@@ -3,8 +3,10 @@ The tower defense game that literally takes place inside your organs - You'll fi
 
 
 Developed by:
+
 Adam Slifco
+
 Gary Fleming
+
 Sean Aubrey
 
-We are the dream team assigned to creating the greatest tower defense game in history.
