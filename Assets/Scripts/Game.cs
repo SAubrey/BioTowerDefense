@@ -31,7 +31,7 @@ public class Game : MonoBehaviour {
 
 	public void SpawnEnemy(GameObject Enemy){
         //Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
-        Instantiate(Enemy);
-        Enemy.GetComponent<MoveEnemyTest>().waypoints = waypoints;
+        GameObject newEnemy = Instantiate(Enemy);
+        newEnemy.GetComponent<MoveEnemyTest>().waypoints = waypoints;
     }
 }

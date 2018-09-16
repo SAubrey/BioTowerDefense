@@ -8,7 +8,7 @@ public class MoveEnemyTest : MonoBehaviour {
     public GameObject[] waypoints;
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
-    public float speed = 1.0f;
+    public float speed;
 
     // Use this for initialization
     void Start () {
@@ -31,7 +31,7 @@ public class MoveEnemyTest : MonoBehaviour {
         float currentTimeOnPath = Time.time - lastWaypointSwitchTime;
 
         //TODO: review Lerp functionality, it returns the linear interpolation between to points...what is linear interpolation
-        gameObject.transform.position = Vector2.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
+        gameObject.transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
 
         // Enemy has reached the next waypoint
         if (gameObject.transform.position.Equals(endPosition))
