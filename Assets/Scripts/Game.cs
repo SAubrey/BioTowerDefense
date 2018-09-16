@@ -5,6 +5,9 @@ using UnityEngine;
 public class Game : MonoBehaviour {
 	public static bool game = false;
 	public GameObject[] waypoints;
+	private AudioClip startSound;
+	private AudioSource audio;
+	private int time;
 	void Start () {
 		
 	}
@@ -17,8 +20,12 @@ public class Game : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(game){
-			GameObject enemy  = Resources.Load("Enemy") as GameObject;
-			SpawnEnemy (enemy);
+			if(time >= 60){
+				GameObject enemy  = Resources.Load("Enemy") as GameObject;
+				SpawnEnemy (enemy);
+				time = 0;
+			}
+			time++;
 		}
 	}
 
