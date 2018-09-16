@@ -46,6 +46,9 @@ public class MoveEnemyTest : MonoBehaviour {
             }
             else
             {
+				var audioObject = GameObject.Find("AudioObject");
+				audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/hurt") as AudioClip;
+				audioObject.GetComponent<AudioSource>().Play();
                 Destroy(gameObject);
                 // TODO: deduct health
             }
