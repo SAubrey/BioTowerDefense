@@ -20,7 +20,7 @@ public class scr_game_cam : MonoBehaviour {
 		position.x += (destX - position.x)*0.1f;
 		transform.position = position;
 		if(position.y < -14){
-			SceneManager.LoadScene("sn_mainMenu");
+			SceneManager.LoadScene("MainMenu");
 		}
 	}
 	

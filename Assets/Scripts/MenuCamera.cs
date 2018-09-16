@@ -7,9 +7,7 @@ public class MenuCamera : MonoBehaviour {
 	private int menuId = 0;
 	private float destX = 0;
 	private float destY	 = 0;
-	private Scene currentScene;
 	void Update(){
-		currentScene = SceneManager.GetActiveScene ();
 		//Main Menu
 		if(menuId == 0){
 			destY = 0f;
@@ -43,7 +41,7 @@ public class MenuCamera : MonoBehaviour {
 		//}
 		//Transition to game scene
 		if(position.y > 19f){
-			SceneManager.LoadScene("sn_game");
+			SceneManager.LoadScene("Game");
 		}
 		//Transition to wiki scene
 		if(position.x < -13f){
