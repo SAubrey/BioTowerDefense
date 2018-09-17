@@ -36,4 +36,18 @@ public class SceneGuy : MonoBehaviour {
         }
 		
 	}
+	
+	public void ChangeScene(string name){
+		SceneManager.LoadScene(name);
+		//Change Music
+		if(name == "Wiki"){
+			GetComponent<MusicPlayer>().NewSong("science4");
+		}
+		if(name == "MainMenu"){
+			GetComponent<MusicPlayer>().NewSong("science2");
+		}
+		if(name == "Game"){
+			GetComponent<MusicPlayer>().NewSong("science");
+		}
+	}
 }

@@ -11,15 +11,14 @@ public class Game : MonoBehaviour {
 	public int HP;
 	public Text HPText;
 	public Text GameOverText;
+	public GameObject Gray;
 	public static bool gameOver = false;
+	private GameObject app;
 	void Start () {
 		gameOver = false;
+		app = GameObject.Find("__app");
 	}
 	
-	void OnGui() {
-		
-	}
-
 	// Use this for initialization
 	public void StartGame () {
 		game = true;
@@ -39,9 +38,11 @@ public class Game : MonoBehaviour {
 		HPText.text = "HP: "+HP;
 		if(gameOver){
 			GameOverText.text = "GAME OVER";
+			Gray.SetActive(true);
 		}
 		else{
 			GameOverText.text = "";
+			Gray.SetActive(false);
 		}
 		if(HP <=0 && game){
 			var audioObject = GameObject.Find("AudioObject");
@@ -49,6 +50,7 @@ public class Game : MonoBehaviour {
 			audioObject.GetComponent<AudioSource>().Play();
 			game = false;
 			gameOver = true;
+			app.GetComponent<MusicPlayer>().NewSong("death");
 		}
 	}
 	

@@ -20,7 +20,7 @@ public class GameCam : MonoBehaviour {
 		position.x += (destX - position.x)*0.1f;
 		transform.position = position;
 		if(position.y < -14){
-			SceneManager.LoadScene("MainMenu");
+			GameObject.Find("__app").GetComponent<SceneGuy>().ChangeScene("MainMenu");
 		}
 	}
 	

@@ -89,16 +89,16 @@ public class MenuCamera : MonoBehaviour {
 		//Transition to game scene
 		if(scene=="MainMenu"){
 			if(position.y > 19f){
-				SceneManager.LoadScene("Game");
+				app.GetComponent<SceneGuy>().ChangeScene("Game");
 			}
 			//Transition to wiki scene
 			if(position.x < -15f){
-				SceneManager.LoadScene("Wiki");
+				app.GetComponent<SceneGuy>().ChangeScene("Wiki");
 			}
 		}
 		if(scene=="Wiki"){
 			if(position.x > 22){
-				SceneManager.LoadScene("MainMenu");
+				app.GetComponent<SceneGuy>().ChangeScene("MainMenu");
 			}
 		}
 	}
