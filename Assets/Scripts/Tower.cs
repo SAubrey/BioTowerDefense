@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scr_tower : MonoBehaviour {
+public class Tower : MonoBehaviour {
 	bool cd = false;
 	float cdTime = 0f;
 	// Use this for initialization
@@ -19,7 +19,7 @@ public class scr_tower : MonoBehaviour {
 			foreach (var obj in objects) {
 				if(Mathf.Abs(obj.transform.position.x - transform.position.x) < 10f){
 					//transform.Translate(1f,0f,0f);
-					obj.GetComponent<scr_enemy>().hurt(1f);
+					obj.GetComponent<Enemy>().Hurt(1);
 					cd = true;
 					cdTime = 60f;
 				}

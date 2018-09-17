@@ -4,22 +4,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneGuy : MonoBehaviour {
-	public Scene currentScene;
-	public Scene previousScene;
+	public int test;
+	public string currentScene;
+	public string previousScene;
 	// Use this for initialization
 	void Start () {
-		currentScene = SceneManager.GetActiveScene ();
-		previousScene = SceneManager.GetActiveScene ();
+		//currentScene = SceneManager.GetActiveScene ().name;
+		//previousScene = SceneManager.GetActiveScene ().name;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//Scene Management
-		/*
-		if(SceneManager.GetActiveScene != currentScene){
+		var checkScene = SceneManager.GetActiveScene().name;
+		if(checkScene != currentScene){
+			Debug.Log("TRANSITION DETECTED!");
+			Debug.Log("Previous Scene: "+currentScene);
 			previousScene = currentScene;
-			currentScene = SceneManager.GetActiveScene;
+			currentScene = SceneManager.GetActiveScene().name;
+			Debug.Log("Current Scene: "+currentScene);
 		}
-		*/
+		if (Input.GetKey(KeyCode.D)){
+            Debug.Log("CHECK PREV: "+previousScene);
+        }
+		if (Input.GetKey(KeyCode.E)){
+            Debug.Log("CHECK CURRENT: "+currentScene);
+        }
+		if (Input.GetKey(KeyCode.S)){
+            test++;
+			Debug.Log(test);
+        }
+		
 	}
 }

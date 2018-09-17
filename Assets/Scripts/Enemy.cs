@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveEnemyTest : MonoBehaviour {
+public class Enemy : MonoBehaviour {
 
     [HideInInspector]
     public GameObject[] waypoints;
@@ -18,6 +18,10 @@ public class MoveEnemyTest : MonoBehaviour {
     // Update is called once per frame
     // Retrieved this functionality from https://www.raywenderlich.com/269-how-to-create-a-tower-defense-game-in-unity-part-1
     void Update () {
+		GameObject game = GameObject.Find("Game");
+		if(!Game.game){
+			return;
+		}
 
         //Retrieve the position of the last waypoint the enemy crossed and the next waypoint
         Vector3 startPosition = waypoints[currentWaypoint].transform.position;
@@ -49,10 +53,15 @@ public class MoveEnemyTest : MonoBehaviour {
 				var audioObject = GameObject.Find("AudioObject");
 				audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/hurt") as AudioClip;
 				audioObject.GetComponent<AudioSource>().Play();
+				game.GetComponent<Game>().TakeDamage(1);
                 Destroy(gameObject);
                 // TODO: deduct health
             }
         }
 
     }
+	
+	public void Hurt(int damage){
+		
+	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class scr_game_cam : MonoBehaviour {
+public class GameCam : MonoBehaviour {
 	private float destX = 0f;
 	private float destY = 0f;
 	// Use this for initialization
