@@ -64,9 +64,9 @@ public class Game : MonoBehaviour {
         newEnemy.GetComponent<Enemy>().waypoints = waypoints;
     }
 	
-	public void QuitGame(){
+	/*public void QuitGame() {
 		var Camera = GameObject.Find("Main Camera");
 		Camera.GetComponent<GameCam>().Quit();
 		game = false;
-	}
+	}*/
 }
