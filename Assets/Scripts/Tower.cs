@@ -15,7 +15,7 @@ public class Tower : MonoBehaviour {
 		if(!cd){
 			var objects = GameObject.FindGameObjectsWithTag("Enemy");
 			var objectCount = objects.Length;
-			Debug.Log("Object Count: "+objectCount);
+			//Debug.Log("Object Count: "+objectCount);
 			foreach (var obj in objects) {
 				if(Mathf.Abs(obj.transform.position.x - transform.position.x) < 10f){
 					//transform.Translate(1f,0f,0f);
