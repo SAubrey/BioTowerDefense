@@ -19,7 +19,7 @@ public class Tower : MonoBehaviour {
 			foreach (var obj in objects) {
 				if(Mathf.Abs(obj.transform.position.x - transform.position.x) < 10f){
 					//transform.Translate(1f,0f,0f);
-					obj.GetComponent<Enemy>().Hurt(1);
+					obj.GetComponent<Enemy>().hurt(1);
 					cd = true;
 					cdTime = 60f;
 				}
