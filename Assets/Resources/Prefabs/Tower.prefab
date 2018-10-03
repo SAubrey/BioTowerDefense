@@ -77,7 +77,7 @@ MonoBehaviour:
   projectileAOE: 0
   projectileSprite: {fileID: 21300000, guid: bdfab9254f92a03409d3adc80ee22567, type: 3}
   projectilePierce: 0
-  detectionRadius: 20
+  detectionRadius: 1
   specialEffect: 0
 --- !u!114 &114882716961538894
 MonoBehaviour:

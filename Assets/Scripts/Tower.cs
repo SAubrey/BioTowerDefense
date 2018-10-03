@@ -24,6 +24,9 @@ public class Tower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(tag=="MenuItems"){
+			return;
+		}
 		if(!cd){
 			var objects = GameObject.FindGameObjectsWithTag("Enemy");
 			var objectCount = objects.Length;
@@ -45,7 +48,7 @@ public class Tower : MonoBehaviour {
 							
 						}
 						else if(targetType==5){
-							
+							shoot(obj);
 						}
 					}
 				}
@@ -56,7 +59,9 @@ public class Tower : MonoBehaviour {
 				if(targetDist > detectionRadius){
 					target = null;
 				}
-				activate(target);
+				if(targetType==0){
+					shoot(target);
+				}
 			}
 		}
 		else{
@@ -67,7 +72,7 @@ public class Tower : MonoBehaviour {
 		}
 	}
 	
-	private void activate(GameObject obj){
+	private void shoot(GameObject obj){
 		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		if(projectileType == 0){
 			GameObject myProjectile = Instantiate(projectile);
