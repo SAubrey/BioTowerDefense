@@ -7,47 +7,54 @@ public class SceneGuy : MonoBehaviour {
 	public int test;
 	public string currentScene;
 	public string previousScene;
+
+	private bool sceneChanged = true;
 	// Use this for initialization
 	void Start () {
-		//currentScene = SceneManager.GetActiveScene ().name;
-		//previousScene = SceneManager.GetActiveScene ().name;
+		currentScene = SceneManager.GetActiveScene().name;
+		previousScene = "";
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//Scene Management
-		var checkScene = SceneManager.GetActiveScene().name;
-		if(checkScene != currentScene){
-			Debug.Log("TRANSITION DETECTED!");
-			Debug.Log("Previous Scene: "+currentScene);
-			previousScene = currentScene;
-			currentScene = SceneManager.GetActiveScene().name;
-			Debug.Log("Current Scene: "+currentScene);
+		if (sceneChanged) {
+			sceneChanged = false;
+			//Debug.Log("TRANSITION DETECTED!");
+			//Debug.Log("Previous Scene: "+previousScene);
+			//Debug.Log("Current Scene: "+currentScene);
 		}
-		if (Input.GetKey(KeyCode.D)){
-            Debug.Log("CHECK PREV: "+previousScene);
-        }
-		if (Input.GetKey(KeyCode.E)){
-            Debug.Log("CHECK CURRENT: "+currentScene);
-        }
-		if (Input.GetKey(KeyCode.S)){
-            test++;
-			Debug.Log(test);
-        }
-		
+
+		if (Input.anyKey) { // reduces # checks
+			if (Input.GetKey(KeyCode.D)) {
+				Debug.Log("CHECK PREV: "+previousScene);
+			}
+			else if (Input.GetKey(KeyCode.E)) {
+				Debug.Log("CHECK CURRENT: "+currentScene);
+			}
+			else if (Input.GetKey(KeyCode.S)) {
+				test++;
+				Debug.Log(test);
+			}
+		}
 	}
 	
-	public void ChangeScene(string name){
-		SceneManager.LoadScene(name);
-		//Change Music
-		if(name == "Wiki"){
-			GetComponent<MusicPlayer>().NewSong("science4");
-		}
-		if(name == "MainMenu"){
-			GetComponent<MusicPlayer>().NewSong("science2");
-		}
-		if(name == "Game"){
-			GetComponent<MusicPlayer>().NewSong("science");
+	public void ChangeScene(string scene) {
+		if (scene != currentScene) {
+			SceneManager.LoadScene(scene);
+			previousScene = currentScene;
+			currentScene = scene;
+			sceneChanged = true;
+
+			//Change Music
+			if(scene == "Wiki"){
+				GetComponent<MusicPlayer>().NewSong("science4");
+			}
+			else if(scene == "MainMenu"){
+				GetComponent<MusicPlayer>().NewSong("science2");
+			}
+			else if(scene == "Game"){
+				GetComponent<MusicPlayer>().NewSong("science");
+			}
 		}
 	}
 }

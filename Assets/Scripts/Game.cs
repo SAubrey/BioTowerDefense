@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
-	public static bool game = false;
+	public static bool game;
 	public GameObject[] waypoints;
 	private int time = 0;
 	private int spawnInterval = 30;
@@ -15,6 +15,7 @@ public class Game : MonoBehaviour {
 	public static bool gameOver = false;
 	private GameObject app;
 	void Start () {
+		game = false;
 		gameOver = false;
 		app = GameObject.Find("__app");
 	}
@@ -46,7 +47,7 @@ public class Game : MonoBehaviour {
 		}
 		if(HP <=0 && game){
 			var audioObject = GameObject.Find("AudioObject");
-			audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/lose") as AudioClip;
+			audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/death") as AudioClip;
 			audioObject.GetComponent<AudioSource>().Play();
 			game = false;
 			gameOver = true;
@@ -64,9 +65,9 @@ public class Game : MonoBehaviour {
         newEnemy.GetComponent<Enemy>().waypoints = waypoints;
     }
 	
-	public void QuitGame(){
+	/*public void QuitGame() {
 		var Camera = GameObject.Find("Main Camera");
 		Camera.GetComponent<GameCam>().Quit();
 		game = false;
-	}
+	}*/
 }
