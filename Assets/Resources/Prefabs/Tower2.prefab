@@ -91,6 +91,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16a8325ed761f849a299c5ef18ac152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolDown: 10
+  targetType: 0
+  projectileType: 0
+  projectileSize: 0.5
+  projectileSpeed: 0.8
+  projectileAOE: 0
+  projectileSprite: {fileID: 21300000, guid: bdfab9254f92a03409d3adc80ee22567, type: 3}
+  projectilePierce: 0
+  detectionRadius: 20
+  specialEffect: 0
 --- !u!120 &120845873982348826
 LineRenderer:
   m_ObjectHideFlags: 1

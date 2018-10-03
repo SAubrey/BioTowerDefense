@@ -69,6 +69,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16a8325ed761f849a299c5ef18ac152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolDown: 120
+  targetType: 0
+  projectileType: 0
+  projectileSize: 2
+  projectileSpeed: 0.5
+  projectileAOE: 0
+  projectileSprite: {fileID: 21300000, guid: bdfab9254f92a03409d3adc80ee22567, type: 3}
+  projectilePierce: 0
+  detectionRadius: 20
+  specialEffect: 0
 --- !u!114 &114882716961538894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,7 +241,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4d1bf110bba332449810ba5e6cd96581, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

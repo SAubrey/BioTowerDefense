@@ -7,6 +7,6 @@ public class LaunchGame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SceneManager.LoadScene("MainMenu");
+		GetComponent<SceneGuy>().ChangeScene("MainMenu");
 	}
 }
