@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown: 10
-  targetType: 5
+  targetType: 0
   projectileType: 0
   projectileSize: 0.5
   projectileSpeed: 0.8

@@ -4,12 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
-<<<<<<< HEAD
-	public static bool game;
-=======
 	public static bool game = false; // True so long as there is a running game state, paused or not. False when gameOver
 	public static bool paused = false;
->>>>>>> e7d23a07a808e65c647d10d40720503616ba7a3c
 	public GameObject[] waypoints;
 	
 	public int HP;
@@ -50,7 +46,6 @@ public class Game : MonoBehaviour {
 		if (gameOver) {
 			GameOverText.text = "GAME OVER";
 			Gray.SetActive(true);
-<<<<<<< HEAD
 		}
 		else{
 			GameOverText.text = "";
@@ -64,8 +59,6 @@ public class Game : MonoBehaviour {
 			gameOver = true;
 			app.GetComponent<MusicPlayer>().NewSong("death");
 		}
-=======
-		} 
 	}
 
 	private void endGame() {
@@ -75,7 +68,6 @@ public class Game : MonoBehaviour {
 		game = false;
 		gameOver = true;
 		app.GetComponent<MusicPlayer>().NewSong("death");
->>>>>>> e7d23a07a808e65c647d10d40720503616ba7a3c
 	}
 	
 	public void takeDamage(int damage){

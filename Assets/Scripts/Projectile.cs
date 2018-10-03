@@ -38,9 +38,10 @@ public class Projectile : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D col){	
-		Debug.Log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES");
+		Debug.Log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEasdfasdfasdf");
 		var obj = col.gameObject;
 		if(obj.tag=="Enemy" && !hurtEnemies.Contains(obj)){
+			Debug.Log("ASFDWASFSDFSDFSDF");
 			hurtEnemies.Add(obj);
 			Destroy(obj);
 			//obj.GetComponent<Enemy>().speed-=2;

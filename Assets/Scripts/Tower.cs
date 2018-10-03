@@ -30,7 +30,6 @@ public class Tower : MonoBehaviour {
 		if(!cd){
 			var objects = GameObject.FindGameObjectsWithTag("Enemy");
 			var objectCount = objects.Length;
-<<<<<<< HEAD
 			//Numbers used for targetType
 			var minHP = 100000f;
 			var maxHP = 0f;
@@ -62,15 +61,6 @@ public class Tower : MonoBehaviour {
 				}
 				if(targetType==0){
 					shoot(target);
-=======
-			//Debug.Log("Object Count: "+objectCount);
-			foreach (var obj in objects) {
-				if(Mathf.Abs(obj.transform.position.x - transform.position.x) < 10f){
-					//transform.Translate(1f,0f,0f);
-					obj.GetComponent<Enemy>().hurt(1);
-					cd = true;
-					cdTime = 60f;
->>>>>>> e7d23a07a808e65c647d10d40720503616ba7a3c
 				}
 			}
 		}
