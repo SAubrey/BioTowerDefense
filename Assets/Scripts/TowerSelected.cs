@@ -19,43 +19,53 @@ public class TowerSelected : MonoBehaviour {
         //On other tower or gray area
         if (selected)
         {
+            //Listen to Click events
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //Raycast to see colliders that were hit
+                //TODO: If we programmatically detect radius, the Circle Collider 2D on tower prefabs wont be needed
+                //And Raycasting won't be as necessary
+                RaycastHit2D[] hit;
+                Vector2 direction = new Vector2(0, 0);
+                hit = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction);
 
                 //If empty area is clicked
-                if (!Physics.Raycast(ray, out hit, Mathf.Infinity))
+                if (hit.Length > 0)
+                {
+                    foreach (RaycastHit2D h in hit)
+                    {
+                        //If a detected collider is another game object, hide this towers radius
+                        if (h.collider.gameObject != gameObject && h.collider is BoxCollider2D)
+                        {
+                            lineRenderer.positionCount = 0;
+                            selected = false;
+                        }
+                    }
+                }
+                else
                 {
                     lineRenderer.positionCount = 0;
                     selected = false;
-                } else {
-
-                    //If another gameobject is clicked
-                    if (hit.collider.gameObject != gameObject)
-                    {
-                        lineRenderer.positionCount = 0;
-                        selected = false;
-
-                    }
                 }
             }
         }
 	}
 
+
     private void OnMouseDown()
     {
-        if (gameObject.tag == "Tower")
-        {
-            drawCircle();
-            selected = true;
-        }
+         //Ignore towers on Menu
+         if (gameObject.tag == "Tower")
+            {
+                drawCircle();
+                selected = true;
+            }
+       
     }
 
     //Draws the Towers radius when it's selected
     public void drawCircle()
     {
-        Debug.Log("HITTING DRAW CIRCLE");
         int segments = 360;
         lineRenderer.positionCount = segments + 1;
 
@@ -65,10 +75,11 @@ public class TowerSelected : MonoBehaviour {
         for (int i = 0; i < pointCount; i++)
         {
             var rad = Mathf.Deg2Rad * (i * 360f / segments);
-            points[i] = new Vector3(Mathf.Sin(rad) * gameObject.GetComponent<SphereCollider>().radius, Mathf.Cos(rad) * gameObject.GetComponent<SphereCollider>().radius, 0);
+            points[i] = new Vector3(Mathf.Sin(rad) * gameObject.GetComponent<CircleCollider2D>().radius, Mathf.Cos(rad) * gameObject.GetComponent<CircleCollider2D>().radius, 0f);
         }
 
         lineRenderer.SetPositions(points);
+        
     }
 
     //Erases the circle when tower is "deselected"

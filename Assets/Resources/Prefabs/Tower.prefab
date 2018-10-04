@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4034689687136422}
   - component: {fileID: 212656326849758178}
   - component: {fileID: 114328337595121226}
-  - component: {fileID: 135693105905548652}
   - component: {fileID: 114882716961538894}
   - component: {fileID: 114914185999793494}
   - component: {fileID: 120301779350014766}
-  - component: {fileID: 65217937164975650}
+  - component: {fileID: 58280853750552338}
+  - component: {fileID: 61332665385460224}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Tower
@@ -46,18 +46,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65217937164975650
-BoxCollider:
+--- !u!58 &58280853750552338
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1268132927294050}
+  m_Enabled: 0
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64, z: 14}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.9
+--- !u!61 &61332665385460224
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1268132927294050}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.64}
+  m_EdgeRadius: 0
 --- !u!114 &114328337595121226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,6 +107,7 @@ MonoBehaviour:
   projectilePierce: 0
   detectionRadius: 4
   specialEffect: 0
+  towerCost: 30
 --- !u!114 &114882716961538894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,18 +222,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!135 &135693105905548652
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1268132927294050}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.9
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212656326849758178
 SpriteRenderer:
   m_ObjectHideFlags: 1
