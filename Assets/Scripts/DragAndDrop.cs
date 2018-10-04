@@ -87,7 +87,7 @@ public class DragAndDrop : MonoBehaviour
             gameObject.tag = "Tower";
             LoadTowers menuTower = gameObject.GetComponentInParent<LoadTowers>();
             gameObject.transform.parent = null;
-            gameManager.Currency -= gameObject.GetComponent<Tower>().towerCost;
+//            gameManager.Currency -= gameObject.GetComponent<Tower>().towerCost;
             menuTower.reloadTowers();
 
         }
