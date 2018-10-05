@@ -38,16 +38,19 @@ public class Projectile : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D col){	
-		Debug.Log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEasdfasdfasdf");
 		var obj = col.gameObject;
-		if(obj.tag=="Enemy" && !hurtEnemies.Contains(obj)){
-			Debug.Log("ASFDWASFSDFSDFSDF");
+		Debug.Log("Collision detected, hit obj of tag " + obj.tag);
+
+		if(obj.tag=="Enemy" && !hurtEnemies.Contains(obj)) {
+			Debug.Log("Enemy hit!");
 			hurtEnemies.Add(obj);
-			Destroy(obj);
+			//Destroy(obj);
+			// obj.hurt(1); // ERROR
+			obj.GetComponent<Enemy>().hurt(5);
 			//obj.GetComponent<Enemy>().speed-=2;
 			if(!projectilePierce){
 				Destroy(gameObject);
 			}
-		}	
+		}
 	}
 }

@@ -488,7 +488,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 399026763}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.90854514, y: 0.014999986, z: 80}
+  m_LocalPosition: {x: -0.90854514, y: 0.015, z: 80}
   m_LocalScale: {x: 24.975748, y: 15.553609, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 407507034}
   - component: {fileID: 407507036}
   - component: {fileID: 407507035}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: GameOverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -723,7 +723,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 436234289}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Waypoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 466431028}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Waypoint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -929,7 +929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 719027153}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Waypoint4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1000,7 +1000,7 @@ GameObject:
   - component: {fileID: 1103945120}
   - component: {fileID: 1103945119}
   - component: {fileID: 1103945122}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SideMenu
   m_TagString: Menu
   m_Icon: {fileID: 0}
@@ -1753,7 +1753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751018941}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Waypoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1787,7 +1787,7 @@ GameObject:
   - component: {fileID: 1761442962}
   - component: {fileID: 1761442961}
   - component: {fileID: 1761442960}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BasicPath
   m_TagString: Path
   m_Icon: {fileID: 0}
@@ -1992,7 +1992,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1802802524}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Waypoint0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2021,7 +2021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1955643140}
   - component: {fileID: 1955643142}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AudioObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2144,7 +2144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1965434464}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Waypoint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

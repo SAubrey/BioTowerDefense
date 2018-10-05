@@ -149,10 +149,16 @@ public class Enemy : MonoBehaviour {
     public void hurt(int baseDamage) {
         //effectivenessMultiplier = 
 		//float damage = baseDamage * 
+        health -= baseDamage;
+        if (health <= 0) {
+            print("---Enemy hurt. Enemy has " + health + " health left.");
+            die();
+        }
 	}
 
     private void die() {
         // queue SFX
+        print("Trying to delete Enemy");
         Destroy(gameObject);
     }
 }

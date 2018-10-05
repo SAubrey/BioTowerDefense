@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour {
 
 	private Game game;
 	private float spawnTimer = 0f;
-	public float spawnInterval = .5f; // seconds
+	public float spawnInterval = .9f; // seconds
 	private GameObject pneu;
 	private GameObject staph;
 	private GameObject strep;

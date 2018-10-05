@@ -28,6 +28,9 @@ public class Tower : MonoBehaviour {
 		if(tag=="MenuItems"){
 			return;
 		}
+		if (Game.paused || !Game.game) {
+			return;
+		}
 		if(!cd){
 			var objects = GameObject.FindGameObjectsWithTag("Enemy");
 			var objectCount = objects.Length;

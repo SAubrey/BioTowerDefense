@@ -181,6 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916468aae4a1e4ed297008ef0b941ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  health: 0
+  species: 
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -188,7 +191,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 5
 --- !u!212 &212046444643050518
 SpriteRenderer:
   m_ObjectHideFlags: 1
