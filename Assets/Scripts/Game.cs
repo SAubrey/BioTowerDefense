@@ -11,6 +11,7 @@ public class Game : MonoBehaviour {
 	public int HP;
 	public Text HPText;
 	public Text GameOverText;
+    public Text currencyText;
 	public GameObject Gray;
 	public static bool gameOver = false;
 	private GameObject app;
@@ -23,6 +24,7 @@ public class Game : MonoBehaviour {
 		HPText.text = "HP: " + HP;
 		GameOverText.text = "";
 		Gray.SetActive(false);
+        Currency = 200;
 	}
 	
 	// Use this for initialization
@@ -82,5 +84,19 @@ public class Game : MonoBehaviour {
 	public void pauseGame() {
 		paused = true;
 	}
-	
+
+    private int _currency;
+    public int Currency
+    {
+        get
+        {
+            return _currency;
+        }
+        set
+        {
+            _currency = value;
+            currencyText.GetComponent<Text>().text = "$: " + _currency;
+        }
+    }
+
 }
