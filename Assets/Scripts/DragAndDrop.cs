@@ -14,39 +14,36 @@ public class DragAndDrop : MonoBehaviour
     private Vector2 originalPosition;
     private TowerSelected towerSelect;
     private Game gameManager;
-
+    
     // Use this for initialization
     void Start()
     {
         towerSelect = gameObject.GetComponent<TowerSelected>();
         gameManager = GameObject.Find("Game").GetComponent<Game>();
-
     }
 
     //Invoked when towers clicked
     void OnMouseDown()
     {
-        if (gameObject.tag == "MenuItems" && !gameObject.GetComponent<CircleCollider2D>().isActiveAndEnabled)
+        if (gameObject.tag == "MenuItems" && gameManager.Currency >= gameObject.GetComponent<Tower>().towerCost)
         {
             originalPosition = gameObject.transform.position;
 
             gameObject.layer = 2;
-            toggleRangeCollider(true);
 
             distance = Vector2.Distance(transform.position, Camera.main.transform.position);
             dragging = true;
-            towerSelect.drawCircle();
+            towerSelect.drawCircle(gameObject.GetComponent<Tower>().detectionRadius);
         }
     }
 
     //Invoked when towers released
     void OnMouseUp()
     {
-        if (gameObject.tag == "MenuItems")
+        if (gameObject.tag == "MenuItems" && gameManager.Currency >= gameObject.GetComponent<Tower>().towerCost)
         {
 
-            Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            validateDropPosition(mousePos);
+            validateDropPosition();
             towerSelect.destroyCircle();
 
         }
@@ -64,14 +61,13 @@ public class DragAndDrop : MonoBehaviour
             gameObject.transform.position = rayPoint;
             Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
-            if (validSpot(mousePos))
+            if (validSpot())
             {
                 towerSelect.colorCircle(validColor);
             }
             else
             {
                 towerSelect.colorCircle(invalidColor);
-
             }
 
         }
@@ -79,36 +75,36 @@ public class DragAndDrop : MonoBehaviour
 
     //Moves tower back to menu if dropped on an invalid area
     //Dissattaches sideMenu as parent if towers dropped on valid area
-    void validateDropPosition(Vector2 pos)
+    void validateDropPosition()
     {
 
-        if (validSpot(pos))
+        if (validSpot()) 
         {
             gameObject.tag = "Tower";
+
             LoadTowers menuTower = gameObject.GetComponentInParent<LoadTowers>();
             gameObject.transform.parent = null;
-//            gameManager.Currency -= gameObject.GetComponent<Tower>().towerCost;
-            menuTower.reloadTowers();
+
+            string towerName = gameObject.name;
+            towerName = towerName.Replace("(Clone)", "");
+            menuTower.reloadTower(towerName);
+
+
+            gameManager.Currency -= gameObject.GetComponent<Tower>().towerCost;
 
         }
         //If invalid, move tower back to original spot
-        else
+        else 
         {
             gameObject.transform.position = originalPosition;
-            toggleRangeCollider(false);
         }
         gameObject.layer = 0;
 
 
     }
 
-    //Enables and Disables the Circle Collider, tower should be disabled when on menu and enabled when dragging begins
-    void toggleRangeCollider(bool val){
-        gameObject.GetComponent<CircleCollider2D>().enabled = val;
-    }
-
-    //returns false if the current position's in an invalid area, true if it's not
-    bool validSpot(Vector2 position)
+    //returns false if the current position's overlapping any other colliders
+    bool validSpot()
     {
 
         //Get length of the towers box collider
@@ -131,29 +127,9 @@ public class DragAndDrop : MonoBehaviour
 
         if (hits.Count > 0)
         {
-
-            //Search through each collision, if any of these tags found, it's an invalid area
-            foreach (RaycastHit2D h in hits)
-            {
-                if (h.collider.gameObject.tag == "Path" || h.collider.gameObject.tag == "Base" || h.collider.gameObject.tag == "Menu")
-                {
-                    return false;
-                }
-
-                //Ignore the sphere collider on the tower, only the box collider means an invalid area
-                else if (h.collider.gameObject.tag == "Tower")
-                {
-
-                    if (h.collider is BoxCollider2D)
-                    {
-                        return false;
-                    }
-                }
-            }
+            return false;
         }
         return true;
-
-    }
-
+           }
 }
 

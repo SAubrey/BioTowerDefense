@@ -17,6 +17,7 @@ public class Tower : MonoBehaviour {
 	public int specialEffect = 0;//0 = none, 1 = slow, 2 = increase damage taken, etc.
 	private GameObject target = null;
 	private GameObject projectile;
+    public int towerCost;
 	// Use this for initialization
 	void Start () {
 		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;

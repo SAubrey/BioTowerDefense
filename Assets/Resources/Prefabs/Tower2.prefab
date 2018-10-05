@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114965796695609676}
   - component: {fileID: 114038554156938826}
   - component: {fileID: 120845873982348826}
-  - component: {fileID: 58803732837054176}
   - component: {fileID: 61335384498039072}
   m_Layer: 0
   m_Name: Tower2
@@ -46,21 +45,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58803732837054176
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1485105097557524}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.2
 --- !u!61 &61335384498039072
 BoxCollider2D:
   m_ObjectHideFlags: 1
