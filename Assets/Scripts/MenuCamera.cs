@@ -30,7 +30,7 @@ public class MenuCamera : MonoBehaviour {
 														{"PlayMenu", new Vector2(0f, 10f)},
 														{"Game", new Vector2(0f, 30f)},
 														{"OptionsMenu", new Vector2(0f, -10f)},
-														{"Wiki", new Vector2(-30f, 0f)}
+														{"Encyclopedia", new Vector2(-30f, 0f)}
 													};
 		app = GameObject.Find("__app");
 		sceneGuy = app.GetComponent<SceneGuy>();
@@ -48,14 +48,14 @@ public class MenuCamera : MonoBehaviour {
 
 	private void determineStartPos() {
 		if (previousScene == "MainMenu") {
-			if (scene == "Wiki") {
+			if (scene == "Encyclopedia") {
 				transform.position = new Vector3(20, 0, cameraHeight);
 			}
 			else if (scene == "Game") {
 				transform.position = new Vector3(0, -20, cameraHeight);
 			}
 		}
-		else if (previousScene == "Wiki") {
+		else if (previousScene == "Encyclopedia") {
 			transform.position = new Vector3(-20, 0, cameraHeight);
 		}
 		else if (previousScene == "Game") {
@@ -80,7 +80,7 @@ public class MenuCamera : MonoBehaviour {
 		if (sceneChange) {
 			// print("scene: " + scene + " nextScene: " + nextScene);
 			if (scene == "MainMenu") {
-				if (nextScene == "Wiki") {
+				if (nextScene == "Encyclopedia") {
 					if (position.x < -20f) {
 						sceneGuy.ChangeScene(nextScene);
 					}
@@ -91,7 +91,7 @@ public class MenuCamera : MonoBehaviour {
 					}
 				}
 			}
-			else if (scene == "Wiki") {
+			else if (scene == "Encyclopedia") {
 				if (nextScene == "MainMenu") {
 					if (position.x > 20f) {
 						sceneGuy.ChangeScene(nextScene);
@@ -131,7 +131,7 @@ public class MenuCamera : MonoBehaviour {
 		scene = SceneManager.GetActiveScene().name;
 		if (scr == "MainMenu" || scr == "PlayMenu" || scr == "OptionsMenu") {
 			nextScene = "MainMenu";
-			if (scene == "Wiki") { // if in wiki moving to main menu
+			if (scene == "Encyclopedia") { // if in Encyclopedia moving to main menu
 				dest.x = 30f;
 				dest.y = 0f;
 			} 

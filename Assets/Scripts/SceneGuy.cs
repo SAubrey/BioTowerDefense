@@ -46,7 +46,7 @@ public class SceneGuy : MonoBehaviour {
 			sceneChanged = true;
 
 			//Change Music
-			if(scene == "Wiki"){
+			if(scene == "Encyclopedia"){
 				GetComponent<MusicPlayer>().NewSong("science4");
 			}
 			else if(scene == "MainMenu"){
