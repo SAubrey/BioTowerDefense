@@ -152,6 +152,7 @@ public class Enemy : MonoBehaviour {
         health -= baseDamage;
         if (health <= 0) {
             print("---Enemy hurt. Enemy has " + health + " health left.");
+            game.GetComponent<Game>().Currency += 10;
             die();
         }
 	}

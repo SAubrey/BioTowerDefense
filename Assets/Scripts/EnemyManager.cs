@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour {
 		pneu = Resources.Load("Prefabs/Enemies/Pneumonia") as GameObject;
 		staph = Resources.Load("Prefabs/Enemies/Staph") as GameObject;
 		strep = Resources.Load("Prefabs/Enemies/Strep") as GameObject;
-		TB = Resources.Load("Prefabs/Enemies/TB") as GameObject;
+        TB = Resources.Load("Prefabs/Enemies/TB") as GameObject;
 	}
 	
 	// Update is called once per frame
@@ -49,7 +49,8 @@ public class EnemyManager : MonoBehaviour {
 			}
 			EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesKilled);
 			TimerText.text = "Timer: "+Mathf.RoundToInt(waveIntervalTimer) + "/" + waveInterval;
-		}
+
+        }
 	}
 
 	private void manageSpawn(float deltaTime) {
@@ -94,6 +95,7 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 	private void spawnEnemy(GameObject Enemy) {
+
         // Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
         GameObject newEnemy = Instantiate(Enemy);
         newEnemy.GetComponent<Enemy>().waypoints = game.waypoints;
@@ -133,8 +135,12 @@ public class EnemyManager : MonoBehaviour {
 		burstSpawn = false;
 		enemiesKilled = 0;
 
-		// Advance and toggle spawning.
-		currentWave++;
+        //TODO: put in better spot
+        game.Currency += 50;
+        
+
+        // Advance and toggle spawning.
+        currentWave++;
 		waveActive = true;
 		print("Beginning wave " + currentWave);
 	}

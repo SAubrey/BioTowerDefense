@@ -5,15 +5,18 @@ using UnityEngine;
 public class TowerSelected : MonoBehaviour {
 
     private LineRenderer lineRenderer;
+    private Game gameManager;
     private bool selected;
+    private bool mouseOverTower;
 
 	// Use this for initialization
 	void Start () {
         lineRenderer = gameObject.GetComponent<LineRenderer>();
+        gameManager = GameObject.Find("Game").GetComponent<Game>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         //Accessed when towers selected, detects if mouse is clocked
         //On other tower or gray area
@@ -31,6 +34,9 @@ public class TowerSelected : MonoBehaviour {
                     selected = false;
                 }
             }
+            else if (Input.GetMouseButtonDown(1)){
+                sellTower();
+            }
         }
 	}
 
@@ -42,8 +48,19 @@ public class TowerSelected : MonoBehaviour {
             {
                 drawCircle(gameObject.GetComponent<Tower>().detectionRadius);
                 selected = true;
+
             }
        
+    }
+
+    private void OnMouseEnter()
+    {
+        mouseOverTower = true;
+    }
+
+    private void OnMouseExit()
+    {
+        mouseOverTower = false;
     }
 
     //Draws the Towers radius when it's selected
@@ -76,6 +93,13 @@ public class TowerSelected : MonoBehaviour {
     {
         lineRenderer.startColor = col;
         lineRenderer.endColor = col;
+    }
+
+    private void sellTower(){
+        if(mouseOverTower){
+            Destroy(gameObject);
+            gameManager.Currency += (gameObject.GetComponent<Tower>().towerCost / 2);
+        }
     }
 
 }
