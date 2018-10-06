@@ -159,6 +159,7 @@ public class Enemy : MonoBehaviour {
     private void die() {
         // queue SFX
         print("Trying to delete Enemy");
+		game.GetComponent<EnemyManager>().enemiesKilled++;
         Destroy(gameObject);
     }
 }

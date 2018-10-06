@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour {
 
@@ -24,6 +25,9 @@ public class EnemyManager : MonoBehaviour {
 	private bool waveActive = true;
 	public float waveInterval = 8f;
 	private float waveIntervalTimer = 0f;
+	public Text EnemyText;
+	public Text TimerText; 	
+	public float enemiesKilled;
 	
 	// Use this for initialization
 
@@ -43,6 +47,8 @@ public class EnemyManager : MonoBehaviour {
 			if (!Game.paused) {
 				manageSpawn(Time.deltaTime);
 			}
+			EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesKilled);
+			TimerText.text = "Timer: "+Mathf.RoundToInt(waveIntervalTimer) + "/" + waveInterval;
 		}
 	}
 
@@ -125,6 +131,7 @@ public class EnemyManager : MonoBehaviour {
 		burstTimer = 0;
 		burstEnemiesRemaining = 0;
 		burstSpawn = false;
+		enemiesKilled = 0;
 
 		// Advance and toggle spawning.
 		currentWave++;
