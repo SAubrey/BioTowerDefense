@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1974649658582742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.03, y: 2.94, z: 0}
+  m_LocalPosition: {x: 8, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
   projectilePierce: 0
   detectionRadius: 4
   specialEffect: 0
-  towerCost: 40
+  towerCost: 10
   abType: ison
 --- !u!120 &120856012666829128
 LineRenderer:
@@ -243,7 +243,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4d1bf110bba332449810ba5e6cd96581, type: 3}
-  m_Color: {r: 0.9245283, g: 0.6759523, b: 0.6759523, a: 1}
+  m_Color: {r: 0, g: 0.9811321, b: 0.9478333, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
