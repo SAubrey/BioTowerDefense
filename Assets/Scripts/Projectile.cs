@@ -35,15 +35,17 @@ public class Projectile : MonoBehaviour {
 		xsp = pXsp;
 		ysp = pYsp;
 		transform.localScale  = new Vector3(projectileSize,projectileSize,projectileSize);
+		var boxCol = GetComponent<BoxCollider2D>();
+		boxCol.size = new Vector2(boxCol.size.x * 2,boxCol.size.y * 2);
 	}
 	
 	void OnTriggerEnter2D(Collider2D col){	
 		var obj = col.gameObject;
 		Debug.Log("Collision detected, hit obj of tag " + obj.tag);
 
-		if(obj.tag=="Enemy" && !hurtEnemies.Contains(obj)) {
+		if(obj.tag=="Enemy") {
 			Debug.Log("Enemy hit!");
-			hurtEnemies.Add(obj);
+			//hurtEnemies.Add(obj);
 			//Destroy(obj);
 			// obj.hurt(1); // ERROR
 			obj.GetComponent<Enemy>().hurt(5);

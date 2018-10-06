@@ -18,6 +18,7 @@ public class Tower : MonoBehaviour {
 	private GameObject target = null;
 	private GameObject projectile;
     public int towerCost;
+	public string abType;
 	// Use this for initialization
 	void Start () {
 		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
@@ -63,7 +64,7 @@ public class Tower : MonoBehaviour {
 				if(targetDist > detectionRadius){
 					target = null;
 				}
-				if(targetType==0){
+				else if(targetType==0){
 					shoot(target);
 				}
 			}
