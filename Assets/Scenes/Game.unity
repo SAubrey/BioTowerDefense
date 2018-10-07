@@ -1048,13 +1048,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towers:
-  - {fileID: 1268132927294050, guid: 5968a0501ad1dc749bc98c5b8eb094cc, type: 2}
-  - {fileID: 1899609857633930, guid: 23cf4c880c6620543944b2ddb6bf7639, type: 2}
-  - {fileID: 1974649658582742, guid: 7737ef1431188fe47a23260653e21cbc, type: 2}
-  - {fileID: 1939320292331466, guid: 626a06ebac510f149baa551736b10a58, type: 2}
-  - {fileID: 1485105097557524, guid: c88a1a0ab443f1b44b14376af2b9980b, type: 2}
-  - {fileID: 1954118604612226, guid: 1d8a16f94ce294f4092e6bd53118a163, type: 2}
-  - {fileID: 1347680462951096, guid: 34ce6fdb481454b4380305f1fb0fa716, type: 2}
+  - {fileID: 1268132927294050, guid: b743914f5b8a1884a922a9513b14b278, type: 2}
+  - {fileID: 1899609857633930, guid: 53b725aaff9f2cf469a00ec82e6371f1, type: 2}
+  - {fileID: 1974649658582742, guid: 87fdbaae44814b343ae14a3a30ca03d3, type: 2}
+  - {fileID: 1939320292331466, guid: f86c5e5ef3da4b64a88c3698c02323db, type: 2}
+  - {fileID: 1485105097557524, guid: c976ebb2909b04b6c85ad9e181b96666, type: 2}
+  - {fileID: 1954118604612226, guid: d3f85dedbecb20d4699e47741b5312c4, type: 2}
+  - {fileID: 1347680462951096, guid: e6f93b0ca11bead4fbc3bbe9b9fc2715, type: 2}
 --- !u!212 &1103945120
 SpriteRenderer:
   m_ObjectHideFlags: 0
