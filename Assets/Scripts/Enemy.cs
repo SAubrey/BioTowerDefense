@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
     //[HideInInspector]
     public float speed;
-    public float health;
+    public float maxHealth;
+    private float health;
     public string species;
-    public GameObject[] waypoints;
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
     private GameObject game;
@@ -16,6 +17,10 @@ public class Enemy : MonoBehaviour {
     private float currentTimeOnPath;
     private float totalTimeForPath;
     private GameObject audioObject;
+
+    [Header("Unity specific")]
+    public Image healthBar;
+    public GameObject[] waypoints;
 
 
     // Dictionaries are arranged in order of effectiveness up to carb (1-5)
@@ -40,17 +45,17 @@ public class Enemy : MonoBehaviour {
                                         {"strep", 1f},
                                         {"pneu", 1f}, // best. If resistant, 1, 2, 3 useless.
                                         {"TB", 0f} };
-    private static IDictionary<string, float> linezolid = new Dictionary<string, float>() {
+    private static IDictionary<string, float> line = new Dictionary<string, float>() {
                                         {"staph", 1f},
                                         {"strep", 1f},
                                         {"pneu", .9f}, // second best
                                         {"TB", 0f} };
-    private static IDictionary<string, float> rifampicin = new Dictionary<string, float>() {
+    private static IDictionary<string, float> rifa = new Dictionary<string, float>() {
                                         {"staph", .1f},
                                         {"strep", .1f},
                                         {"pneu", .1f},
                                         {"TB", .5f} };
-    private static IDictionary<string, float> isoniazid = new Dictionary<string, float>() {
+    private static IDictionary<string, float> ison = new Dictionary<string, float>() {
                                         {"staph", .1f},
                                         {"strep", .1f},
                                         {"pneu", .1f},
@@ -61,12 +66,13 @@ public class Enemy : MonoBehaviour {
                                         {"meth", meth},
                                         {"vanc", vanc},
                                         {"carb", carb},
-                                        {"linezolid", linezolid},
-                                        {"rifampicin", rifampicin},
-                                        {"isoniazid", isoniazid} };
+                                        {"line", line},
+                                        {"rifa", rifa},
+                                        {"ison", ison} };
 
     // Use this for initialization
     void Start () {
+        health = maxHealth;
         lastWaypointSwitchTime = Time.time;
         game = GameObject.Find("Game");
         audioObject = GameObject.Find("AudioObject");
@@ -125,42 +131,29 @@ public class Enemy : MonoBehaviour {
         audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/hurt") as AudioClip;
         audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
+        game.GetComponent<EnemyManager>().incEnemiesDead();
         Destroy(gameObject);
     }
 
-	public void hurt(int baseDamage, string projectileSpecies) {
-        float effectiveness = antibiotics[projectileSpecies][species];
+    public void hurt(int baseDamage, string antibioticType) {
+        float effectiveness = antibiotics[antibioticType][species];
         float damage = baseDamage * effectiveness;
-        health -= damage;
-
-        if (health <= 0) {
-            die();
-        }
-    }
-    public void hurt(int baseDamage, string projectileSpecies, int effect) {
-        float effectiveness = antibiotics[projectileSpecies][species];
-        float damage = baseDamage * effectiveness;
-        health -= damage;
-
-        if (health <= 0) {
-            die();
-        }
-    }
-    public void hurt(int baseDamage) {
-        //effectivenessMultiplier = 
-		//float damage = baseDamage * 
         health -= baseDamage;
+        updateHealthBar();
+
         if (health <= 0) {
-            print("---Enemy hurt. Enemy has " + health + " health left.");
-            game.GetComponent<Game>().Currency += 10;
             die();
         }
 	}
 
     private void die() {
         // queue SFX
-        print("Trying to delete Enemy");
-		game.GetComponent<EnemyManager>().enemiesKilled++;
+        game.GetComponent<EnemyManager>().incEnemiesDead();
+        game.GetComponent<Game>().Currency += 2;
         Destroy(gameObject);
+    }
+
+    private void updateHealthBar() {
+        healthBar.fillAmount = health / maxHealth;
     }
 }

@@ -9,18 +9,14 @@ public class MenuCamera : MonoBehaviour {
 	private string scene;
 	private string previousScene;
 	private string nextScene;
-	private string screen;
 	private string nextScreen;
 	private float cameraHeight = -20.79f;
 	private SceneGuy sceneGuy;
 	private bool sceneChange = true;
-	private bool screenChange = true;
 	private IDictionary<string, Vector2> mainMenuCoordinates;
 	private Vector2 dest;
 	private bool moving = true;
 	void Awake() {
-		
-		
 	}
 
 	void Start() {
@@ -36,7 +32,7 @@ public class MenuCamera : MonoBehaviour {
 		sceneGuy = app.GetComponent<SceneGuy>();
 		scene = sceneGuy.currentScene;
 		previousScene = sceneGuy.previousScene;
-		screen = scene;
+		//screen = scene;
 		determineStartPos();
 	}
 
@@ -109,7 +105,6 @@ public class MenuCamera : MonoBehaviour {
 		} else {
 			// If movement distance for frame is near zero, stop moving.
 			if (Math.Abs(dx) < .02 && Math.Abs(dy) < .02) {
-				screenChange = false;
 				moving = false;
 			}
 		}
@@ -117,7 +112,6 @@ public class MenuCamera : MonoBehaviour {
 	
 	// Called by menu buttons
 	public void changeScreen(string scr) {
-		screenChange = true;
 		dest = mainMenuCoordinates[scr]; // Gives coordinates assuming scene is MainMenu
 		setSceneFromScreen(scr);
 		moving = true;

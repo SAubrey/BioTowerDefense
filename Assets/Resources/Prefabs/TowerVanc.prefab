@@ -84,6 +84,7 @@ MonoBehaviour:
   coolDown: 30
   targetType: 0
   projectileType: 0
+  antibioticType: vanc
   projectileSize: 0.5
   projectileSpeed: 0.6
   projectileAOE: 0
@@ -92,7 +93,6 @@ MonoBehaviour:
   detectionRadius: 4
   specialEffect: 0
   towerCost: 20
-  abType: vanc
 --- !u!114 &114127779665506720
 MonoBehaviour:
   m_ObjectHideFlags: 1

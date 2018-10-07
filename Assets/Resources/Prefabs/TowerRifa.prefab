@@ -84,6 +84,7 @@ MonoBehaviour:
   coolDown: 30
   targetType: 0
   projectileType: 0
+  antibioticType: rifa
   projectileSize: 0.5
   projectileSpeed: 0.6
   projectileAOE: 0
@@ -92,7 +93,6 @@ MonoBehaviour:
   detectionRadius: 4
   specialEffect: 0
   towerCost: 40
-  abType: rifa
 --- !u!114 &114595873728569608
 MonoBehaviour:
   m_ObjectHideFlags: 1

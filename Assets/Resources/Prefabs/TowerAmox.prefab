@@ -72,6 +72,7 @@ MonoBehaviour:
   coolDown: 120
   targetType: 0
   projectileType: 0
+  antibioticType: amox
   projectileSize: 1
   projectileSpeed: 0.1
   projectileAOE: 0
@@ -80,7 +81,6 @@ MonoBehaviour:
   detectionRadius: 4
   specialEffect: 0
   towerCost: 30
-  abType: amox
 --- !u!114 &114882716961538894
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -106,6 +106,7 @@ MonoBehaviour:
   coolDown: 30
   targetType: 0
   projectileType: 0
+  antibioticType: carb
   projectileSize: 0.5
   projectileSpeed: 0.6
   projectileAOE: 0
@@ -114,7 +115,6 @@ MonoBehaviour:
   detectionRadius: 4
   specialEffect: 0
   towerCost: 40
-  abType: carb
 --- !u!120 &120725407791335224
 LineRenderer:
   m_ObjectHideFlags: 1

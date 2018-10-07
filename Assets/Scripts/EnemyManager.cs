@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour {
 
@@ -23,11 +23,12 @@ public class EnemyManager : MonoBehaviour {
 	public int currentWave = 0;
 	private int enemiesSpawnedInWave = 0;
 	private bool waveActive = true;
+	private bool spawningActive = true;
 	public float waveInterval = 8f;
 	private float waveIntervalTimer = 0f;
 	public Text EnemyText;
-	public Text TimerText; 	
-	public float enemiesKilled;
+	public Text TimerText; 
+	private float enemiesDead;
 	
 	// Use this for initialization
 
@@ -37,7 +38,9 @@ public class EnemyManager : MonoBehaviour {
 		pneu = Resources.Load("Prefabs/Enemies/Pneumonia") as GameObject;
 		staph = Resources.Load("Prefabs/Enemies/Staph") as GameObject;
 		strep = Resources.Load("Prefabs/Enemies/Strep") as GameObject;
-        TB = Resources.Load("Prefabs/Enemies/TB") as GameObject;
+		TB = Resources.Load("Prefabs/Enemies/TB") as GameObject;
+
+		updateEnemyText();
 	}
 	
 	// Update is called once per frame
@@ -47,36 +50,36 @@ public class EnemyManager : MonoBehaviour {
 			if (!Game.paused) {
 				manageSpawn(Time.deltaTime);
 			}
-			EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesKilled);
-			TimerText.text = "Timer: "+Mathf.RoundToInt(waveIntervalTimer) + "/" + waveInterval;
-
-        }
+		}
 	}
 
 	private void manageSpawn(float deltaTime) {
 		if (!waveActive) {
 			waveIntervalTimer += deltaTime;
+			TimerText.text = "Next Wave In: " + (Mathf.RoundToInt(waveInterval - waveIntervalTimer));
 			if (waveIntervalTimer >= waveInterval) {
 				progressWave();
+				TimerText.text = "";
 			}
 			return;
 		} 
-
-		burstTimer += deltaTime;
-		if (burstTimer >= burstInterval) {
-			initiateBurst();
-		}
-
-		// Special spawning is still bound by the general spawn timer.
-		spawnTimer += deltaTime;
-		if (spawnTimer >= spawnInterval) {
-			if (burstSpawn) {
-				spawnBurstEnemy();
-			} 
-			else {
-				spawnEnemy(chooseRandomEnemy(25, 25, 25, 25));
+		else if (spawningActive) {
+			burstTimer += deltaTime;
+			if (burstTimer >= burstInterval) {
+				initiateBurst();
 			}
-			spawnTimer = 0;
+
+			// Special spawning is still bound by the general spawn timer.
+			spawnTimer += deltaTime;
+			if (spawnTimer >= spawnInterval) {
+				if (burstSpawn) {
+					spawnBurstEnemy();
+				} 
+				else {
+					spawnEnemy(chooseRandomEnemy(25, 25, 25, 25));
+				}
+				spawnTimer = 0;
+			}
 		}
 	}
 
@@ -95,14 +98,13 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 	private void spawnEnemy(GameObject Enemy) {
-
         // Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
         GameObject newEnemy = Instantiate(Enemy);
         newEnemy.GetComponent<Enemy>().waypoints = game.waypoints;
 
 		enemiesSpawnedInWave++;
 		if (enemiesSpawnedInWave >= wavesEnemyCounts[currentWave]) {
-			waveActive = false;
+			spawningActive = false;
 		}
     }
 
@@ -133,15 +135,28 @@ public class EnemyManager : MonoBehaviour {
 		burstTimer = 0;
 		burstEnemiesRemaining = 0;
 		burstSpawn = false;
-		enemiesKilled = 0;
+		enemiesDead = 0;
 
-        //TODO: put in better spot
-        game.Currency += 50;
-        
+		game.Currency += 50;
 
-        // Advance and toggle spawning.
-        currentWave++;
+		// Advance and toggle spawning.
+		currentWave++;
 		waveActive = true;
+		spawningActive = true;
+		updateEnemyText();
 		print("Beginning wave " + currentWave);
+	}
+
+	public void incEnemiesDead() {
+		enemiesDead++;
+		updateEnemyText();
+
+		if (enemiesDead >= wavesEnemyCounts[currentWave]) {
+			waveActive = false;
+		}
+	}
+
+	private void updateEnemyText() {
+		EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesDead);
 	}
 }

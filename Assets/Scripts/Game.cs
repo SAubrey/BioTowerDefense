@@ -24,7 +24,7 @@ public class Game : MonoBehaviour {
 		HPText.text = "HP: " + HP;
 		GameOverText.text = "";
 		Gray.SetActive(false);
-        Currency = 200;
+        Currency = 150;
 	}
 	
 	// Use this for initialization
@@ -40,30 +40,18 @@ public class Game : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (game) {
-			if (!paused) {
+			//if (!paused) {
+			//}
 
+			if (HP <= 0) {
+				endGame();
 			}
-		}
-		
-		if (gameOver) {
-			GameOverText.text = "GAME OVER";
-			Gray.SetActive(true);
-		}
-		else{
-			GameOverText.text = "";
-			Gray.SetActive(false);
-		}
-		if(HP <=0 && game){
-			var audioObject = GameObject.Find("AudioObject");
-			audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/death") as AudioClip;
-			audioObject.GetComponent<AudioSource>().Play();
-			game = false;
-			gameOver = true;
-			app.GetComponent<MusicPlayer>().NewSong("death");
 		}
 	}
 
 	private void endGame() {
+		GameOverText.text = "GAME OVER";
+		Gray.SetActive(true);
 		var audioObject = GameObject.Find("AudioObject");
 		audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/lose") as AudioClip;
 		audioObject.GetComponent<AudioSource>().Play();
@@ -86,17 +74,13 @@ public class Game : MonoBehaviour {
 	}
 
     private int _currency;
-    public int Currency
-    {
-        get
-        {
+    public int Currency {
+        get {
             return _currency;
         }
-        set
-        {
+        set {
             _currency = value;
             currencyText.GetComponent<Text>().text = "$: " + _currency;
         }
     }
-
 }
