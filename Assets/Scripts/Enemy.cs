@@ -12,71 +12,38 @@ public class Enemy : MonoBehaviour {
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
     private GameObject game;
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-    private float currentTimeOnPath;
-    private float totalTimeForPath;
+    private __app appScript;
+    private Vector3 startPosition, endPosition;
+    private float currentTimeOnPath, totalTimeForPath;
     private GameObject audioObject;
 
     [Header("Unity specific")]
     public Image healthBar;
     public GameObject[] waypoints;
 
+    private IDictionary<string, bool> resistances = new Dictionary<string, bool>() {
+                                        {"amox", false},
+                                        {"meth", false},
+                                        {"vanc", false},
+                                        {"carb", false},
+                                        {"line", false},
+                                        {"rifa", false},
+                                        {"ison", false} };
 
-    // Dictionaries are arranged in order of effectiveness up to carb (1-5)
-    // Linezolid is its own category, rifampicin and isoniazid are their own category.
-    private static IDictionary<string, float> amox = new Dictionary<string, float>() {
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .4f},
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> meth = new Dictionary<string, float>() {
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .4f},
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> vanc = new Dictionary<string, float>() {
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .4f},
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> carb = new Dictionary<string, float>() {
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", 1f}, // best. If resistant, 1, 2, 3 useless.
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> line = new Dictionary<string, float>() {
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .9f}, // second best
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> rifa = new Dictionary<string, float>() {
-                                        {"staph", .1f},
-                                        {"strep", .1f},
-                                        {"pneu", .1f},
-                                        {"TB", .5f} };
-    private static IDictionary<string, float> ison = new Dictionary<string, float>() {
-                                        {"staph", .1f},
-                                        {"strep", .1f},
-                                        {"pneu", .1f},
-                                        {"TB", .5f} };                                                                                
-   
-    private static IDictionary<string, IDictionary<string, float>> antibiotics = new Dictionary<string, IDictionary<string, float>>() {
-                                        {"amox", amox},
-                                        {"meth", meth},
-                                        {"vanc", vanc},
-                                        {"carb", carb},
-                                        {"line", line},
-                                        {"rifa", rifa},
-                                        {"ison", ison} };
 
     // Use this for initialization
     void Start () {
         health = maxHealth;
         lastWaypointSwitchTime = Time.time;
         game = GameObject.Find("Game");
+        //appScript = GameObject.Find("__app").GetComponent<__app>();
+        appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
+
+        //app.GetComponent<__increaseMutationChance(species, "vanc");
+
         setDestination();
+        rollForMutate();
     }
 
     // Retrieved this functionality from https://www.raywenderlich.com/269-how-to-create-a-tower-defense-game-in-unity-part-1
@@ -128,28 +95,70 @@ public class Enemy : MonoBehaviour {
     }
 
     private void reachOrgan() {
-        audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/hurt") as AudioClip;
-        audioObject.GetComponent<AudioSource>().Play();
+        //audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/hurt") as AudioClip;
+       // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
         game.GetComponent<EnemyManager>().incEnemiesDead();
         Destroy(gameObject);
     }
 
     public void hurt(int baseDamage, string antibioticType) {
-        float effectiveness = antibiotics[antibioticType][species];
+        float effectiveness = appScript.antibiotics[antibioticType][species];
         float damage = baseDamage * effectiveness;
-        health -= baseDamage;
+
+        if (resistances[antibioticType] == true) { // If resistant, null effect
+            damage = 0;
+        }
+        health -= damage;
         updateHealthBar();
 
         if (health <= 0) {
-            die();
+            die(antibioticType);
         }
 	}
 
-    private void die() {
+    public void rollForMutate() {
+        // Roll for mutation against each antibacteria type.
+        var carb = appScript.mutationChances[species]["carb"];
+        if (Random.Range(0, 100) <= carb * 100) {
+            resistances["amox"] = true;
+            resistances["meth"] = true;
+            resistances["vanc"] = true;
+            resistances["carb"] = true;
+            print(species + " has mutated against carb!");
+            return;
+        }
+    
+        var vanc = appScript.mutationChances[species]["vanc"];
+        if (Random.Range(0, 100) <= vanc * 100) {
+            resistances["amox"] = true;
+            resistances["meth"] = true;
+            resistances["vanc"] = true;
+            print(species + " has mutated against vanc!");
+            return;
+        }
+        var meth = appScript.mutationChances[species]["meth"];
+         if (Random.Range(0, 100) <= meth * 100) {
+            resistances["amox"] = true;
+            resistances["meth"] = true;
+            print(species + " has mutated against meth!");
+            return;
+        }
+        var amox = appScript.mutationChances[species]["amox"];
+        if (Random.Range(0, 100) <= amox * 100) {
+            resistances["amox"] = true;
+            print(species + " has mutated against amox!");
+            return;
+        }
+
+       // More logic here 
+    }
+
+    private void die(string antibioticType) {
         // queue SFX
         game.GetComponent<EnemyManager>().incEnemiesDead();
         game.GetComponent<Game>().Currency += 2;
+        appScript.increaseMutationChance(species, antibioticType);
         Destroy(gameObject);
     }
 
