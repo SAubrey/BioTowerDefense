@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerSelected : MonoBehaviour {
 
     private LineRenderer lineRenderer;
+    private TowerManager towerManager;
     private Game gameManager;
     private bool selected;
     private bool mouseOverTower;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         gameManager = GameObject.Find("Game").GetComponent<Game>();
+        towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
+        
     }
 
     // Update is called once per frame
@@ -28,15 +32,23 @@ public class TowerSelected : MonoBehaviour {
                 Vector2 direction = new Vector2(0, 0);
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction);
 
-                if ((hit.collider != null && hit.collider.gameObject != gameObject) || hit.collider == null)
-                {
-                    lineRenderer.positionCount = 0;
+                //If clicked a different collider or no collider
+                if ((hit.collider != null && hit.collider.gameObject != gameObject && hit.collider.gameObject.tag != "SellTower") 
+                    || hit.collider == null)
+                    {
+
+                    destroyCircle();
                     selected = false;
+                    if ((hit.collider != null && hit.collider.gameObject != gameObject && hit.collider.gameObject.tag != "Tower") || (hit.collider == null))
+                    {
+                        towerManager.clearLabels();
+                        towerManager.SelectedTower = null;
+                    }
+                  
                 }
+
             }
-            else if (Input.GetMouseButtonDown(1)){
-                sellTower();
-            }
+    
         }
 	}
 
@@ -46,21 +58,36 @@ public class TowerSelected : MonoBehaviour {
          //Ignore towers on Menu
          if (gameObject.tag == "Tower")
             {
-                drawCircle(gameObject.GetComponent<Tower>().detectionRadius);
-                selected = true;
 
-            }
+                drawCircle(gameObject.GetComponent<Tower>().detectionRadius);
+
+                towerManager.SelectedTower = gameObject;
+                towerManager.setLabels(gameObject.GetComponent<Tower>().towerName, gameObject.GetComponent<Tower>().towerCost);
+              
+                selected = true;
+              }
        
     }
 
+    //Display Tower Name if its a menu item and there's no tower currently selected
     private void OnMouseEnter()
     {
-        mouseOverTower = true;
+      
+        // mouseOverTower = true;
+        if (towerManager.SelectedTower == null && gameObject.tag == "MenuItems")
+        {
+            towerManager.towerNamelabel.text = gameObject.GetComponent<Tower>().towerName;
+        }
     }
 
+    //Clear tower name
     private void OnMouseExit()
     {
-        mouseOverTower = false;
+        // mouseOverTower = false;
+        if (towerManager.SelectedTower == null && gameObject.tag == "MenuItems")
+        {
+            towerManager.towerNamelabel.text = "";
+        }
     }
 
     //Draws the Towers radius when it's selected
@@ -93,13 +120,6 @@ public class TowerSelected : MonoBehaviour {
     {
         lineRenderer.startColor = col;
         lineRenderer.endColor = col;
-    }
-
-    private void sellTower(){
-        if(mouseOverTower){
-            Destroy(gameObject);
-            gameManager.Currency += (gameObject.GetComponent<Tower>().towerCost / 2);
-        }
     }
 
 }

@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadTowers : MonoBehaviour
 {
 
     public GameObject[] towers;
-    private GameObject newInstance;
 
     // Use this for initialization
     void Start()
     {
-        LoadAllTowers();   
+        LoadAllTowers();
+
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class LoadTowers : MonoBehaviour
         t = Instantiate(t, gameObject.transform, true);
         t.tag = "MenuItems";
 
-    }   
+    }
 
     //Loads all towers on start
     void LoadAllTowers()
@@ -41,4 +42,5 @@ public class LoadTowers : MonoBehaviour
 
         }
     }
+
 }
