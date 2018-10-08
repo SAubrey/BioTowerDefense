@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tower : MonoBehaviour {
-	bool cd = false;
-	float cdTime = 0f;
+
 	public float coolDown = 0f;
 	public int targetType = 0;//0=first, 1=last, 2=lowestHP, 3=highestHP, 4=self(aoe), 5=all in radius
 	public int projectileType = 0;//0 = Pellet, 1 = Laser, 2 = AOE
@@ -16,13 +16,18 @@ public class Tower : MonoBehaviour {
 	public bool projectilePierce;	
 	public float detectionRadius;
 	public int specialEffect = 0;//0 = none, 1 = slow, 2 = increase damage taken, etc.
-	private GameObject target = null;
-	private GameObject projectile;
     public int towerCost;
-	// Use this for initialization
-	void Start () {
+    public string towerName;
+
+    private GameObject target = null;
+    private GameObject projectile;
+    bool cd = false;
+    float cdTime = 0f;
+
+    // Use this for initialization
+    void Start () {
 		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -61,7 +66,9 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
-	private void findTarget() {
+   
+
+    private void findTarget() {
 		var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		var objectCount = enemies.Length;
 
@@ -105,4 +112,5 @@ public class Tower : MonoBehaviour {
 		cd = true;
 		cdTime = coolDown;
 	}
+
 }
