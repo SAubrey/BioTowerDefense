@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class __app : MonoBehaviour {
 
-
+	private Options options;
 
         // Dictionaries are arranged in order of effectiveness up to carb (1-5)
     // Linezolid is its own category, rifampicin and isoniazid are their own category.
@@ -102,7 +102,7 @@ public class __app : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		options = new Options();
 	}
 	
 	// Update is called once per frame
@@ -114,4 +114,54 @@ public class __app : MonoBehaviour {
         // Called by Enemy on death. Increase mutation chance by mutationIncrement relative to the bacteria species/antibioticType
         mutationChances[species][antibioticType] += mutationIncrement;
 	}
+	
+	public bool getMusic(){
+		return options.getMusic();
+	}
+	
+	public void setMusic(bool mus){
+		options.setMusic(mus);
+		GetComponent<MusicPlayer>().updatePlay();
+	}
+	
+	public bool getSFX(){
+		print("GOTEEEEM");
+		return options.getSFX();
+	}
+	
+	public void setSFX(bool s){
+		options.setSFX(s);
+		//Stop/Start music if playing
+	}
+	
+	private class Options {
+		private bool music;
+		private bool sfx;
+		
+		public Options(){
+			music = false;
+			sfx = true;
+			print("Music: "+music);
+			print("SFX: "+sfx);
+		}
+		
+		public bool getMusic(){
+			return music;
+		}
+		
+		public void setMusic(bool mus){
+			music = mus;
+		}
+		public bool getSFX(){
+			return sfx;
+		}
+		
+		public void setSFX(bool s){
+			sfx = s;
+		}
+	}
+	
+	
+	
+	
 }

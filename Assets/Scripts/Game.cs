@@ -15,12 +15,14 @@ public class Game : MonoBehaviour {
 	public GameObject Gray;
 	public static bool gameOver = false;
 	private GameObject app;
+	private __app appScript;
 
 
 	void Start () {
 		game = false;
 		gameOver = false;
 		app = GameObject.Find("__app");
+		appScript = app.GetComponent<__app>();
 		HPText.text = "HP: " + HP;
 		GameOverText.text = "";
 		Gray.SetActive(false);
@@ -54,6 +56,9 @@ public class Game : MonoBehaviour {
 		Gray.SetActive(true);
 		var audioObject = GameObject.Find("AudioObject");
 		audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/lose") as AudioClip;
+		if(appScript.getSFX()){
+			audioObject.GetComponent<AudioSource>().Play();
+		}
 		audioObject.GetComponent<AudioSource>().Play();
 		game = false;
 		gameOver = true;
