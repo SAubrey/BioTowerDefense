@@ -59,7 +59,6 @@ public class Game : MonoBehaviour {
 		if(appScript.getSFX()){
 			audioObject.GetComponent<AudioSource>().Play();
 		}
-		audioObject.GetComponent<AudioSource>().Play();
 		game = false;
 		gameOver = true;
 		app.GetComponent<MusicPlayer>().NewSong("death");

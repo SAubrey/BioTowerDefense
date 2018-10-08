@@ -16,6 +16,9 @@ public class MenuCamera : MonoBehaviour {
 	private IDictionary<string, Vector2> mainMenuCoordinates;
 	private Vector2 dest;
 	private bool moving = true;
+	private float xOffset;
+	private float yOffset;
+	private __app appScript;
 	void Awake() {
 	}
 
@@ -29,17 +32,31 @@ public class MenuCamera : MonoBehaviour {
 														{"Encyclopedia", new Vector2(-30f, 0f)}
 													};
 		app = GameObject.Find("__app");
+		appScript = app.GetComponent<__app>();
 		sceneGuy = app.GetComponent<SceneGuy>();
 		scene = sceneGuy.currentScene;
 		previousScene = sceneGuy.previousScene;
 		//screen = scene;
 		determineStartPos();
+		xOffset = 0;
+		yOffset = 0;
 	}
 
 	void Update() {
 		if (moving) {
 			moveCamera();
 		}
+		if(appScript.isScreenshaking()){
+			print("SHAKING");
+			xOffset = appScript.getXOffset();
+			yOffset = appScript.getYOffset();
+			transform.position = new Vector3(transform.position.x + xOffset,transform.position.y + yOffset,transform.position.z);
+		}
+		else{
+			xOffset = 0;
+			yOffset = 0;
+		}
+		
 	}
 
 	private void determineStartPos() {

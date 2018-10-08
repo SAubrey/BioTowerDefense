@@ -99,6 +99,7 @@ public class Enemy : MonoBehaviour {
        // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
         game.GetComponent<EnemyManager>().incEnemiesDead();
+		appScript.newScreenshake(6,0.1f);
         Destroy(gameObject);
     }
 
