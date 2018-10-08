@@ -36,7 +36,6 @@ public class TowerSelected : MonoBehaviour {
                 if ((hit.collider != null && hit.collider.gameObject != gameObject && hit.collider.gameObject.tag != "SellTower") 
                     || hit.collider == null)
                     {
-
                     destroyCircle();
                     selected = false;
                     if ((hit.collider != null && hit.collider.gameObject != gameObject && hit.collider.gameObject.tag != "Tower") || (hit.collider == null))

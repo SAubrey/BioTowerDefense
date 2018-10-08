@@ -12,13 +12,9 @@ public class TowerManager : MonoBehaviour {
 
     private Game gameManager;
 
-    public bool sell;
-
-
     // Use this for initialization
     void Start () {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
-        sell = false;
     }
 
     // Update is called once per frame
