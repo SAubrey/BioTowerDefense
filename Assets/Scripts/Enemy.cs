@@ -118,6 +118,7 @@ public class Enemy : MonoBehaviour {
         }
 	}
 
+    // TODO: Bacteria should only mutate against ab that can hurt it.
     public void rollForMutate() {
         // Roll for mutation against each antibacteria type.
         var carb = appScript.mutationChances[species]["carb"];
@@ -126,7 +127,7 @@ public class Enemy : MonoBehaviour {
             resistances["meth"] = true;
             resistances["vanc"] = true;
             resistances["carb"] = true;
-            print(species + " has mutated against carb!");
+            print(species + " has mutated against carb! Likelihood: " + carb);
             return;
         }
     
@@ -135,20 +136,20 @@ public class Enemy : MonoBehaviour {
             resistances["amox"] = true;
             resistances["meth"] = true;
             resistances["vanc"] = true;
-            print(species + " has mutated against vanc!");
+            print(species + " has mutated against vanc! Likelihood: " + vanc);
             return;
         }
         var meth = appScript.mutationChances[species]["meth"];
          if (Random.Range(0, 100) <= meth * 100) {
             resistances["amox"] = true;
             resistances["meth"] = true;
-            print(species + " has mutated against meth!");
+            print(species + " has mutated against meth! Likelihood: " + meth);
             return;
         }
         var amox = appScript.mutationChances[species]["amox"];
         if (Random.Range(0, 100) <= amox * 100) {
             resistances["amox"] = true;
-            print(species + " has mutated against amox!");
+            print(species + " has mutated against amox! Likelihood: " + amox);
             return;
         }
 

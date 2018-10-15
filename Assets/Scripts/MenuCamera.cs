@@ -47,7 +47,7 @@ public class MenuCamera : MonoBehaviour {
 			moveCamera();
 		}
 		if(appScript.isScreenshaking()){
-			print("SHAKING");
+			//print("SHAKING");
 			xOffset = appScript.getXOffset();
 			yOffset = appScript.getYOffset();
 			transform.position = new Vector3(transform.position.x + xOffset,transform.position.y + yOffset,transform.position.z);

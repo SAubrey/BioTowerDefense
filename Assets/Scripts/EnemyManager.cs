@@ -143,6 +143,8 @@ public class EnemyManager : MonoBehaviour {
 		currentWave++;
 		waveActive = true;
 		spawningActive = true;
+
+		GameObject.Find("__app").GetComponent<__app>().lowerAllChances(0.5f);
 		updateEnemyText();
 		print("Beginning wave " + currentWave);
 	}

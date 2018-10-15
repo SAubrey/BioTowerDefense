@@ -1278,12 +1278,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towers:
   - {fileID: 1268132927294050, guid: b743914f5b8a1884a922a9513b14b278, type: 2}
-  - {fileID: 1899609857633930, guid: 53b725aaff9f2cf469a00ec82e6371f1, type: 2}
-  - {fileID: 1974649658582742, guid: 87fdbaae44814b343ae14a3a30ca03d3, type: 2}
-  - {fileID: 1939320292331466, guid: f86c5e5ef3da4b64a88c3698c02323db, type: 2}
   - {fileID: 1485105097557524, guid: c976ebb2909b04b6c85ad9e181b96666, type: 2}
-  - {fileID: 1954118604612226, guid: d3f85dedbecb20d4699e47741b5312c4, type: 2}
   - {fileID: 1347680462951096, guid: e6f93b0ca11bead4fbc3bbe9b9fc2715, type: 2}
+  - {fileID: 1899609857633930, guid: 53b725aaff9f2cf469a00ec82e6371f1, type: 2}
+  - {fileID: 1939320292331466, guid: f86c5e5ef3da4b64a88c3698c02323db, type: 2}
+  - {fileID: 1954118604612226, guid: d3f85dedbecb20d4699e47741b5312c4, type: 2}
+  - {fileID: 1974649658582742, guid: 87fdbaae44814b343ae14a3a30ca03d3, type: 2}
 --- !u!212 &1103945120
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1923,7 +1923,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1660842053}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.2897544, y: -1.9800001, z: 80}
+  m_LocalPosition: {x: 5.26, y: -1.95, z: 80}
   m_LocalScale: {x: 2.2417564, y: 2.1921613, z: 0.79225206}
   m_Children: []
   m_Father: {fileID: 0}
