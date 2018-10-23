@@ -4,69 +4,87 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
-	public static bool game = false;
+	public static bool game = false; // True so long as there is a running game state, paused or not. False when gameOver
+	public static bool paused = false;
 	public GameObject[] waypoints;
-	private int time = 0;
-	private int spawnInterval = 30;
+	
 	public int HP;
 	public Text HPText;
 	public Text GameOverText;
+    public Text currencyText;
 	public GameObject Gray;
 	public static bool gameOver = false;
 	private GameObject app;
+	private __app appScript;
+
+
 	void Start () {
+		game = false;
 		gameOver = false;
 		app = GameObject.Find("__app");
+		appScript = app.GetComponent<__app>();
+		HPText.text = "HP: " + HP;
+		GameOverText.text = "";
+		Gray.SetActive(false);
+        Currency = 150;
 	}
 	
 	// Use this for initialization
-	public void StartGame () {
+	public void startGame () {
 		game = true;
+		paused = false;
 		gameOver = false;
+		HPText.text = "HP: " + HP;
+		GameOverText.text = "";
+		Gray.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(game){
-			if(time >= spawnInterval){
-				GameObject enemy  = Resources.Load("Prefabs/Enemy") as GameObject;
-				SpawnEnemy (enemy);
-				time = 0;
+		if (game) {
+			//if (!paused) {
+			//}
+
+			if (HP <= 0) {
+				endGame();
 			}
-			time++;
 		}
-		HPText.text = "HP: "+HP;
-		if(gameOver){
-			GameOverText.text = "GAME OVER";
-			Gray.SetActive(true);
-		}
-		else{
-			GameOverText.text = "";
-			Gray.SetActive(false);
-		}
-		if(HP <=0 && game){
-			var audioObject = GameObject.Find("AudioObject");
-			audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/lose") as AudioClip;
-			audioObject.GetComponent<AudioSource>().Play();
-			game = false;
-			gameOver = true;
-			app.GetComponent<MusicPlayer>().NewSong("death");
-		}
-	}
-	
-	public void TakeDamage(int damage){
-		HP-=damage;
 	}
 
-	public void SpawnEnemy(GameObject Enemy){
-        //Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
-        GameObject newEnemy = Instantiate(Enemy);
-        newEnemy.GetComponent<Enemy>().waypoints = waypoints;
-    }
-	
-	public void QuitGame(){
-		var Camera = GameObject.Find("Main Camera");
-		Camera.GetComponent<GameCam>().Quit();
+	private void endGame() {
+		GameOverText.text = "GAME OVER";
+		Gray.SetActive(true);
+		var audioObject = GameObject.Find("AudioObject");
+		audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/lose") as AudioClip;
+		if(appScript.getSFX()){
+			audioObject.GetComponent<AudioSource>().Play();
+		}
 		game = false;
+		gameOver = true;
+		app.GetComponent<MusicPlayer>().NewSong("death");
 	}
+	
+	public void takeDamage(int damage){
+		HP -= damage;
+		HPText.text = "HP: " + HP;
+
+		if (HP <= 0) {
+			endGame();
+		}
+	}
+
+	public void pauseGame() {
+		paused = true;
+	}
+
+    private int _currency;
+    public int Currency {
+        get {
+            return _currency;
+        }
+        set {
+            _currency = value;
+            currencyText.GetComponent<Text>().text = "$: " + _currency;
+        }
+    }
 }
