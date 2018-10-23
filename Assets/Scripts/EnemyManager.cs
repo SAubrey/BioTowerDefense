@@ -8,17 +8,22 @@ public class EnemyManager : MonoBehaviour {
 	private Game game;
 	private float spawnTimer = 0f;
 	public float spawnInterval = .9f; // seconds
-	private GameObject pneu;
-	private GameObject staph;
-	private GameObject strep;
-	private GameObject TB;
+	public GameObject Enemy;
+	public Sprite pneuSprite;
+	public Sprite staphSprite;
+	public Sprite strepSprite;
+	public Sprite TBSprite;
+	private IDictionary<string, Sprite> enemySprites;
+
+	// Burst Spawning Mode Management
 	private bool burstSpawn = false;
 	private float burstTimer = 0f;
 	public float burstInterval = 4f;
 	private int burstEnemiesRemaining = 0;
 	public int burstEnemyCount = 4; // Number of same enemy spawned in a row.
-	private GameObject burstEnemy;
+	private string burstEnemy;
 
+	// Wave Management
 	public int[] wavesEnemyCounts = {9, 12, 16, 19, 21, 23, 25, 27, 29, 31};
 	public int currentWave = 0;
 	private int enemiesSpawnedInWave = 0;
@@ -29,21 +34,16 @@ public class EnemyManager : MonoBehaviour {
 	public Text EnemyText;
 	public Text TimerText; 
 	private float enemiesDead;
-	
-	// Use this for initialization
 
 	void Start () {
 		game = GameObject.Find("Game").GetComponentInParent<Game>();
-
-		pneu = Resources.Load("Prefabs/Enemies/Pneumonia") as GameObject;
-		staph = Resources.Load("Prefabs/Enemies/Staph") as GameObject;
-		strep = Resources.Load("Prefabs/Enemies/Strep") as GameObject;
-		TB = Resources.Load("Prefabs/Enemies/TB") as GameObject;
-
 		updateEnemyText();
+		enemySprites = new Dictionary<string, Sprite>() {
+												{"pneu", pneuSprite},
+												{"staph", staphSprite}, 
+												{"strep", strepSprite},
+												{"TB", TBSprite} };
 	}
-	
-	// Update is called once per frame
 	 
 	void Update () {
 		if (Game.game) {
@@ -97,10 +97,11 @@ public class EnemyManager : MonoBehaviour {
 			burstSpawn = false;
 		}
 	}
-	private void spawnEnemy(GameObject Enemy) {
+	private void spawnEnemy(string enemyName) {
         // Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
-        GameObject newEnemy = Instantiate(Enemy);
-        newEnemy.GetComponent<Enemy>().waypoints = game.waypoints;
+		GameObject enemy = Instantiate(Enemy);
+		enemy.GetComponent<Enemy>().waypoints = game.waypoints;		
+        enemy.GetComponent<Enemy>().setSpecies(enemySprites[enemyName], enemyName);
 
 		enemiesSpawnedInWave++;
 		if (enemiesSpawnedInWave >= wavesEnemyCounts[currentWave]) {
@@ -108,22 +109,22 @@ public class EnemyManager : MonoBehaviour {
 		}
     }
 
-	private GameObject chooseRandomEnemy(int pneuWeight, int staphWeight, int strepWeight, int TBWeight) {
+	private string chooseRandomEnemy(int pneuWeight, int staphWeight, int strepWeight, int TBWeight) {
 		int choice = Random.Range(0, pneuWeight + staphWeight + strepWeight + TBWeight); // Should equal 0-100
-		GameObject enemy = pneu;
+		
 		if (choice <= pneuWeight) { 
-			enemy = pneu;
+			return "pneu";
 		} 
 		else if (choice <= pneuWeight + staphWeight) {
-			enemy = staph;
+			return "staph";
 		}
 		else if (choice <= pneuWeight + staphWeight + strepWeight) {
-			enemy = strep;
+			return "strep";
 		}
 		else if (choice <= pneuWeight + staphWeight + strepWeight + TBWeight) {
-			enemy = TB;
+			return "TB";
 		}
-		return enemy;
+		return "pneu";
 	}
 
 	// Called after waveInterval has been reached.

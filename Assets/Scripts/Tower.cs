@@ -15,7 +15,7 @@ public class Tower : MonoBehaviour {
 	public Sprite projectileSprite;
 	public bool projectilePierce;	
 	public float detectionRadius;
-	public int specialEffect = 0;//0 = none, 1 = slow, 2 = increase damage taken, etc.
+	public int specialEffect = 0; //0 = none, 1 = slow, 2 = increase damage taken, etc.
     public int towerCost;
     public string towerName;
 
@@ -66,8 +66,6 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
-   
-
     private void findTarget() {
 		var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		var objectCount = enemies.Length;
@@ -112,5 +110,4 @@ public class Tower : MonoBehaviour {
 		cd = true;
 		cdTime = coolDown;
 	}
-
 }

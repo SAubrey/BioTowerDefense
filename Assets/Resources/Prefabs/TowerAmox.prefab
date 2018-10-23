@@ -73,8 +73,8 @@ MonoBehaviour:
   targetType: 0
   projectileType: 0
   antibioticType: amox
-  projectileSize: 1
-  projectileSpeed: 0.1
+  projectileSize: 0.5
+  projectileSpeed: 0.6
   projectileAOE: 0
   projectileSprite: {fileID: 21300000, guid: bdfab9254f92a03409d3adc80ee22567, type: 3}
   projectilePierce: 0
