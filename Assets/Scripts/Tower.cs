@@ -21,12 +21,16 @@ public class Tower : MonoBehaviour {
 
     private GameObject target = null;
     private GameObject projectile;
+
+	private TowerManager towerManager;
     bool cd = false;
     float cdTime = 0f;
 
     // Use this for initialization
     void Start () {
 		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
+		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
+
     }
 	
 	// Update is called once per frame
@@ -64,6 +68,18 @@ public class Tower : MonoBehaviour {
 			}
 			cdTime -= 1f;
 		}
+	}
+
+    private void OnMouseDown()
+    {
+       if(gameObject.tag != "MenuItems"){
+		towerManager.destroyCircle();
+	   	towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+        towerManager.SelectedTower = gameObject;
+		towerManager.drawCircle(detectionRadius);
+		towerManager.setLabels(towerName,towerCost);
+		towerManager.enableSellButton();
+	   }
 	}
 
     private void findTarget() {

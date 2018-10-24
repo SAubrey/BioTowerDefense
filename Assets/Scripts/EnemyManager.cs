@@ -127,6 +127,7 @@ public class EnemyManager : MonoBehaviour {
 		return "pneu";
 	}
 
+
 	// Called after waveInterval has been reached.
 	private void progressWave() {
 		// Reset values
@@ -138,7 +139,6 @@ public class EnemyManager : MonoBehaviour {
 		burstSpawn = false;
 		enemiesDead = 0;
 
-		game.Currency += 50;
 
 		// Advance and toggle spawning.
 		currentWave++;
@@ -156,8 +156,10 @@ public class EnemyManager : MonoBehaviour {
 
 		if (enemiesDead >= wavesEnemyCounts[currentWave]) {
 			waveActive = false;
-		}
-	}
+            game.Currency += 50;
+
+        }
+    }
 
 	private void updateEnemyText() {
 		EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesDead);

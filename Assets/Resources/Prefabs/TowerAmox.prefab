@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 212656326849758178}
   - component: {fileID: 114328337595121226}
   - component: {fileID: 114882716961538894}
-  - component: {fileID: 114914185999793494}
   - component: {fileID: 120301779350014766}
   - component: {fileID: 61332665385460224}
   - component: {fileID: 222703734753272918}
+  - component: {fileID: 50511671354624342}
   m_Layer: 0
   m_Name: TowerAmox
   m_TagString: Tower
@@ -33,6 +33,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!50 &50511671354624342
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1268132927294050}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61332665385460224
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -42,7 +62,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -80,7 +100,7 @@ MonoBehaviour:
   projectilePierce: 0
   detectionRadius: 4
   specialEffect: 0
-  towerCost: 30
+  towerCost: 10
   towerName: Amoxicillin
 --- !u!114 &114882716961538894
 MonoBehaviour:
@@ -91,17 +111,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59d05f54d91964326b472f359dd291f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114914185999793494
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1268132927294050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a56d22bb30724c26abf34c17a9aafc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!120 &120301779350014766
