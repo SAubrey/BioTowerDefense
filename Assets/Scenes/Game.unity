@@ -1250,14 +1250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01208acb4cbb4b6dac5a035728f5ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towers:
-  - {fileID: 1268132927294050, guid: b743914f5b8a1884a922a9513b14b278, type: 2}
-  - {fileID: 1485105097557524, guid: c976ebb2909b04b6c85ad9e181b96666, type: 2}
-  - {fileID: 1347680462951096, guid: e6f93b0ca11bead4fbc3bbe9b9fc2715, type: 2}
-  - {fileID: 1899609857633930, guid: 53b725aaff9f2cf469a00ec82e6371f1, type: 2}
-  - {fileID: 1939320292331466, guid: f86c5e5ef3da4b64a88c3698c02323db, type: 2}
-  - {fileID: 1954118604612226, guid: d3f85dedbecb20d4699e47741b5312c4, type: 2}
-  - {fileID: 1974649658582742, guid: 87fdbaae44814b343ae14a3a30ca03d3, type: 2}
+  test: {fileID: 0}
 --- !u!212 &1103945120
 SpriteRenderer:
   m_ObjectHideFlags: 0
