@@ -128,9 +128,7 @@ public class DragAndDrop : MonoBehaviour
 
     //Upon successful drop, reload the an instance of the tower to the sidemenu
     void updateTheMenu(){
-            string towerName = gameObject.name;
-            towerName = towerName.Replace("(Clone)", "");
-            loadTowers.reloadTower(towerName);
+            loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName);
     }
 
     //returns false if the current position's overlapping any other colliders
