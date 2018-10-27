@@ -4,55 +4,57 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 	private string antibioticType;
-	private int projectileType = 0;//0 = Pellet, 1 = Laser, 2 = AOE
-	private float projectileSize = 0f;
-	private float projectileSpeed = 0f;
-	private float projectileAOE = 0f;
-	private bool projectilePierce;
-	private int specialEffect = 0;//0 = none, 1 = slow, 2 = increase damage taken, etc.
+	private string type; 
+	// PROJECTILE DOESN'T NEED TO STORE THESE VALUES IF THEY'RE STORED/USED BY TOWER (size, speed)
+	private float size = 0.5f;
+	private float speed = 0.6f;
+	private int pierce = 1; // Number of enemies a projectile pierces
+	private int enemiesPierced = 0;
 	private GameObject tower;
-	private float xsp = 0;
-	private float ysp = 0;
+	//private float xsp = 0;
+	//private float ysp = 0;
+	private Vector3 velocity;
 	private List<GameObject> hurtEnemies;
 	// Use this for initialization
-	void Start () {
+
+	public virtual void Start () {
 		hurtEnemies = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public virtual void Update () {
 		//Move
-		transform.position = new Vector3(transform.position.x + xsp, transform.position.y + ysp,transform.position.z);
+		//transform.position = new Vector3(transform.position.x + xsp, 
+										 //transform.position.y + ysp, 
+										 //transform.position.z);
+		transform.position += velocity;
 	}
 	
-	public void setVals(string abType, int pType, float pSize, float pSpeed, float pAOE, bool pPierce, 
-						int pSpec, GameObject pTow, float pXsp, float pYsp) {
+	public void setVals(GameObject pTow, string abType, float pSize, 
+						float pSpeed, int pPierce, float xsp, float ysp) {
+		tower = pTow;
 		antibioticType = abType;
-		projectileType = pType;
-		projectileSize = pSize;
-		projectileSpeed = pSpeed;
-		projectileAOE = pAOE;
-		projectilePierce = pPierce;
-		specialEffect = pSpec;
-		GameObject tower = pTow;
-		xsp = pXsp;
-		ysp = pYsp;
-		transform.localScale  = new Vector3(projectileSize, projectileSize, projectileSize);
+		size = pSize;
+		speed = pSpeed;
+		pierce = pPierce;
+		velocity.x = xsp;
+		velocity.y = ysp;
+
+		transform.localScale  = new Vector3(size, size, size);
 		var boxCol = GetComponent<BoxCollider2D>();
-		boxCol.size = new Vector2(boxCol.size.x * 2,boxCol.size.y * 2);
+		boxCol.size = new Vector2(boxCol.size.x * 2, boxCol.size.y * 2);
 	}
 	
 	void OnTriggerEnter2D(Collider2D col) {	
 		var obj = col.gameObject;
 		// Debug.Log("Collision detected, hit obj of tag " + obj.tag);
 
-		if(obj.tag=="Enemy") {
+		if (obj.tag == "Enemy") {
 			//hurtEnemies.Add(obj);
-			//Destroy(obj);
-			// obj.hurt(1); // ERROR
 			obj.GetComponent<Enemy>().hurt(5, antibioticType);
 			//obj.GetComponent<Enemy>().speed-=2;
-			if(!projectilePierce){
+			enemiesPierced++;
+			if (enemiesPierced >= pierce) {
 				Destroy(gameObject);
 			}
 		}

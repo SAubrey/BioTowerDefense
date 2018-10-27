@@ -20,46 +20,39 @@ public class DragAndDrop : MonoBehaviour
     private int hitting;
     
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
         towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
         loadTowers = gameObject.GetComponentInParent<LoadTowers>();
         myTower = gameObject.GetComponent<Tower>();
     }
 
-    void Update()
-    {
+    void Update() {
         //Handles updating tower movement when being dragged
-        if (dragging)
-        {
+        if (dragging) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 rayPoint = ray.GetPoint(distance);
             gameObject.transform.position = rayPoint;
 
-            if (validSpot())
-            {
+            if (validSpot()) {
                 towerManager.colorCircle(validColor);
             }
-            else
-            {
+            else {
                 towerManager.colorCircle(invalidColor);
             }
-
         }
     }
 
     //Invoked when towers clicked
-    void OnMouseDown()
-    {
+    void OnMouseDown() {
 		    towerManager.destroyCircle();
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
-            towerManager.setLabels(myTower.towerName, myTower.towerCost);
+            towerManager.setLabels(myTower.towerName, myTower.cost);
             gameObject.layer = 2;
 
         //if user has enough money to buy tower
-        if(gameManager.Currency >= myTower.towerCost){
+        if (gameManager.Currency >= myTower.cost) {
 
             towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
             originalPosition = gameObject.transform.position;
@@ -68,76 +61,62 @@ public class DragAndDrop : MonoBehaviour
             dragging = true;
 
             towerManager.drawCircle(myTower.detectionRadius);
-
         }
     }
 
     //Invoked when towers released
-    void OnMouseUp()
-    {
-        if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.towerCost)
-        {
+    void OnMouseUp() {
+        if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {
             validateDropPosition();
         }
         dragging = false;
         gameObject.layer = 0;
-
     }
 
-    void OnTriggerEnter2D()
-    {
+    void OnTriggerEnter2D() {
         hitting = hitting + 1;
     }
 
-    void OnTriggerExit2D()
-    {
+    void OnTriggerExit2D() {
         hitting = hitting - 1;
     }
 
     //Moves tower back to menu if dropped on an invalid area
     //Dissattaches sideMenu as parent if towers dropped on valid area
-    void validateDropPosition()
-    {
-
-        if (validSpot()) 
-        {
+    void validateDropPosition() {
+        if (validSpot()) {
             
             detachFromMenu();
             updateTheMenu();
 
-            gameManager.Currency -= myTower.towerCost;
+            gameManager.Currency -= myTower.cost;
             towerManager.SelectedTower = null;
 
             Destroy(this);
-
         }
         //If invalid, move tower back to original spot, destroy circle, but tower remains selected
-        else 
-        {
+        else {
             gameObject.transform.position = originalPosition;
             towerManager.destroyCircle();
         }
-
     }
 
     //Upon successful purchase of tower, detach it from the menu.
-    void detachFromMenu(){
-            gameObject.tag = "Tower";
-            gameObject.transform.parent = null;
+    void detachFromMenu() {
+        gameObject.tag = "Tower";
+        gameObject.transform.parent = null;
     }
 
     //Upon successful drop, reload the an instance of the tower to the sidemenu
-    void updateTheMenu(){
-            loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName);
+    void updateTheMenu() {
+        loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName);
     }
 
     //returns false if the current position's overlapping any other colliders
-    bool validSpot()
-    {
-        if(hitting == 0){
+    bool validSpot() {
+        if (hitting == 0) {
             return true;
         }
         return false;
     }
 }
-

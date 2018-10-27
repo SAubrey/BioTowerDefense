@@ -5,48 +5,43 @@ using UnityEngine.UI;
 
 public class Tower : MonoBehaviour {
 
+    public string towerName;
+	public string antibioticType;
+	public int type = 0; // 0 = pellet, 1 = laser, 2 = bomb 
+    public int cost;
 	public float coolDown = 0f;
 	public int targetType = 0;//0=first, 1=last, 2=lowestHP, 3=highestHP, 4=self(aoe), 5=all in radius
-	public int projectileType = 0;//0 = Pellet, 1 = Laser, 2 = AOE
-	public string antibioticType;
-	public float projectileSize = 0f;
-	public float projectileSpeed;
-	public float projectileAOE = 0f;
-	public Sprite projectileSprite;
-	public bool projectilePierce;	
 	public float detectionRadius;
-	public int specialEffect = 0; //0 = none, 1 = slow, 2 = increase damage taken, etc.
-    public int towerCost;
-    public string towerName;
-
+	public Sprite projectileSprite;
+	public float projectileSize = 0.5f;
+	public float projectileSpeed = 0.6f;
+	public int projectilePierce = 1;
+	// public int specialEffect = 0; //0 = none, 1 = slow, 2 = increase damage taken, etc.
     private GameObject target = null;
     private GameObject projectile;
-
 	private TowerManager towerManager;
-    bool cd = false;
+    bool coolingDown = false;
     float cdTime = 0f;
 
     // Use this for initialization
     void Start () {
-		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
+		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
-
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (tag=="MenuItems") {
+		if (tag == "MenuItems") {
 			return;
 		}
 		if (Game.paused || !Game.game) {
 			return;
 		}
 
-		if (!cd) {
+		if (!coolingDown) {
 			//Numbers used for targetType
 			//var minHP = 100000f;
 			//var maxHP = 0f;
-			//This is not a if/else statement because it must be checked after the previous if statement
 			if (target == null) {
 				findTarget();
 			}
@@ -64,22 +59,21 @@ public class Tower : MonoBehaviour {
 		}
 		else {
 			if (cdTime <= 0f) {
-				cd = false;
+				coolingDown = false;
 			}
 			cdTime -= 1f;
 		}
 	}
 
-    private void OnMouseDown()
-    {
-       if(gameObject.tag != "MenuItems"){
-		towerManager.destroyCircle();
-	   	towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
-        towerManager.SelectedTower = gameObject;
-		towerManager.drawCircle(detectionRadius);
-		towerManager.setLabels(towerName,towerCost);
-		towerManager.enableSellButton();
-	   }
+    private void OnMouseDown() {
+    	if (gameObject.tag != "MenuItems") {
+			towerManager.destroyCircle();
+			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+			towerManager.SelectedTower = gameObject;
+			towerManager.drawCircle(detectionRadius);
+			towerManager.setLabels(towerName, cost);
+			towerManager.enableSellButton();
+		}
 	}
 
     private void findTarget() {
@@ -88,9 +82,9 @@ public class Tower : MonoBehaviour {
 
 		foreach (var enemy in enemies) {
 			//Get Distance
-			var myDist = Mathf.Sqrt(Mathf.Pow(enemy.transform.position.x - transform.position.x, 2f) +
+			var dist = Mathf.Sqrt(Mathf.Pow(enemy.transform.position.x - transform.position.x, 2f) +
 									 Mathf.Pow(enemy.transform.position.y - transform.position.y, 2f));
-			if (myDist <= detectionRadius) {
+			if (dist <= detectionRadius) {
 				//Based on TargetType
 				if (targetType == 0) {
 					target = enemy;
@@ -107,23 +101,20 @@ public class Tower : MonoBehaviour {
 	}
 	
 	private void shoot(GameObject enemy) {
-		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
-		if(projectileType == 0){
-			GameObject myProjectile = Instantiate(projectile);
-			myProjectile.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-			var run = enemy.transform.position.x - transform.position.x;
-			var rise = enemy.transform.position.y - transform.position.y;
-			var myDist = Mathf.Sqrt(Mathf.Pow(run, 2f) + Mathf.Pow(rise, 2f));
-			var myXsp = (run / myDist) * projectileSpeed;
-			var myYsp = (rise / myDist) * projectileSpeed;
-			myProjectile.GetComponent<Projectile>().setVals(antibioticType, projectileType, projectileSize, 
-															projectileSpeed, projectileAOE, projectilePierce, 
-															specialEffect, gameObject, myXsp, myYsp);
-		}
-		else{
-			
-		}
-		cd = true;
+		GameObject myProjectile = Instantiate(projectile);
+
+		myProjectile.transform.position = new Vector3(transform.position.x, 
+													transform.position.y, transform.position.z);
+		var run = enemy.transform.position.x - transform.position.x;
+		var rise = enemy.transform.position.y - transform.position.y;
+		
+		var distance = Mathf.Sqrt(Mathf.Pow(run, 2f) + Mathf.Pow(rise, 2f));
+		var xsp = (run / distance) * projectileSpeed;
+		var ysp = (rise / distance) * projectileSpeed;
+		myProjectile.GetComponent<Projectile>().setVals(gameObject, antibioticType, projectileSize, 
+														projectileSpeed, projectilePierce, xsp, ysp);
+
+		coolingDown = true;
 		cdTime = coolDown;
 	}
 }
