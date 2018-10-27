@@ -103,7 +103,7 @@ MonoBehaviour:
   coolDown: 30
   targetType: 0
   projectileType: 0
-  antibioticType: vanc
+  antibioticType: rifa
   projectileSize: 0.5
   projectileSpeed: 0.6
   projectileAOE: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   projectilePierce: 0
   detectionRadius: 4
   specialEffect: 0
-  towerCost: 30
-  towerName: Vancocymin
+  towerCost: 60
+  towerName: Rifampicin
 --- !u!120 &120266810001499112
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -240,8 +240,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 07bd742d9f0704144adf2ffc00b8d268, type: 3}
-  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 250c327d9033c4e41bc36fbab1ffc2cd, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -273,6 +273,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 1}
+  m_AnchoredPosition: {x: 8, y: -2}
   m_SizeDelta: {x: 0.64, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
