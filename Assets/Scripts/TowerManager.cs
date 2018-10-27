@@ -23,7 +23,7 @@ public class TowerManager : MonoBehaviour {
     void Update () {
 
         //IF a tower is selected
-        if(SelectedTower != null){
+        if (SelectedTower != null) {
             
             //Listen to Click events
             if (Input.GetMouseButtonDown(0))
@@ -47,17 +47,15 @@ public class TowerManager : MonoBehaviour {
  
         } else {
             clearLabels();
-            if(lineRenderer != null){
+            if (lineRenderer != null) {
                 destroyCircle();
             }
-            
         }      
 	}
 
     //Destroys the currently selected tower and adds currecncy for it
-    public void sellTower()
-    {
-        gameManager.Currency += (SelectedTower.GetComponent<Tower>().towerCost / 2);
+    public void sellTower() {
+        gameManager.Currency += (int)(SelectedTower.GetComponent<Tower>().cost * 0.7);
         Destroy(SelectedTower);
         clearLabels();
         SelectedTower = null;
@@ -68,62 +66,53 @@ public class TowerManager : MonoBehaviour {
         towerNamelabel.text = towerName;
 
         //If MenuItem show buy price, if already bought, show sell price
-        if(SelectedTower.tag == "Tower"){
-        sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
+        if (SelectedTower.tag == "Tower") {
+            sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
         }
         else {
-        sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
+            sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
         }
     }
 
     //Clears the labels once tower is deselected or sold
-    void clearLabels(){
+    void clearLabels() {
         towerNamelabel.text = "";
         sellTowerButton.GetComponent<Text>().text = "";
     }
 
     //Draws the Towers radius when it's selected
-    public void drawCircle(float radius)
-    {
-       
+    public void drawCircle(float radius) {
         int segments = 360;
         lineRenderer.positionCount = segments + 1;
 
         int pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
         Vector3[] points = new Vector3[pointCount];
 
-        for (int i = 0; i < pointCount; i++)
-        {
+        for (int i = 0; i < pointCount; i++) {
             var rad = Mathf.Deg2Rad * (i * 360f / segments);
             points[i] = new Vector3(Mathf.Sin(rad) * radius, Mathf.Cos(rad) * radius, 0f);
         }
 
-        lineRenderer.SetPositions(points);
-        
+        lineRenderer.SetPositions(points); 
     }
 
-    public void enableSellButton(){
+    public void enableSellButton() {
         sellTowerButton.enabled = true;
-
     }
-    public void disableSellButton(){
+    public void disableSellButton() {
         sellTowerButton.enabled = false;
-
     }
 
     //Erases the circle when tower is "deselected"
-    public void destroyCircle()
-    {
-        if(lineRenderer!= null){
-        lineRenderer.positionCount = 0;
+    public void destroyCircle() {
+        if (lineRenderer != null) {
+            lineRenderer.positionCount = 0;
         }
     }
 
     //Sets the color of the radius Circle
-    public void colorCircle(Color col)
-    {
+    public void colorCircle(Color col) {
         lineRenderer.startColor = col;
         lineRenderer.endColor = col;
     }
-
 }

@@ -4,9 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadTowers : MonoBehaviour
-{
-        public Sprite test;
+public class LoadTowers : MonoBehaviour {
         public static Sprite amoxSprite;
         public static Sprite methSprite;
         public static Sprite vancSprite;
@@ -16,151 +14,109 @@ public class LoadTowers : MonoBehaviour
         public static Sprite isonSprite;
         public static GameObject projectile;
 
-
     public static IDictionary<string, object> amoxTower = new Dictionary<string, object>(){
                                 {"name", "Amoxicillin"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", 3f},
+                                {"antibioticType", "amox"},
+                                {"towerType", 0},
+                                {"targetType", 0}, 
                                 {"cost", 10},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", amoxSprite},
                                 {"towerColor", Color.gray},
-                                {"radius", 4f},
-                                {"antibioticType", "amox"},
-                                {"coolDown", 120.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
                                 {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
-
+                                };
 
     public static IDictionary<string, object> methTower = new Dictionary<string, object>(){
                                 {"name", "Methicillin"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", 2f},
-                                {"cost", 20},
+                                {"antibioticType", "meth"},
+                                {"towerType", 0},
+                                {"targetType", 0}, 
+                                {"cost", 15},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", methSprite},
                                 {"towerColor", Color.magenta},
-                                {"radius", 4f},
-                                {"antibioticType", "meth"},
-                                {"coolDown", 30.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
-                                {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
-
+                                {"projectileSprite", projectile} };
 
     public static IDictionary<string, object> vancTower = new Dictionary<string, object>(){
                                 {"name", "Vancocymin"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", 1f},
-                                {"cost", 30},
+                                {"antibioticType", "vanc"},
+                                {"towerType", 0},
+                                {"targetType", 0},
+                                {"cost", 20},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", vancSprite},
                                 {"towerColor", Color.blue},
-                                {"radius", 4f},
-                                {"antibioticType", "vanc"},
-                                {"coolDown", 30.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
                                 {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
-
+                                 };
 
     public static IDictionary<string, object> carbTower = new Dictionary<string, object>(){
                                 {"name", "Carbapenem"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", 0f},
-                                {"cost", 40},
+                                {"antibioticType", "carb"},
+                                {"towerType", 0},
+                                {"targetType", 0}, 
+                                {"cost", 30},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", carbSprite},
                                 {"towerColor", Color.yellow},
-                                {"radius", 4f},
-                                {"antibioticType", "carb"},
-                                {"coolDown", 120.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
                                 {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
-
+                                };
 
     public static IDictionary<string, object> lineTower = new Dictionary<string, object>(){
                                 {"name", "Linezolid"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", -1f},
-                                {"cost", 50},
+                                {"antibioticType", "line"},
+                                {"towerType", 0},
+                                {"targetType", 0}, 
+                                {"cost", 40},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", lineSprite},
                                 {"towerColor", Color.green},
-                                {"radius", 4f},
-                                {"antibioticType", "line"},
-                                {"coolDown", 30.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
                                 {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
-
+                                };
 
     public static IDictionary<string, object> rifaTower = new Dictionary<string, object>(){
                                 {"name", "Rifampicin"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", -2f},
-                                {"cost", 60},
+                                {"antibioticType", "rifa"},
+                                {"towerType", 0},
+                                {"targetType", 0}, 
+                                {"cost", 30},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", rifaSprite},
                                 {"towerColor", Color.red},
-                                {"radius", 4f},
-                                {"antibioticType", "rifa"},
-                                {"coolDown", 30.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
                                 {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
+                                 };
 
     public static IDictionary<string, object> isonTower = new Dictionary<string, object>(){
                                 {"name", "Isoniazid"},
                                 {"towerPositionX", 8f},
                                 {"towerPositionY", -3f},
-                                {"cost", 70},
+                                {"antibioticType", "ison"},
+                                {"towerType", 0},
+                                {"targetType", 0}, 
+                                {"cost", 30},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f},
                                 {"towerSprite", isonSprite},
                                 {"towerColor", Color.cyan},
-                                {"radius", 4f},
-                                {"antibioticType", "ison"},
-                                {"coolDown", 30.0f},
-                                {"specialEffect", 0},
-                                {"projectileType", 0},
-                                {"projectileSize", 0.5f},
-                                {"projectileSpeed", 0.6f},
-                                {"projectileAOE", 0f},
                                 {"projectileSprite", projectile},
-                                {"projectilePierce", false},
-                                {"targetType", 0}
-    };
+                                 };
 
     public IDictionary<string, IDictionary<string, object>> towers = new Dictionary<string, IDictionary<string, object>>(){
                                     {"Amoxicillin", amoxTower},
@@ -169,17 +125,22 @@ public class LoadTowers : MonoBehaviour
                                    {"Carbapenem", carbTower},
                                    {"Linezolid", lineTower},
                                    {"Rifampicin", rifaTower},
-                                   {"Isoniazid", isonTower} 
-    };
+                                   {"Isoniazid", isonTower} };
 
+/* 
+    private static IDictionary<string, object> pellet = new Dictionary<string, object>() {
+                                {"additionalCost", 0},
+                                {"radius", 4f},
+                                {"cooldown", 30.0f}, };
+                                */
 
+ // USE ADDITIONAL DICTIONARIES BASED ON TOWER TYPE TO ADJUST VALUES BEING SET
     private GameObject tower;
 
     private __app appTowers;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         appTowers = GameObject.Find("__app").GetComponent<__app>();
         tower = Resources.Load("Prefabs/Tower") as GameObject;
 
@@ -195,67 +156,55 @@ public class LoadTowers : MonoBehaviour
         projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
         LoadAllTowers();
-
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
     }
 
     //Reloads towers, called by the DragAndDrop script attached to individual towers
-    public void reloadTower(string towerName){
+    public void reloadTower(string towerName) {
       
         IDictionary <string, object> towerAttributes;
         towerAttributes = towers[towerName];
 
         GameObject newTower = setTowerAttributes(towerAttributes);
         Instantiate(newTower, gameObject.transform, true);
-
     }
 
     //Loads all towers on start
-    void LoadAllTowers()
-    {
-
-        foreach (KeyValuePair<string, IDictionary<string, object>> tow in towers)
-        {     
+    void LoadAllTowers() {
+        foreach (KeyValuePair<string, IDictionary<string, object>> tow in towers) {     
             GameObject newTower = setTowerAttributes(tow.Value);
             Instantiate(newTower, gameObject.transform, true);
         }
     }
 
     //Set the towers attributes before spawning to the menu
-    GameObject setTowerAttributes(IDictionary<string, object> attributes){
+    GameObject setTowerAttributes(IDictionary<string, object> attributes) {
 
-            GameObject t;
-            t = tower;
+        GameObject t = tower;
+        Tower tScript = tower.GetComponent<Tower>();
 
-            t.GetComponent<Tower>().coolDown = (float)attributes["coolDown"];
-            t.GetComponent<Tower>().targetType = (int) attributes["targetType"];
-            t.GetComponent<Tower>().projectileType = (int) attributes["projectileType"];
-            t.GetComponent<Tower>().antibioticType = (string) attributes["antibioticType"];
-            t.GetComponent<Tower>().projectileSize = (float)attributes["projectileSize"];
-            t.GetComponent<Tower>().projectileSpeed = (float)attributes["projectileSpeed"];
-            t.GetComponent<Tower>().projectileAOE = (float)attributes["projectileAOE"];
-            t.GetComponent<Tower>().projectileSprite = null;
-            t.GetComponent<Tower>().projectilePierce = (bool) attributes["projectilePierce"];
-            t.GetComponent<Tower>().detectionRadius = (float)attributes["radius"];
-            t.GetComponent<Tower>().specialEffect = (int) attributes["specialEffect"];
-            t.GetComponent<Tower>().towerCost = (int) attributes["cost"];
-            t.GetComponent<Tower>().towerName = (string) attributes["name"];
-            t.GetComponent<SpriteRenderer>().sprite = (Sprite) attributes["towerSprite"];
-            t.GetComponent<SpriteRenderer>().color = (Color) attributes["towerColor"];
+        tScript.towerName = (string) attributes["name"];
+        tScript.antibioticType = (string) attributes["antibioticType"];
+        tScript.type = (int) attributes["towerType"];
+        tScript.targetType = (int) attributes["targetType"]; 
+        tScript.cost = (int) attributes["cost"];
+        tScript.detectionRadius = (float)attributes["radius"];
+        tScript.coolDown = (float)attributes["cooldown"];
+        //tScript.specialEffect = (int) attributes["specialEffect"];
+        t.GetComponent<SpriteRenderer>().sprite = (Sprite) attributes["towerSprite"];
+        t.GetComponent<SpriteRenderer>().color = (Color) attributes["towerColor"];
+        tScript.projectileSprite = null;
 
-            float xPos =  (float) attributes["towerPositionX"];
-            float yPos =  (float) attributes["towerPositionY"];
+        float xPos =  (float) attributes["towerPositionX"];
+        float yPos =  (float) attributes["towerPositionY"];
 
-            t.transform.position = new Vector3(xPos, yPos, 0f);
+        tScript.transform.position = new Vector3(xPos, yPos, 0f);
 
-            t.tag = "MenuItems";
+        tScript.tag = "MenuItems";
 
-            return t;
-
+        return t;
     }
-
 }
