@@ -15,18 +15,22 @@ public class Tower : MonoBehaviour {
 	public Sprite projectileSprite;
 	public bool projectilePierce;	
 	public float detectionRadius;
-	public int specialEffect = 0;//0 = none, 1 = slow, 2 = increase damage taken, etc.
+	public int specialEffect = 0; //0 = none, 1 = slow, 2 = increase damage taken, etc.
     public int towerCost;
     public string towerName;
 
     private GameObject target = null;
     private GameObject projectile;
+
+	private TowerManager towerManager;
     bool cd = false;
     float cdTime = 0f;
 
     // Use this for initialization
     void Start () {
 		GameObject projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
+		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
+
     }
 	
 	// Update is called once per frame
@@ -66,7 +70,17 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
-   
+    private void OnMouseDown()
+    {
+       if(gameObject.tag != "MenuItems"){
+		towerManager.destroyCircle();
+	   	towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+        towerManager.SelectedTower = gameObject;
+		towerManager.drawCircle(detectionRadius);
+		towerManager.setLabels(towerName,towerCost);
+		towerManager.enableSellButton();
+	   }
+	}
 
     private void findTarget() {
 		var enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -112,5 +126,4 @@ public class Tower : MonoBehaviour {
 		cd = true;
 		cdTime = coolDown;
 	}
-
 }

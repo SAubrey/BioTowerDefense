@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour {
     public float speed;
     public float maxHealth;
     private float health;
-    public string species;
+    public string species; // Type of bacteria]
+    
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
     private GameObject game;
@@ -36,7 +37,6 @@ public class Enemy : MonoBehaviour {
         health = maxHealth;
         lastWaypointSwitchTime = Time.time;
         game = GameObject.Find("Game");
-        //appScript = GameObject.Find("__app").GetComponent<__app>();
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
 
@@ -118,37 +118,38 @@ public class Enemy : MonoBehaviour {
         }
 	}
 
+    // TODO: Bacteria should only mutate against ab that can hurt it.
     public void rollForMutate() {
         // Roll for mutation against each antibacteria type.
         var carb = appScript.mutationChances[species]["carb"];
-        if (Random.Range(0, 100) <= carb * 100) {
+        if (Random.Range(0, 100) < carb * 100) {
             resistances["amox"] = true;
             resistances["meth"] = true;
             resistances["vanc"] = true;
             resistances["carb"] = true;
-            print(species + " has mutated against carb!");
+            print(species + " has mutated against carb! Likelihood: " + carb);
             return;
         }
     
         var vanc = appScript.mutationChances[species]["vanc"];
-        if (Random.Range(0, 100) <= vanc * 100) {
+        if (Random.Range(0, 100) < vanc * 100) {
             resistances["amox"] = true;
             resistances["meth"] = true;
             resistances["vanc"] = true;
-            print(species + " has mutated against vanc!");
+            print(species + " has mutated against vanc! Likelihood: " + vanc);
             return;
         }
         var meth = appScript.mutationChances[species]["meth"];
-         if (Random.Range(0, 100) <= meth * 100) {
+         if (Random.Range(0, 100) < meth * 100) {
             resistances["amox"] = true;
             resistances["meth"] = true;
-            print(species + " has mutated against meth!");
+            print(species + " has mutated against meth! Likelihood: " + meth);
             return;
         }
         var amox = appScript.mutationChances[species]["amox"];
-        if (Random.Range(0, 100) <= amox * 100) {
+        if (Random.Range(0, 100) < amox * 100) {
             resistances["amox"] = true;
-            print(species + " has mutated against amox!");
+            print(species + " has mutated against amox! Likelihood: " + amox);
             return;
         }
 
@@ -165,5 +166,11 @@ public class Enemy : MonoBehaviour {
 
     private void updateHealthBar() {
         healthBar.fillAmount = health / maxHealth;
+    }
+
+    public void setSpecies(Sprite img, string type) {
+        species = type;
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.sprite = img;
     }
 }
