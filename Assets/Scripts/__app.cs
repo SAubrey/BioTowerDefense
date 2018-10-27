@@ -134,9 +134,18 @@ public class __app : MonoBehaviour {
 		options.setSFX(s);
 	}
 	
+	public bool getScreenshake(){
+		return options.getScreenshake();
+	}
+	
+	public void setScreenshake(bool ss){
+		options.setScreenshake(ss);
+	}
+	
 	private class Options {
 		private bool music;
 		private bool sfx;
+		private bool screenshake;
 		
 		public Options(){
 			music = false;
@@ -158,6 +167,14 @@ public class __app : MonoBehaviour {
 		
 		public void setSFX(bool s){
 			sfx = s;
+		}
+		
+		public bool getScreenshake(){
+			return screenshake;
+		}
+		
+		public void setScreenshake(bool ss){
+			screenshake = ss;
 		}
 	}
 	
