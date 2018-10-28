@@ -104,7 +104,7 @@ public class DragAndDrop : MonoBehaviour
     //Upon successful purchase of tower, detach it from the menu.
     void detachFromMenu() {
         gameObject.tag = "Tower";
-		gameObject.GetComponent<Tower>().oldPos = transform.position;
+		//gameObject.GetComponent<Tower>().oldPos = transform.position;
         gameObject.transform.parent = null;
     }
 

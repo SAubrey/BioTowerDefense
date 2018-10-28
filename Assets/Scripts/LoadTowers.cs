@@ -22,6 +22,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0}, 
                                 {"cost", 10},
+								{"type",2},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", amoxSprite},
@@ -37,6 +38,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0}, 
                                 {"cost", 15},
+								{"type",1},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", methSprite},
@@ -51,6 +53,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0},
                                 {"cost", 20},
+								{"type",0},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", vancSprite},
@@ -66,6 +69,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0}, 
                                 {"cost", 30},
+								{"type",0},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", carbSprite},
@@ -81,6 +85,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0}, 
                                 {"cost", 40},
+								{"type",0},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", lineSprite},
@@ -96,6 +101,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0}, 
                                 {"cost", 30},
+								{"type",0},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", rifaSprite},
@@ -111,6 +117,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"towerType", 0},
                                 {"targetType", 0}, 
                                 {"cost", 30},
+								{"type",0},
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", isonSprite},
@@ -191,6 +198,7 @@ public class LoadTowers : MonoBehaviour {
         tScript.type = (int) attributes["towerType"];
         tScript.targetType = (int) attributes["targetType"]; 
         tScript.cost = (int) attributes["cost"];
+		tScript.type = (int) attributes["type"];
         tScript.detectionRadius = (float)attributes["radius"];
         tScript.coolDown = (float)attributes["cooldown"];
         //tScript.specialEffect = (int) attributes["specialEffect"];

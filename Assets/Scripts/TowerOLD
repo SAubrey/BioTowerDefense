@@ -1,4 +1,5 @@
-﻿using System.Collections;
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,32 +23,66 @@ public class Tower : MonoBehaviour {
 	private TowerManager towerManager;
     bool coolingDown = false;
     float cdTime = 0f;
+	//For Hover Animation
+	//public Vector3 oldPos;
 
     // Use this for initialization
     void Start () {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
+		//oldPos = transform.position;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		//Return if not actually placed
 		if (tag == "MenuItems") {
 			return;
 		}
-		//Return if paused or game not in session
+		//Hover Animation
+		/*
+		Vector3 myVect = oldPos;
+		myVect.y = oldPos.y + Mathf.Sin(Time.time*3 + (GetInstanceID()*10))/11;
+		transform.position = myVect;
+		*/
 		if (Game.paused || !Game.game) {
 			return;
 		}
-		//Do this when not on Cooldown
+
 		if (!coolingDown) {
-			activate();
+			//Numbers used for targetType
+			//var minHP = 100000f;
+			//var maxHP = 0f;
+			if (target == null) {
+				findTarget();
+			}
+			else {
+				//Check if target is out of bounds
+				var targetDist = Mathf.Sqrt(Mathf.Pow(target.transform.position.x - transform.position.x, 2f) + 
+											Mathf.Pow(target.transform.position.y - transform.position.y, 2f));
+				if (targetDist > detectionRadius) {
+					target = null;
+				}
+				else if (type!= 2 && targetType == 0) {
+					shoot(target);
+				}
+			}
 		}
 		else {
 			if (cdTime <= 0f) {
 				coolingDown = false;
 			}
 			cdTime -= 1f;
+		}
+	}
+
+    private void OnMouseDown() {
+    	if (gameObject.tag != "MenuItems") {
+			towerManager.destroyCircle();
+			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+			towerManager.SelectedTower = gameObject;
+			towerManager.drawCircle(detectionRadius);
+			towerManager.setLabels(towerName, cost);
+			towerManager.enableSellButton();
 		}
 	}
 
@@ -61,52 +96,17 @@ public class Tower : MonoBehaviour {
 									 Mathf.Pow(enemy.transform.position.y - transform.position.y, 2f));
 			if (dist <= detectionRadius) {
 				//Based on TargetType
-				if( targetType == 0){
-					target = enemy;
-				}
-				break;
-			}
-		}
-	}
-	
-	private void activate(){
-		if(type==0 || type==1){
-			if (target == null) {
-				findTarget();
-			}
-			else {
-				//Check if target is out of bounds
-				var targetDist = Mathf.Sqrt(Mathf.Pow(target.transform.position.x - transform.position.x, 2f) + 
-											Mathf.Pow(target.transform.position.y - transform.position.y, 2f));
-				if (targetDist > detectionRadius) {
-					target = null;
-				}
-				else{
-					if (type==0){
-						shoot(target);
+				if (type==0) {
+					if( targetType == 0){
+						target = enemy;
 					}
-					else if(type==1){
-						Debug.Log("BOOOOOOOOOOOOOOOOM");
-						target.GetComponent<Enemy>().hurt(5, antibioticType);
-					}
+					break;
+				}
+				else if(type==2) {
+					shoot(enemy);
 				}
 			}
 		}
-		else if(type==2){
-			var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-			var objectCount = enemies.Length;
-
-			foreach (var enemy in enemies) {
-				//Get Distance
-				var dist = Mathf.Sqrt(Mathf.Pow(enemy.transform.position.x - transform.position.x, 2f) +
-										 Mathf.Pow(enemy.transform.position.y - transform.position.y, 2f));
-				if (dist <= detectionRadius) {
-					enemy.GetComponent<Enemy>().hurt(5, antibioticType);
-				}
-			}
-		}
-		coolingDown = true;
-		cdTime = coolDown;
 	}
 	
 	private void shoot(GameObject enemy) {
@@ -122,17 +122,11 @@ public class Tower : MonoBehaviour {
 			myProjectile.GetComponent<Projectile>().setVals(gameObject, antibioticType, projectileSize, 
 															projectileSpeed, projectilePierce, xsp, ysp);
 		}
-	}
-	
-	//Placement stuff
-	    private void OnMouseDown() {
-    	if (gameObject.tag != "MenuItems") {
-			towerManager.destroyCircle();
-			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
-			towerManager.SelectedTower = gameObject;
-			towerManager.drawCircle(detectionRadius);
-			towerManager.setLabels(towerName, cost);
-			towerManager.enableSellButton();
+		else{
+			enemy.GetComponent<Enemy>().hurt(5, antibioticType);
 		}
+
+		coolingDown = true;
+		cdTime = coolDown;
 	}
 }

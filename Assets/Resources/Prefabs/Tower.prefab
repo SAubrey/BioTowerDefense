@@ -127,7 +127,6 @@ MonoBehaviour:
   projectileSize: 0.5
   projectileSpeed: 0.6
   projectilePierce: 0
-  oldPos: {x: 0, y: 0, z: 0}
 --- !u!120 &120266810001499112
 LineRenderer:
   m_ObjectHideFlags: 1
