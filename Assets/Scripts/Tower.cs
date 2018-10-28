@@ -102,12 +102,10 @@ public class Tower : MonoBehaviour {
 	
 	private void shoot(GameObject enemy) {
 		GameObject myProjectile = Instantiate(projectile);
-
 		myProjectile.transform.position = new Vector3(transform.position.x, 
 													transform.position.y, transform.position.z);
 		var run = enemy.transform.position.x - transform.position.x;
 		var rise = enemy.transform.position.y - transform.position.y;
-		
 		var distance = Mathf.Sqrt(Mathf.Pow(run, 2f) + Mathf.Pow(rise, 2f));
 		var xsp = (run / distance) * projectileSpeed;
 		var ysp = (rise / distance) * projectileSpeed;

@@ -11,12 +11,9 @@ public class Projectile : MonoBehaviour {
 	private int pierce = 1; // Number of enemies a projectile pierces
 	private int enemiesPierced = 0;
 	private GameObject tower;
-	//private float xsp = 0;
-	//private float ysp = 0;
 	private Vector3 velocity;
 	private List<GameObject> hurtEnemies;
 	// Use this for initialization
-
 	public virtual void Start () {
 		hurtEnemies = new List<GameObject>();
 	}
@@ -24,9 +21,6 @@ public class Projectile : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 		//Move
-		//transform.position = new Vector3(transform.position.x + xsp, 
-										 //transform.position.y + ysp, 
-										 //transform.position.z);
 		transform.position += velocity;
 	}
 	
@@ -39,7 +33,6 @@ public class Projectile : MonoBehaviour {
 		pierce = pPierce;
 		velocity.x = xsp;
 		velocity.y = ysp;
-
 		transform.localScale  = new Vector3(size, size, size);
 		var boxCol = GetComponent<BoxCollider2D>();
 		boxCol.size = new Vector2(boxCol.size.x * 2, boxCol.size.y * 2);

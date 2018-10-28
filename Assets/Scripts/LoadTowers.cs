@@ -145,13 +145,13 @@ public class LoadTowers : MonoBehaviour {
         tower = Resources.Load("Prefabs/Tower") as GameObject;
 
         //Load the towers sprites, and assign them to their spots in the dictionaries
-        towers["Amoxicillin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/amoxSprite") as Sprite;
-        towers["Methicillin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/methSprite") as Sprite;
-        towers["Vancocymin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/vancSprite") as Sprite;
-        towers["Carbapenem"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/carbSprite") as Sprite;
-        towers["Linezolid"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/lineSprite") as Sprite;
-        towers["Rifampicin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/rifaSprite") as Sprite;
-        towers["Isoniazid"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/isonSprite") as Sprite;
+        towers["Amoxicillin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        towers["Methicillin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        towers["Vancocymin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        towers["Carbapenem"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        towers["Linezolid"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        towers["Rifampicin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        towers["Isoniazid"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
 
         projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
