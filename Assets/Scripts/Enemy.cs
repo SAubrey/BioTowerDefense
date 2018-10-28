@@ -128,6 +128,8 @@ public class Enemy : MonoBehaviour {
             resistances["vanc"] = true;
             resistances["carb"] = true;
             print(species + " has mutated against carb! Likelihood: " + carb);
+			GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = Color.magenta;
             return;
         }
     
@@ -137,6 +139,8 @@ public class Enemy : MonoBehaviour {
             resistances["meth"] = true;
             resistances["vanc"] = true;
             print(species + " has mutated against vanc! Likelihood: " + vanc);
+			GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = Color.magenta;
             return;
         }
         var meth = appScript.mutationChances[species]["meth"];
@@ -144,12 +148,16 @@ public class Enemy : MonoBehaviour {
             resistances["amox"] = true;
             resistances["meth"] = true;
             print(species + " has mutated against meth! Likelihood: " + meth);
+			GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = Color.magenta;
             return;
         }
         var amox = appScript.mutationChances[species]["amox"];
         if (Random.Range(0, 100) < amox * 100) {
             resistances["amox"] = true;
             print(species + " has mutated against amox! Likelihood: " + amox);
+			GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = Color.magenta;
             return;
         }
 
