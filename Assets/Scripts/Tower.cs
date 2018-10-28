@@ -22,11 +22,14 @@ public class Tower : MonoBehaviour {
 	private TowerManager towerManager;
     bool coolingDown = false;
     float cdTime = 0f;
+	//For Hover Animation
+	public Vector3 oldPos;
 
     // Use this for initialization
     void Start () {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
+		oldPos = transform.position;
     }
 	
 	// Update is called once per frame
@@ -34,6 +37,10 @@ public class Tower : MonoBehaviour {
 		if (tag == "MenuItems") {
 			return;
 		}
+		//Hover Animation
+		Vector3 myVect = oldPos;
+		myVect.y = oldPos.y + Mathf.Sin(Time.time*3 + (GetInstanceID()*10))/11;
+		transform.position = myVect;
 		if (Game.paused || !Game.game) {
 			return;
 		}

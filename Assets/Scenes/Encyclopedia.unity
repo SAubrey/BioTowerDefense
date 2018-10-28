@@ -1162,6 +1162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defbf6656293a4b4c9fd20f9f38e5e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSpeed: 4
+  hoverDistance: 9
+  syncMod: 1
 --- !u!1 &1030906528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,6 +1297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defbf6656293a4b4c9fd20f9f38e5e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSpeed: 4
+  hoverDistance: 9
+  syncMod: 1
 --- !u!1 &1173435970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,6 +1829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defbf6656293a4b4c9fd20f9f38e5e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSpeed: 4
+  hoverDistance: 9
+  syncMod: 1
 --- !u!95 &1785415304
 Animator:
   serializedVersion: 3
@@ -2281,6 +2290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defbf6656293a4b4c9fd20f9f38e5e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverSpeed: 4
+  hoverDistance: 9
+  syncMod: 1
 --- !u!1 &2103247567
 GameObject:
   m_ObjectHideFlags: 0
