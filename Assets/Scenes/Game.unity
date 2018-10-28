@@ -2102,8 +2102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defbf6656293a4b4c9fd20f9f38e5e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSpeed: 1
-  hoverDistance: 13
+  hoverSpeed: 3
+  hoverDistance: 20
   syncMod: 1
 --- !u!1 &1694354564
 GameObject:
