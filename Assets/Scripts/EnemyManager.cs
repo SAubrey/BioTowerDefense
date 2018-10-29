@@ -31,12 +31,14 @@ public class EnemyManager : MonoBehaviour {
 	private bool spawningActive = true;
 	public float waveInterval = 8f;
 	private float waveIntervalTimer = 0f;
-	public Text EnemyText;
-	public Text TimerText; 
+	private Text EnemyText;
+	private Text TimerText; 
 	private float enemiesDead;
 
 	void Start () {
 		game = GameObject.Find("Game").GetComponentInParent<Game>();
+		EnemyText = GameObject.Find("EnemyText").GetComponent<Text>();
+		TimerText = GameObject.Find("TimerText").GetComponent<Text>();
 		updateEnemyText();
 		enemySprites = new Dictionary<string, Sprite>() {
 												{"pneu", pneuSprite},

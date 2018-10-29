@@ -11,6 +11,8 @@ TagManager:
   - Menu
   - MenuItems
   - SellTower
+  - Waypoint
+  - Level
   layers:
   - Default
   - TransparentFX
