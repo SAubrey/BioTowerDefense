@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Game : MonoBehaviour {
 	public static bool game = false; // True so long as there is a running game state, paused or not. False when gameOver
 	public static bool paused = false;
+	[HideInInspector] 
 	public GameObject[] waypoints;
 	
 	public int HP;
@@ -16,6 +17,7 @@ public class Game : MonoBehaviour {
 	public static bool gameOver = false;
 	private GameObject app;
 	private __app appScript;
+	private GameObject level;
 
 
 	void Start () {
@@ -27,6 +29,19 @@ public class Game : MonoBehaviour {
 		GameOverText.text = "";
 		Gray.SetActive(false);
         Currency = 150;
+		//Load Level
+		//level = Resources.Load("Prefabs/Levels/LevelLungs") as GameObject;
+		//level = appScript.getLevel();
+		//Instantiate(level);
+		GameObject[] foundWaypoints = GameObject.FindGameObjectsWithTag("Waypoint");
+		waypoints = new GameObject[foundWaypoints.Length];
+		for( int i = 0;i<foundWaypoints.Length;i++){
+			foreach( GameObject way in foundWaypoints ){
+				if(way.name == "Waypoint"+i.ToString()){
+					waypoints[i] = way;
+				}
+			}
+		}
 	}
 	
 	// Use this for initialization

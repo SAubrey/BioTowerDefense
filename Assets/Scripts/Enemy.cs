@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
     private GameObject game;
+	private GameObject level;
     private __app appScript;
     private Vector3 startPosition, endPosition;
     private float currentTimeOnPath, totalTimeForPath;
@@ -37,6 +38,7 @@ public class Enemy : MonoBehaviour {
         health = maxHealth;
         lastWaypointSwitchTime = Time.time;
         game = GameObject.Find("Game");
+		level = GameObject.FindGameObjectsWithTag("Level")[0];
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
 
@@ -98,7 +100,7 @@ public class Enemy : MonoBehaviour {
         //audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/hurt") as AudioClip;
        // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
-        game.GetComponent<EnemyManager>().incEnemiesDead();
+        level.GetComponent<EnemyManager>().incEnemiesDead();
 		appScript.newScreenshake(6,0.1f);
         Destroy(gameObject);
     }
@@ -160,13 +162,13 @@ public class Enemy : MonoBehaviour {
 			healthBar.color = Color.magenta;
             return;
         }
-
+	
        // More logic here 
     }
 
     private void die(string antibioticType) {
         // queue SFX
-        game.GetComponent<EnemyManager>().incEnemiesDead();
+        level.GetComponent<EnemyManager>().incEnemiesDead();
         game.GetComponent<Game>().Currency += 2;
         appScript.increaseMutationChance(species, antibioticType);
         Destroy(gameObject);

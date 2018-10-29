@@ -102,7 +102,7 @@ public class __app : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		options = new Options();
 		screenshake = new Screenshake();
 	}
