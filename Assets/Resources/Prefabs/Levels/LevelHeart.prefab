@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 114214353562989900}
   m_Layer: 0
   m_Name: LevelHeart
-  m_TagString: Path
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -506,8 +506,6 @@ MonoBehaviour:
   wavesEnemyCounts: 090000000c00000010000000130000001500000017000000190000001b0000001d0000001f000000
   currentWave: 0
   waveInterval: 8
-  EnemyText: {fileID: 0}
-  TimerText: {fileID: 0}
 --- !u!114 &114890555661250452
 MonoBehaviour:
   m_ObjectHideFlags: 1

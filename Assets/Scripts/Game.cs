@@ -30,11 +30,12 @@ public class Game : MonoBehaviour {
 		Gray.SetActive(false);
         Currency = 150;
 		//Load Level
-		//level = Resources.Load("Prefabs/Levels/LevelLungs") as GameObject;
+		level = Resources.Load("Prefabs/Levels/LevelHeart") as GameObject;
 		//level = appScript.getLevel();
-		//Instantiate(level);
+		Instantiate(level);
 		GameObject[] foundWaypoints = GameObject.FindGameObjectsWithTag("Waypoint");
 		waypoints = new GameObject[foundWaypoints.Length];
+		Debug.Log("Waypoints: "+foundWaypoints.Length.ToString());
 		for( int i = 0;i<foundWaypoints.Length;i++){
 			foreach( GameObject way in foundWaypoints ){
 				if(way.name == "Waypoint"+i.ToString()){
