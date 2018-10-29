@@ -30,8 +30,7 @@ public class Game : MonoBehaviour {
 		Gray.SetActive(false);
         Currency = 150;
 		//Load Level
-		level = Resources.Load("Prefabs/Levels/LevelHeart") as GameObject;
-		//level = appScript.getLevel();
+		level = Resources.Load("Prefabs/Levels/"+appScript.getLevel()) as GameObject;
 		Instantiate(level);
 		GameObject[] foundWaypoints = GameObject.FindGameObjectsWithTag("Waypoint");
 		waypoints = new GameObject[foundWaypoints.Length];

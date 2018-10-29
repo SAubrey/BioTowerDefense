@@ -6,6 +6,7 @@ public class __app : MonoBehaviour {
 
 	private Options options;
 	private Screenshake screenshake;
+	private string level;
 
         // Dictionaries are arranged in order of effectiveness up to carb (1-5)
     // Linezolid is its own category, rifampicin and isoniazid are their own category.
@@ -105,11 +106,25 @@ public class __app : MonoBehaviour {
 	void Awake () {
 		options = new Options();
 		screenshake = new Screenshake();
+		level = "doi";
+		Debug.Log("STARTING APP!!!!");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		screenshake.Update();
+	}
+	
+	public void setLevel(string lvl){
+		level = lvl;
+		Debug.Log("LEVEL SET!!!"+level);
+	}
+	public void printLevel(){
+		Debug.Log("=============="+level);
+	}
+	public string getLevel(){
+		Debug.Log("RETURNING!!!"+level);
+		return level;
 	}
 
 	public void increaseMutationChance(string species, string antibioticType) {
