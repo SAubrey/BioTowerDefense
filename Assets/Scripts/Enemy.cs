@@ -171,6 +171,13 @@ public class Enemy : MonoBehaviour {
         level.GetComponent<EnemyManager>().incEnemiesDead();
         game.GetComponent<Game>().Currency += 2;
         appScript.increaseMutationChance(species, antibioticType);
+		//Particles
+		for(int i = 0;i<10;i++){
+			GameObject particle = Resources.Load("Prefabs/Particle") as GameObject;
+			particle.transform.position = transform.position;
+			particle.GetComponent<SpriteRenderer>().color = transform.GetChild(2).GetComponent<SpriteRenderer>().color;
+			Instantiate(particle);
+		}
         Destroy(gameObject);
     }
 
@@ -180,7 +187,21 @@ public class Enemy : MonoBehaviour {
 
     public void setSpecies(Sprite img, string type) {
         species = type;
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		switch(type){
+			case "strep":
+				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.yellow;
+				break;
+			case "staph":
+				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.red;
+				break;
+			case "pneu":
+				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.cyan;
+				break;
+			case "TB":
+				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.magenta;
+				break;
+		}
+        SpriteRenderer sr = transform.GetChild(2).GetComponent<SpriteRenderer>();
         sr.sprite = img;
     }
 }

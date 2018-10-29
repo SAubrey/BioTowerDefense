@@ -453,7 +453,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -84.36}
+  m_AnchoredPosition: {x: -26, y: -94.3}
   m_SizeDelta: {x: 78.74, y: 93.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &208693081
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.78036356, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.6127949, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -948,7 +948,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 97.5, y: -52.8}
+  m_AnchoredPosition: {x: 119.9, y: -95.1}
   m_SizeDelta: {x: 78.74, y: 93.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &506014101
@@ -1364,7 +1364,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 237376a9373cd624987e2dfae759f03b, type: 3}
-  m_Color: {r: 1, g: 0.75686276, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8176471, b: 0.25, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2410,7 +2410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.35297975, b: 0.28773582, a: 1}
+  m_Color: {r: 1, g: 0.093406595, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3350,7 +3350,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 237376a9373cd624987e2dfae759f03b, type: 3}
-  m_Color: {r: 0.91764706, g: 0.43137255, b: 1, a: 1}
+  m_Color: {r: 0.8811679, g: 0.27305093, b: 0.9811321, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4492,7 +4492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -83.4, y: -178.1}
+  m_AnchoredPosition: {x: -178.7, y: -63.6}
   m_SizeDelta: {x: 78.74, y: 93.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2074815429
@@ -4559,7 +4559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9175911, g: 0.4292453, b: 1, a: 1}
+  m_Color: {r: 0.85616446, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
