@@ -45,12 +45,12 @@ public class DragAndDrop : MonoBehaviour
 
     //Invoked when towers clicked
     void OnMouseDown() {
+        Debug.Log("HITTING");
 		    towerManager.destroyCircle();
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
             towerManager.setLabels(myTower.towerName, myTower.cost);
             gameObject.layer = 2;
-
         //if user has enough money to buy tower
         if (gameManager.Currency >= myTower.cost) {
 
@@ -104,13 +104,12 @@ public class DragAndDrop : MonoBehaviour
     //Upon successful purchase of tower, detach it from the menu.
     void detachFromMenu() {
         gameObject.tag = "Tower";
-		//gameObject.GetComponent<Tower>().oldPos = transform.position;
         gameObject.transform.parent = null;
     }
 
     //Upon successful drop, reload the an instance of the tower to the sidemenu
     void updateTheMenu() {
-        loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName);
+        loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName, originalPosition);
     }
 
     //returns false if the current position's overlapping any other colliders

@@ -59,6 +59,7 @@ public class TowerManager : MonoBehaviour {
         Destroy(SelectedTower);
         clearLabels();
         SelectedTower = null;
+        disableSellButton();
     }
 
     //Sets the selected towers labels
@@ -67,17 +68,17 @@ public class TowerManager : MonoBehaviour {
 
         //If MenuItem show buy price, if already bought, show sell price
         if (SelectedTower.tag == "Tower") {
-            sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
+            sellTowerButton.GetComponentInChildren<Text>().text = "Sell for $" + (towerCost / 2);
         }
         else {
-            sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
+            sellTowerButton.GetComponentInChildren<Text>().text = "$" + towerCost.ToString();
         }
     }
 
     //Clears the labels once tower is deselected or sold
     void clearLabels() {
         towerNamelabel.text = "";
-        sellTowerButton.GetComponent<Text>().text = "";
+        sellTowerButton.GetComponentInChildren<Text>().text = "";
     }
 
     //Draws the Towers radius when it's selected
@@ -98,9 +99,12 @@ public class TowerManager : MonoBehaviour {
 
     public void enableSellButton() {
         sellTowerButton.enabled = true;
+        sellTowerButton.GetComponent<Text>().enabled = true;
+
     }
     public void disableSellButton() {
         sellTowerButton.enabled = false;
+        sellTowerButton.GetComponent<Text>().enabled = false;
     }
 
     //Erases the circle when tower is "deselected"
