@@ -196,6 +196,7 @@ public class Enemy : MonoBehaviour {
         healthBar.fillAmount = health / maxHealth;
     }
 
+/* 
     public void setSpecies(Sprite img, string type) {
         species = type;
 		switch(type){
@@ -214,5 +215,11 @@ public class Enemy : MonoBehaviour {
 		}
         SpriteRenderer sr = transform.GetChild(2).GetComponent<SpriteRenderer>();
         sr.sprite = img;
+    }
+*/
+
+    public void setSpecies(string type) {
+        species = type;
+        GetComponent<Animator>().Play(type);
     }
 }
