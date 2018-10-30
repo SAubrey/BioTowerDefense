@@ -291,8 +291,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"cooldown", 30.0f},
                                 {"towerSprite", vancSprite},
                                 {"towerColor", (Color)(new Color32(155, 0, 250, 255))},
-                                {"projectileSprite", projectile},
-                                 };
+                                {"projectileSprite", projectile} };
 
  public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
                                 {"name", "CarbAOE"},
@@ -307,8 +306,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"cooldown", 30.0f},
                                 {"towerSprite", carbSprite},
                                 {"towerColor", (Color)(new Color32(255, 65, 0, 255))},
-                                {"projectileSprite", projectile},
-                                };
+                                {"projectileSprite", projectile} };
 
  public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
                                 {"name", "LineAOE"},
@@ -323,8 +321,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"cooldown", 30.0f},
                                 {"towerSprite", lineSprite},
                                 {"towerColor", Color.red},
-                                {"projectileSprite", projectile},
-                                };
+                                {"projectileSprite", projectile} };
 
     public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
                                 {"name", "RifaAOE"},
@@ -339,8 +336,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"cooldown", 30.0f},
                                 {"towerSprite", rifaSprite},
                                 {"towerColor", (Color)(new Color32(9, 9, 200, 255))},
-                                {"projectileSprite", projectile},
-                                 };
+                                {"projectileSprite", projectile} };
 
     public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
                                 {"name", "IsonAOE"},
@@ -355,33 +351,30 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"cooldown", 30.0f},
                                 {"towerSprite", isonSprite},
                                 {"towerColor", (Color)(new Color32(200, 9, 9, 255))},
-                                {"projectileSprite", projectile},
-                                 };
+                                {"projectileSprite", projectile} };
 
     public IDictionary<string, IDictionary<string, object>> towers = new Dictionary<string, IDictionary<string, object>>(){
-                                    {"Amoxicillin", amoxProjectile},
-                                    {"Methicillin", methProjectile},
-                                    {"Vancocymin", vancProjectile},
-                                   {"Carbapenem", carbProjectile},
-                                   {"Linezolid", lineProjectile},
-                                   {"Rifampicin", rifaProjectile},
-                                   {"Isoniazid", isonProjectile},
-                                   {"AmoxHitscan", amoxHitscan},
-                                   {"MethHitscan", methHitscan},
-                                   {"VancHitscan", vancHitscan},
-                                   {"CarbHitscan", carbHitscan},
-                                    {"LineHitscan", lineHitscan},
-                                    {"RifaHitscan", rifaHitscan},
-                                    {"IsonHitscan", isonHitscan},
-                                     {"AmoxAOE", amoxAOE},
-                                   {"MethAOE", methAOE},
-                                   {"VancAOE", vancAOE},
-                                   {"CarbAOE", carbAOE},
-                                    {"LineAOE", lineAOE},
-                                    {"RifaAOE", rifaAOE},
-                                    {"IsonAOE", isonAOE},
-                            
-                                  };
+                                {"Amoxicillin", amoxProjectile},
+                                {"Methicillin", methProjectile},
+                                {"Vancocymin", vancProjectile},
+                                {"Carbapenem", carbProjectile},
+                                {"Linezolid", lineProjectile},
+                                {"Rifampicin", rifaProjectile},
+                                {"Isoniazid", isonProjectile},
+                                {"AmoxHitscan", amoxHitscan},
+                                {"MethHitscan", methHitscan},
+                                {"VancHitscan", vancHitscan},
+                                {"CarbHitscan", carbHitscan},
+                                {"LineHitscan", lineHitscan},
+                                {"RifaHitscan", rifaHitscan},
+                                {"IsonHitscan", isonHitscan},
+                                {"AmoxAOE", amoxAOE},
+                                {"MethAOE", methAOE},
+                                {"VancAOE", vancAOE},
+                                {"CarbAOE", carbAOE},
+                                {"LineAOE", lineAOE},
+                                {"RifaAOE", rifaAOE},
+                                {"IsonAOE", isonAOE} };
 
 /* 
     private static IDictionary<string, object> pellet = new Dictionary<string, object>() {
@@ -436,15 +429,14 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
         scrollCoordinates =  new Dictionary<int, Vector2>() {
 							{0, new Vector2(0f, 6.02f)},
 							{1, new Vector2(0f, -0.9f)},
-							{2, new Vector2(0f, -7.9f)},			
-													};
+							{2, new Vector2(0f, -7.9f)} };
     }
 
     // Update is called once per frame
     void Update() {
-        if(scrolling){
-                scrollTowers(destination);        
-                }
+        if(scrolling) {
+            scrollTowers(destination);        
+        }
     }
 
     //Reloads towers, called by the DragAndDrop script attached to individual towers
@@ -457,15 +449,13 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
 
         newTower.transform.position = relativePosition;
         Instantiate(newTower, gameObject.transform, true);
-
     }
 
     //Loads the first column of towers on start, will load the displayed column
     void LoadAllTowers() {
         foreach (KeyValuePair<string, IDictionary<string, object>> tow in towers) {    
                   GameObject newTower = setTowerAttributes(tow.Value);
-                  Instantiate(newTower, gameObject.transform, true);   
-                         
+                  Instantiate(newTower, gameObject.transform, true);                 
         }
     }
 
@@ -498,7 +488,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
         return t;
     }
 
-    public void ShowTowerColumn(int step){
+    public void ShowTowerColumn(int step) {
         showTowers += step;
         Debug.Log(gameObject.transform.position.y);
 
@@ -515,13 +505,10 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
               navDown.interactable = false;
         } else {
             navDown.interactable = true;
-
         }
-
-
     }
 
-    void scrollTowers(float y){
+    void scrollTowers(float y) {
         
         Vector3 position = transform.position;
         Debug.Log(position);
@@ -534,8 +521,5 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
         if (Math.Abs(dy) < .02) {
 				scrolling = false;
 			}
-
     }
-
-
 }

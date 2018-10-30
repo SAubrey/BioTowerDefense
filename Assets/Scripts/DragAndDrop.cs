@@ -109,6 +109,7 @@ public class DragAndDrop : MonoBehaviour
 
     //Upon successful drop, reload the an instance of the tower to the sidemenu
     void updateTheMenu() {
+        //loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName, originalPosition);
         loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName, originalPosition);
     }
 

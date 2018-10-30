@@ -122,7 +122,20 @@ public class Enemy : MonoBehaviour {
 
     // TODO: Bacteria should only mutate against ab that can hurt it.
     public void rollForMutate() {
+        //if ()
         // Roll for mutation against each antibacteria type.
+        var line = appScript.mutationChances[species]["line"];
+        if (Random.Range(0, 100) < line * 100) {
+            resistances["amox"] = true;
+            resistances["meth"] = true;
+            resistances["vanc"] = true;
+            resistances["carb"] = true;
+            resistances["line"] = true;
+            print(species + " has mutated against line! Likelihood: " + line);
+            //GetComponent<SpriteRenderer>().color = Color.black;
+            healthBar.color = Color.red;
+            return;
+        }
         var carb = appScript.mutationChances[species]["carb"];
         if (Random.Range(0, 100) < carb * 100) {
             resistances["amox"] = true;
@@ -130,19 +143,18 @@ public class Enemy : MonoBehaviour {
             resistances["vanc"] = true;
             resistances["carb"] = true;
             print(species + " has mutated against carb! Likelihood: " + carb);
-			GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = Color.magenta;
+			//GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = (Color)(new Color32(255, 65, 0, 255));
             return;
         }
-    
         var vanc = appScript.mutationChances[species]["vanc"];
         if (Random.Range(0, 100) < vanc * 100) {
             resistances["amox"] = true;
             resistances["meth"] = true;
             resistances["vanc"] = true;
             print(species + " has mutated against vanc! Likelihood: " + vanc);
-			GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = Color.magenta;
+			//GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = (Color)(new Color32(155, 0, 250, 255));
             return;
         }
         var meth = appScript.mutationChances[species]["meth"];
@@ -150,23 +162,22 @@ public class Enemy : MonoBehaviour {
             resistances["amox"] = true;
             resistances["meth"] = true;
             print(species + " has mutated against meth! Likelihood: " + meth);
-			GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = Color.magenta;
+			//GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = (Color)(new Color32(80, 80, 255, 255));
             return;
         }
         var amox = appScript.mutationChances[species]["amox"];
         if (Random.Range(0, 100) < amox * 100) {
             resistances["amox"] = true;
             print(species + " has mutated against amox! Likelihood: " + amox);
-			GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = Color.magenta;
+			//GetComponent<SpriteRenderer>().color = Color.black;
+			healthBar.color = Color.green;
             return;
         }
-	
        // More logic here 
     }
 
-    private void die(string antibioticType) {
+   private void die(string antibioticType) {
         // queue SFX
         level.GetComponent<EnemyManager>().incEnemiesDead();
         game.GetComponent<Game>().Currency += 2;
