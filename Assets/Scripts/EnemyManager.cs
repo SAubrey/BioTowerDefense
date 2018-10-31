@@ -103,7 +103,8 @@ public class EnemyManager : MonoBehaviour {
         // Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
 		GameObject enemy = Instantiate(Enemy);
 		enemy.GetComponent<Enemy>().waypoints = game.waypoints;		
-        enemy.GetComponent<Enemy>().setSpecies(enemySprites[enemyName], enemyName);
+        //enemy.GetComponent<Enemy>().setSpecies(enemySprites[enemyName], enemyName);
+		enemy.GetComponent<Enemy>().setSpecies(enemyName);
 
 		enemiesSpawnedInWave++;
 		if (enemiesSpawnedInWave >= wavesEnemyCounts[currentWave]) {

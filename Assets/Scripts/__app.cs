@@ -101,7 +101,6 @@ public class __app : MonoBehaviour {
                                         {"TB", TBChances} };
             
 
-
 	// Use this for initialization
 	void Awake () {
 		options = new Options();
@@ -250,8 +249,4 @@ public class __app : MonoBehaviour {
 			return Random.Range(-magnitude,magnitude);
 		}
 	}
-	
-	
-	
-	
 }
