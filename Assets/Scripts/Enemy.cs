@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour {
     public float speed;
     public float maxHealth;
     private float health;
-    public string species; // Type of bacteria]
+    public string species; // Type of bacteria
     
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour {
                                         {"rifa", false},
                                         {"ison", false} };
 
-
     // Use this for initialization
     void Start () {
         health = maxHealth;
@@ -42,13 +41,9 @@ public class Enemy : MonoBehaviour {
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
 
-        //app.GetComponent<__increaseMutationChance(species, "vanc");
-
         setDestination();
-        rollForMutate();
     }
 
-    // Retrieved this functionality from https://www.raywenderlich.com/269-how-to-create-a-tower-defense-game-in-unity-part-1
     void Update () {
 		if (Game.paused || !Game.game) {
 			return;
@@ -101,89 +96,83 @@ public class Enemy : MonoBehaviour {
        // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
         level.GetComponent<EnemyManager>().incEnemiesDead();
-		appScript.newScreenshake(6,0.1f);
+		appScript.newScreenshake(6, 0.1f);
         Destroy(gameObject);
     }
 
     public void hurt(int baseDamage, string antibioticType) {
-        float effectiveness = appScript.antibiotics[antibioticType][species];
-        float damage = baseDamage * effectiveness;
-
-        if (resistances[antibioticType] == true) { // If resistant, null effect
-            damage = 0;
+        if (baseDamage > 0) {
+            if (resistances[antibioticType] == false) {
+                rollForMutate(antibioticType);
+            }
         }
-        health -= damage;
-        updateHealthBar();
 
-        if (health <= 0) {
-            die(antibioticType);
-        }
+        if (resistances[antibioticType] == false) { // If not resistant, do damage
+            float effectiveness = appScript.antibiotics[antibioticType][species];
+            health -= baseDamage * effectiveness;
+            updateHealthBar();
+
+            if (health <= 0) {
+                die();
+            }
+        }   
 	}
 
-    // TODO: Bacteria should only mutate against ab that can hurt it.
-    public void rollForMutate() {
-        //if ()
-        // Roll for mutation against each antibacteria type.
-        var line = appScript.mutationChances[species]["line"];
-        if (Random.Range(0, 100) < line * 100) {
-            resistances["amox"] = true;
-            resistances["meth"] = true;
-            resistances["vanc"] = true;
-            resistances["carb"] = true;
-            resistances["line"] = true;
-            print(species + " has mutated against line! Likelihood: " + line);
-            //GetComponent<SpriteRenderer>().color = Color.black;
-            healthBar.color = Color.red;
-            return;
+    // Mutation check happens at each projectile hit.
+    public void rollForMutate(string antibioticType) {
+        
+        var chance = appScript.mutationChances[species][antibioticType];
+        if (Random.Range(0, 100) < chance * 100) {
+            print(species + " has mutated against " + antibioticType + "! Likelihood: " + (chance * 100) + "%");
+            setResistance(antibioticType);
         }
-        var carb = appScript.mutationChances[species]["carb"];
-        if (Random.Range(0, 100) < carb * 100) {
-            resistances["amox"] = true;
-            resistances["meth"] = true;
-            resistances["vanc"] = true;
-            resistances["carb"] = true;
-            print(species + " has mutated against carb! Likelihood: " + carb);
-			//GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = (Color)(new Color32(255, 65, 0, 255));
-            return;
-        }
-        var vanc = appScript.mutationChances[species]["vanc"];
-        if (Random.Range(0, 100) < vanc * 100) {
-            resistances["amox"] = true;
-            resistances["meth"] = true;
-            resistances["vanc"] = true;
-            print(species + " has mutated against vanc! Likelihood: " + vanc);
-			//GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = (Color)(new Color32(155, 0, 250, 255));
-            return;
-        }
-        var meth = appScript.mutationChances[species]["meth"];
-         if (Random.Range(0, 100) < meth * 100) {
-            resistances["amox"] = true;
-            resistances["meth"] = true;
-            print(species + " has mutated against meth! Likelihood: " + meth);
-			//GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = (Color)(new Color32(80, 80, 255, 255));
-            return;
-        }
-        var amox = appScript.mutationChances[species]["amox"];
-        if (Random.Range(0, 100) < amox * 100) {
-            resistances["amox"] = true;
-            print(species + " has mutated against amox! Likelihood: " + amox);
-			//GetComponent<SpriteRenderer>().color = Color.black;
-			healthBar.color = Color.green;
-            return;
-        }
-       // More logic here 
     }
 
-   private void die(string antibioticType) {
+    // Recursive calls handle hierarchy of antibiotics.
+    private void setResistance(string antibioticType) {
+        switch(antibioticType) {
+            case "amox":
+                setResistances(new string[] {"amox"});
+                healthBar.color = Color.green;
+                break;
+            case "meth":
+                setResistances(new string[] {"amox", "meth"});
+                healthBar.color = (Color)(new Color32(80, 80, 255, 255));
+                break;
+            case "vanc":
+                setResistances(new string[] {"amox", "meth", "vanc"});
+                healthBar.color = (Color)(new Color32(155, 0, 250, 255));
+                break;
+            case "carb":
+                setResistances(new string[] {"amox", "meth", "vanc", "carb"});
+                healthBar.color = (Color)(new Color32(255, 65, 0, 255));
+                break;
+            case "line":
+                setResistances(new string[] {"amox", "meth", "vanc", "carb", "line"});
+                healthBar.color = Color.red;
+                break;
+            case "rifa":
+                resistances["rifa"] = true;
+                break;
+            case "ison":
+                resistances["ison"] = true;
+                break;
+        }
+    }
+
+    private void setResistances(string[] abs) {
+        foreach (string ab in abs) {
+            resistances[ab] = true;
+        }
+    }
+
+    private void die() {
         // queue SFX
         level.GetComponent<EnemyManager>().incEnemiesDead();
         game.GetComponent<Game>().Currency += 2;
-        appScript.increaseMutationChance(species, antibioticType);
+        
 		//Particles
-		for(int i = 0;i<10;i++){
+		for(int i = 0; i < 10; i++){
 			GameObject particle = Resources.Load("Prefabs/Particle") as GameObject;
 			particle.transform.position = transform.position;
 			particle.GetComponent<SpriteRenderer>().color = transform.GetChild(2).GetComponent<SpriteRenderer>().color;
@@ -195,28 +184,6 @@ public class Enemy : MonoBehaviour {
     private void updateHealthBar() {
         healthBar.fillAmount = health / maxHealth;
     }
-
-/* 
-    public void setSpecies(Sprite img, string type) {
-        species = type;
-		switch(type){
-			case "strep":
-				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.yellow;
-				break;
-			case "staph":
-				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.red;
-				break;
-			case "pneu":
-				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.cyan;
-				break;
-			case "TB":
-				transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.magenta;
-				break;
-		}
-        SpriteRenderer sr = transform.GetChild(2).GetComponent<SpriteRenderer>();
-        sr.sprite = img;
-    }
-*/
 
     public void setSpecies(string type) {
         species = type;

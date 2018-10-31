@@ -376,46 +376,18 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"RifaAOE", rifaAOE},
                                 {"IsonAOE", isonAOE} };
 
-/* 
-    private static IDictionary<string, object> pellet = new Dictionary<string, object>() {
-                                {"additionalCost", 0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f}, };
-                                */
-
  // USE ADDITIONAL DICTIONARIES BASED ON TOWER TYPE TO ADJUST VALUES BEING SET
     private GameObject tower;
 
-    private __app appTowers;
-
     // Use this for initialization
     void Start() {
-        appTowers = GameObject.Find("__app").GetComponent<__app>();
         tower = Resources.Load("Prefabs/Tower") as GameObject;
 
-        //Load the towers sprites, and assign them to their spots in the dictionaries
-        towers["Amoxicillin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["Methicillin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["Vancocymin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["Carbapenem"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["Linezolid"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["Rifampicin"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["Isoniazid"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["AmoxHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["MethHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["VancHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["CarbHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["LineHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["RifaHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["IsonHitscan"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["AmoxAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["MethAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["VancAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["CarbAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["LineAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["RifaAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        towers["IsonAOE"]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-       
+        // Load the towers sprites, and assign them to their spots in the dictionaries
+        List<string> towerKeys = new List<string> (towers.Keys);
+        foreach (string key in towerKeys) {
+            towers[key]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
+        }
 
         projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
