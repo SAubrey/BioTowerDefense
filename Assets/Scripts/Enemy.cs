@@ -101,21 +101,24 @@ public class Enemy : MonoBehaviour {
     }
 
     public void hurt(int baseDamage, string antibioticType) {
-        if (baseDamage > 0) {
-            if (resistances[antibioticType] == false) {
+        if (baseDamage > 0) { // So that TB cannot mutate to 1-5 abs.
+            // So that pneu, staph, strep cannot mutate to rifa and ison.
+            if (resistances[antibioticType] == false && 
+               !(species != "TB" && (antibioticType == "rifa" || antibioticType == "ison"))) { 
                 rollForMutate(antibioticType);
             }
+        
+
+            if (resistances[antibioticType] == false) { // If not resistant, do damage
+                float effectiveness = appScript.antibiotics[antibioticType][species];
+                health -= baseDamage * effectiveness;
+                updateHealthBar();
+
+                if (health <= 0) {
+                    die();
+                }
+            }   
         }
-
-        if (resistances[antibioticType] == false) { // If not resistant, do damage
-            float effectiveness = appScript.antibiotics[antibioticType][species];
-            health -= baseDamage * effectiveness;
-            updateHealthBar();
-
-            if (health <= 0) {
-                die();
-            }
-        }   
 	}
 
     // Mutation check happens at each projectile hit.
@@ -128,34 +131,35 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    // Recursive calls handle hierarchy of antibiotics.
     private void setResistance(string antibioticType) {
         switch(antibioticType) {
             case "amox":
                 setResistances(new string[] {"amox"});
-                healthBar.color = Color.green;
+                healthBar.color = LoadTowers.amoxColor;
                 break;
             case "meth":
                 setResistances(new string[] {"amox", "meth"});
-                healthBar.color = (Color)(new Color32(80, 80, 255, 255));
+                healthBar.color = LoadTowers.methColor;
                 break;
             case "vanc":
                 setResistances(new string[] {"amox", "meth", "vanc"});
-                healthBar.color = (Color)(new Color32(155, 0, 250, 255));
+                healthBar.color = LoadTowers.vancColor;
                 break;
             case "carb":
                 setResistances(new string[] {"amox", "meth", "vanc", "carb"});
-                healthBar.color = (Color)(new Color32(255, 65, 0, 255));
+                healthBar.color = LoadTowers.carbColor;
                 break;
             case "line":
                 setResistances(new string[] {"amox", "meth", "vanc", "carb", "line"});
-                healthBar.color = Color.red;
+                healthBar.color = LoadTowers.lineColor;
                 break;
             case "rifa":
                 resistances["rifa"] = true;
+                healthBar.color = LoadTowers.rifaColor;
                 break;
             case "ison":
                 resistances["ison"] = true;
+                healthBar.color = LoadTowers.isonColor;
                 break;
         }
     }

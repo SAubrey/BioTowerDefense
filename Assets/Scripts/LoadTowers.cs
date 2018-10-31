@@ -25,6 +25,16 @@ public class LoadTowers : MonoBehaviour {
 
         private Vector2 movement;
         private IDictionary<int, Vector2> scrollCoordinates;
+
+        public static Color amoxColor = Color.green;
+        public static Color methColor = (Color)(new Color32(80, 80, 255, 255));
+        public static Color vancColor = (Color)(new Color32(155, 0, 205, 255));
+        public static Color carbColor = (Color)(new Color32(255, 60, 0, 255));
+        public static Color lineColor = Color.red;
+        public static Color rifaColor = (Color)(new Color32(205, 205, 205, 255));
+        public static Color isonColor = (Color)(new Color32(85, 85, 85, 255));
+
+
     public static IDictionary<string, object> amoxProjectile = new Dictionary<string, object>(){
                                 {"name", "Amoxicillin"},
                                 {"towerPositionX", 8f},
@@ -37,7 +47,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", amoxSprite},
-                                {"towerColor", Color.green},
+                                {"towerColor", amoxColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -53,7 +63,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", methSprite},
-                                {"towerColor", (Color)(new Color32(80, 80, 255, 255))},
+                                {"towerColor", methColor},
                                 {"projectileSprite", projectile} };
 
     public static IDictionary<string, object> vancProjectile = new Dictionary<string, object>(){
@@ -68,7 +78,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", vancSprite},
-                                {"towerColor", (Color)(new Color32(155, 0, 250, 255))},
+                                {"towerColor", vancColor},
                                 {"projectileSprite", projectile},
                                  };
 
@@ -84,7 +94,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", carbSprite},
-                                {"towerColor", (Color)(new Color32(255, 65, 0, 255))},
+                                {"towerColor", carbColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -100,7 +110,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", lineSprite},
-                                {"towerColor", Color.red},
+                                {"towerColor", lineColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -116,7 +126,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", rifaSprite},
-                                {"towerColor", (Color)(new Color32(9, 9, 200, 255))},
+                                {"towerColor", rifaColor},
                                 {"projectileSprite", projectile},
                                  };
 
@@ -132,7 +142,7 @@ public class LoadTowers : MonoBehaviour {
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", isonSprite},
-                                {"towerColor", (Color)(new Color32(200, 9, 9, 255))},
+                                {"towerColor", isonColor},
                                 {"projectileSprite", projectile},
                                  };
 
@@ -148,7 +158,7 @@ public static IDictionary<string, object> amoxHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", amoxSprite},
-                                {"towerColor", Color.green},
+                                {"towerColor", amoxColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -164,7 +174,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", methSprite},
-                                {"towerColor", (Color)(new Color32(80, 80, 255, 255))},
+                                {"towerColor", methColor},
                                 {"projectileSprite", projectile} };
 
  public static IDictionary<string, object> vancHitscan = new Dictionary<string, object>(){
@@ -179,7 +189,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", vancSprite},
-                                {"towerColor", (Color)(new Color32(155, 0, 250, 255))},
+                                {"towerColor", vancColor},
                                 {"projectileSprite", projectile},
                                  };
 
@@ -195,7 +205,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", carbSprite},
-                                {"towerColor", (Color)(new Color32(255, 65, 0, 255))},
+                                {"towerColor", carbColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -211,7 +221,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", lineSprite},
-                                {"towerColor", Color.red},
+                                {"towerColor", lineColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -227,7 +237,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", rifaSprite},
-                                {"towerColor", (Color)(new Color32(9, 9, 200, 255))},
+                                {"towerColor", rifaColor},
                                 {"projectileSprite", projectile},
                                  };
 
@@ -243,7 +253,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", isonSprite},
-                                {"towerColor", (Color)(new Color32(200, 9, 9, 255))},
+                                {"towerColor", isonColor},
                                 {"projectileSprite", projectile},
                                  };
 
@@ -259,7 +269,7 @@ public static IDictionary<string, object> amoxAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", amoxSprite},
-                                {"towerColor", Color.green},
+                                {"towerColor", amoxColor},
                                 {"projectileSprite", projectile},
                                 };
 
@@ -275,7 +285,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", methSprite},
-                                {"towerColor", (Color)(new Color32(80, 80, 255, 255))},
+                                {"towerColor", methColor},
                                 {"projectileSprite", projectile} };
 
  public static IDictionary<string, object> vancAOE = new Dictionary<string, object>(){
@@ -290,7 +300,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", vancSprite},
-                                {"towerColor", (Color)(new Color32(155, 0, 250, 255))},
+                                {"towerColor", vancColor},
                                 {"projectileSprite", projectile} };
 
  public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
@@ -305,7 +315,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", carbSprite},
-                                {"towerColor", (Color)(new Color32(255, 65, 0, 255))},
+                                {"towerColor", carbColor},
                                 {"projectileSprite", projectile} };
 
  public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
@@ -320,7 +330,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", lineSprite},
-                                {"towerColor", Color.red},
+                                {"towerColor", lineColor},
                                 {"projectileSprite", projectile} };
 
     public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
@@ -335,7 +345,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", rifaSprite},
-                                {"towerColor", (Color)(new Color32(9, 9, 200, 255))},
+                                {"towerColor", rifaColor},
                                 {"projectileSprite", projectile} };
 
     public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
@@ -350,7 +360,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                                 {"radius", 4f},
                                 {"cooldown", 30.0f},
                                 {"towerSprite", isonSprite},
-                                {"towerColor", (Color)(new Color32(200, 9, 9, 255))},
+                                {"towerColor", isonColor},
                                 {"projectileSprite", projectile} };
 
     public IDictionary<string, IDictionary<string, object>> towers = new Dictionary<string, IDictionary<string, object>>(){
