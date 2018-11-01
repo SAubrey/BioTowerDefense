@@ -78,7 +78,7 @@ public class EnemyManager : MonoBehaviour {
 					spawnBurstEnemy();
 				} 
 				else {
-					spawnEnemy(chooseRandomEnemy(25, 25, 25, 25));
+					spawnEnemy(chooseRandomEnemy(27, 27, 27, 19));
 				}
 				spawnTimer = 0;
 			}
@@ -100,10 +100,8 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 	private void spawnEnemy(string enemyName) {
-        // Instantiate(Enemy, new Vector3(-10.5f,3.25f,0f),Quaternion.identity);
 		GameObject enemy = Instantiate(Enemy);
 		enemy.GetComponent<Enemy>().waypoints = game.waypoints;		
-        //enemy.GetComponent<Enemy>().setSpecies(enemySprites[enemyName], enemyName);
 		enemy.GetComponent<Enemy>().setSpecies(enemyName);
 
 		enemiesSpawnedInWave++;

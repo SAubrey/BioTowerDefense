@@ -55,9 +55,6 @@ public class __app : MonoBehaviour {
                                         {"rifa", rifa},
                                         {"ison", ison} };
 
-	public float baseMutationChance = 0f;
-    public float mutationIncrement = 0.02f;
-
     public static IDictionary<string, float> staphChances = new Dictionary<string, float>() {
                                     {"amox", 0f},
                                     {"meth", 0f},
@@ -101,12 +98,15 @@ public class __app : MonoBehaviour {
                                         {"TB", TBChances} };
             
 
+   	public float mutationIncrement = 0.02f;
+
 	// Use this for initialization
 	void Awake () {
 		options = new Options();
 		screenshake = new Screenshake();
 		level = "doi";
 		Debug.Log("STARTING APP!!!!");
+		mutationIncrement = 0.1f; // for testing
 	}
 	
 	// Update is called once per frame
@@ -129,6 +129,15 @@ public class __app : MonoBehaviour {
 	public void increaseMutationChance(string species, string antibioticType) {
         // Called by Enemy on death. Increase mutation chance by mutationIncrement relative to the bacteria species/antibioticType
         mutationChances[species][antibioticType] += mutationIncrement;
+		print("HEY TURN ME OFF");
+	}
+
+	public void increaseMutationChanceForAntibiotic(string antibioticType) {
+		List<string> bacterias = new List<string> (mutationChances.Keys);
+		foreach (string bacteria in bacterias) {
+			mutationChances[bacteria][antibioticType] += mutationIncrement;
+		}
+		print("Increasing mutation chances for " + antibioticType + " by " + mutationIncrement);
 	}
 
     // Iterate through all mutation chances and reduce by some percentage. Called after each wave?

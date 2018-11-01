@@ -69,8 +69,8 @@ public class Tower : MonoBehaviour {
 		}
 	}
 	
-	private void activate(){
-		if(type==0 || type==1){
+	private void activate() {
+		if(type == 0 || type == 1){
 			if (target == null) {
 				findTarget();
 			}
@@ -81,18 +81,18 @@ public class Tower : MonoBehaviour {
 				if (targetDist > detectionRadius) {
 					target = null;
 				}
-				else{
-					if (type==0){
+				else {
+					if (type == 0) { // PELLET
 						shoot(target);
 					}
-					else if(type==1){
-						Debug.Log("BOOOOOOOOOOOOOOOOM");
+					else if(type == 1) { // LASER
+						// Debug.Log("BOOOOOOOOOOOOOOOOM");
 						target.GetComponent<Enemy>().hurt(5, antibioticType);
 					}
 				}
 			}
 		}
-		else if(type==2){
+		else if(type == 2) { // AOE
 			var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 			var objectCount = enemies.Length;
 
