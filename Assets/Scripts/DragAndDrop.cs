@@ -11,7 +11,7 @@ public class DragAndDrop : MonoBehaviour
     private bool dragging = false;
     private float distance;
 
-    private Vector2 originalPosition;
+    private Vector3 originalPosition;
     private TowerManager towerManager;
     private LoadTowers loadTowers;
     private Game gameManager;
@@ -45,7 +45,6 @@ public class DragAndDrop : MonoBehaviour
 
     //Invoked when towers clicked
     void OnMouseDown() {
-        Debug.Log("HITTING");
 		    towerManager.destroyCircle();
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
@@ -56,7 +55,7 @@ public class DragAndDrop : MonoBehaviour
 
             towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
             originalPosition = gameObject.transform.position;
-           
+            Debug.Log(originalPosition);
             distance = Vector2.Distance(transform.position, Camera.main.transform.position);
             dragging = true;
 
@@ -109,7 +108,6 @@ public class DragAndDrop : MonoBehaviour
 
     //Upon successful drop, reload the an instance of the tower to the sidemenu
     void updateTheMenu() {
-        //loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName, originalPosition);
         loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName, originalPosition);
     }
 

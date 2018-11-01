@@ -55,7 +55,7 @@ public class TowerManager : MonoBehaviour {
 
     //Destroys the currently selected tower and adds currecncy for it
     public void sellTower() {
-        gameManager.Currency += (int)(SelectedTower.GetComponent<Tower>().cost * 0.7);
+        gameManager.Currency += (int)Mathf.Round(SelectedTower.GetComponent<Tower>().cost * 0.7f);
         Destroy(SelectedTower);
         clearLabels();
         SelectedTower = null;
@@ -68,17 +68,20 @@ public class TowerManager : MonoBehaviour {
 
         //If MenuItem show buy price, if already bought, show sell price
         if (SelectedTower.tag == "Tower") {
-            sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
+           // sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
+           towerNamelabel.text += ("\n Sell for $" + Mathf.Round(towerCost * 0.7f));
         }
         else {
-            sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
+            //sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
+            towerNamelabel.text += "\n $" + towerCost.ToString();
+
         }
     }
 
     //Clears the labels once tower is deselected or sold
     void clearLabels() {
         towerNamelabel.text = "";
-        sellTowerButton.GetComponent<Text>().text = "";
+      //  sellTowerButton.GetComponent<Text>().text = "";
     }
 
     //Draws the Towers radius when it's selected
@@ -99,11 +102,13 @@ public class TowerManager : MonoBehaviour {
 
     public void enableSellButton() {
         sellTowerButton.enabled = true;
-     //   sellTowerButton.GetComponent<Text>().enabled = true;
+        sellTowerButton.GetComponent<Image>().color = Color.green;
 
     }
     public void disableSellButton() {
         sellTowerButton.enabled = false;
+        sellTowerButton.GetComponent<Image>().color = Color.white;
+
     //    sellTowerButton.GetComponent<Text>().enabled = false;
     }
 
