@@ -104,7 +104,11 @@ public class DragAndDrop : MonoBehaviour
     //Upon successful purchase of tower, detach it from the menu.
     void detachFromMenu() {
         gameObject.tag = "Tower";
-        gameObject.transform.parent = null;
+        gameObject.transform.SetParent(null);
+
+        // Increase mutation probability.
+		__app appScript = GameObject.Find("__app").GetComponent<__app>();
+		appScript.increaseMutationChanceForAntibiotic(myTower.antibioticType);
     }
 
     //Upon successful drop, reload the an instance of the tower to the sidemenu
