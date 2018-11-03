@@ -17,7 +17,7 @@ public class DragAndDrop : MonoBehaviour
     private Game gameManager;
     private Tower myTower;
 
-    private int hitting;
+    private TowerPlacement shadow;
     
     // Use this for initialization
     void Start() {
@@ -25,6 +25,7 @@ public class DragAndDrop : MonoBehaviour
         towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
         loadTowers = gameObject.GetComponentInParent<LoadTowers>();
         myTower = gameObject.GetComponent<Tower>();
+        shadow = gameObject.GetComponentInChildren<TowerPlacement>();
     }
 
     void Update() {
@@ -32,7 +33,8 @@ public class DragAndDrop : MonoBehaviour
         if (dragging) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 rayPoint = ray.GetPoint(distance);
-            gameObject.transform.position = rayPoint;
+            Debug.Log(rayPoint);
+            gameObject.transform.position = new Vector3(rayPoint.x, rayPoint.y, rayPoint.y);
 
             if (validSpot()) {
                 towerManager.colorCircle(validColor);
@@ -50,12 +52,12 @@ public class DragAndDrop : MonoBehaviour
             towerManager.disableSellButton();
             towerManager.setLabels(myTower.towerName, myTower.cost);
             gameObject.layer = 2;
+
         //if user has enough money to buy tower
         if (gameManager.Currency >= myTower.cost) {
 
             towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
             originalPosition = gameObject.transform.position;
-            Debug.Log(originalPosition);
             distance = Vector2.Distance(transform.position, Camera.main.transform.position);
             dragging = true;
 
@@ -72,14 +74,6 @@ public class DragAndDrop : MonoBehaviour
         gameObject.layer = 0;
     }
 
-    void OnTriggerEnter2D() {
-        hitting = hitting + 1;
-    }
-
-    void OnTriggerExit2D() {
-        hitting = hitting - 1;
-    }
-
     //Moves tower back to menu if dropped on an invalid area
     //Dissattaches sideMenu as parent if towers dropped on valid area
     void validateDropPosition() {
@@ -93,7 +87,7 @@ public class DragAndDrop : MonoBehaviour
 
             Destroy(this);
         }
-        //If invalid, move tower back to original spot, destroy circle, but tower remains selected
+        //If invalid, move tower back to original spot, destroy radius circle, but tower remains "selected"
         else {
             gameObject.transform.position = originalPosition;
             towerManager.destroyCircle();
@@ -117,7 +111,7 @@ public class DragAndDrop : MonoBehaviour
 
     //returns false if the current position's overlapping any other colliders
     bool validSpot() {
-        if (hitting == 0) {
+        if (shadow.hitting == 0) {
             return true;
         }
         return false;

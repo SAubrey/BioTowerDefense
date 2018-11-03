@@ -22,8 +22,6 @@ public class LoadTowers : MonoBehaviour {
 
         private bool scrolling;
         private float destination;
-
-        private Vector2 movement;
         private IDictionary<int, Vector2> scrollCoordinates;
 
         public static Color amoxColor = Color.green;
@@ -406,8 +404,6 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
         scrolling = false;
         LoadAllTowers();
 
-        movement = new Vector2(0,0);
-
         scrollCoordinates =  new Dictionary<int, Vector2>() {
 							{0, new Vector2(0f, 7.08f)},
 							{1, new Vector2(0f, -0.5f)},
@@ -461,7 +457,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
         tScript.projectileSprite = null;
 
         float xPos =  (float) attributes["towerPositionX"];
-        float yPos =  (float) attributes["towerPositionY"] - movement.y;
+        float yPos =  (float) attributes["towerPositionY"];
 
         tScript.transform.position = new Vector3(xPos, yPos, -2f);
 
@@ -471,11 +467,8 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
     }
 
     public void ShowTowerColumn(int step) {
+        
         showTowers += step;
-        Debug.Log(gameObject.transform.position.y);
-
-        movement = scrollCoordinates[showTowers];
-
         scrolling = true;
 
         if(showTowers == 0){
@@ -493,9 +486,8 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
     void scrollTowers(float y) {
         
         Vector3 position = transform.position;
-        Debug.Log(position);
-
         Vector2 dest = scrollCoordinates[showTowers];
+
 		float dy = dest.y - position.y;
 		position.y += dy * 0.1f;
 		transform.position = position;
