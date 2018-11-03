@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Enemy : MonoBehaviour {
 
     //[HideInInspector]
+	public float speedActual;
     public float speed;
     public float maxHealth;
     private float health;
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+		speedActual = speed;
         health = maxHealth;
         lastWaypointSwitchTime = Time.time;
         game = GameObject.Find("Game");
@@ -49,10 +51,13 @@ public class Enemy : MonoBehaviour {
 			return;
 		}
         //bool reachedDestination = checkReachedDestination();
+		
         if (checkReachedDestination()) {
             setDestination();
         }
         move();
+		speedActual = speed*game.GetComponent<Game>().timescale;
+		Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
     }
     private void move() {
         // Figure out where it's currently at between the waypoints
@@ -88,7 +93,7 @@ public class Enemy : MonoBehaviour {
 
         // Figure out length between waypoints and time to cover distance
         float pathLength = Vector3.Distance(startPosition, endPosition);
-        totalTimeForPath = pathLength / speed;
+        totalTimeForPath = pathLength / speedActual;
     }
 
     private void reachOrgan() {

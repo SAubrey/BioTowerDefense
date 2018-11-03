@@ -18,10 +18,12 @@ public class Game : MonoBehaviour {
 	private GameObject app;
 	private __app appScript;
 	private GameObject level;
+	public float timescale;
 
 
 	void Start () {
 		game = false;
+		timescale = 1f;
 		gameOver = false;
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
@@ -90,6 +92,15 @@ public class Game : MonoBehaviour {
 
 	public void pauseGame() {
 		paused = true;
+	}
+	
+	public void toggleTimescale(){
+		if(timescale == 1f){
+			timescale = 2f;
+		}
+		else{
+			timescale = 1f;
+		}
 	}
 
     private int _currency;

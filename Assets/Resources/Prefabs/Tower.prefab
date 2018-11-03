@@ -116,10 +116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16a8325ed761f849a299c5ef18ac152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerName: Vancocymin
-  antibioticType: vanc
+  towerName: IsonAOE
+  antibioticType: ison
   type: 0
-  cost: 20
+  cost: 30
   coolDown: 30
   targetType: 0
   detectionRadius: 4
@@ -255,7 +255,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a5ca6ff3e2aad8b49860dc05e12bf3a7, type: 3}
-  m_Color: {r: 0.60784316, g: 0, b: 0.8039216, a: 1}
+  m_Color: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -352,6 +352,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 0.6000005}
+  m_AnchoredPosition: {x: 8, y: 17.75}
   m_SizeDelta: {x: 0.64, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
