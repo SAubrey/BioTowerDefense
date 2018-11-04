@@ -40,6 +40,13 @@ public class MenuCamera : MonoBehaviour {
 		determineStartPos();
 		xOffset = 0;
 		yOffset = 0;
+
+		if (SceneManager.GetActiveScene().name == "MainMenu") {
+			GameObject.Find("Strep").GetComponent<Animator>().Play("strep");
+			GameObject.Find("Staph").GetComponent<Animator>().Play("staph");
+			GameObject.Find("TB").GetComponent<Animator>().Play("TB");
+			GameObject.Find("Pneu").GetComponent<Animator>().Play("pneu");
+		}
 	}
 
 	void Update() {

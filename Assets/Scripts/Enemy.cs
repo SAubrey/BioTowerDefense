@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour {
         }
         move();
 		speedActual = speed*game.GetComponent<Game>().timescale;
-		Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
+		//Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
     }
     private void move() {
 
@@ -102,23 +102,24 @@ public class Enemy : MonoBehaviour {
     }
 
     public void hurt(int baseDamage, string antibioticType) {
-        if (baseDamage > 0) { // So that TB cannot mutate to 1-5 abs.
+        if (resistances[antibioticType] == false) {
+            float effectiveness = 0;
             // So that pneu, staph, strep cannot mutate to rifa and ison.
-            if (resistances[antibioticType] == false && 
-               !(species != "TB" && (antibioticType == "rifa" || antibioticType == "ison"))) { 
-                rollForMutate(antibioticType);
+            if (!(species != "TB" && (antibioticType == "rifa" || antibioticType == "ison"))) {
+                effectiveness = appScript.antibiotics[antibioticType][species];
+                if (effectiveness > 0) { // So that TB doesn't mutate against 1-5
+                    rollForMutate(antibioticType);
+                }
             }
-        
 
-            if (resistances[antibioticType] == false) { // If not resistant, do damage
-                float effectiveness = appScript.antibiotics[antibioticType][species];
+            if (resistances[antibioticType] == false) {
                 health -= baseDamage * effectiveness;
                 updateHealthBar();
 
                 if (health <= 0) {
                     die();
                 }
-            }   
+            }
         }
 	}
 
