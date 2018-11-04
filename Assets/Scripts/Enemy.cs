@@ -12,17 +12,18 @@ public class Enemy : MonoBehaviour {
     public string species; // Type of bacteria
     
     private int currentWaypoint = 0;
-    private float lastWaypointSwitchTime;
+
     private GameObject game;
 	private GameObject level;
     private __app appScript;
     private Vector3 startPosition, endPosition;
-    private float currentTimeOnPath, totalTimeForPath;
     private GameObject audioObject;
 
     [Header("Unity specific")]
     public Image healthBar;
     public GameObject[] waypoints;
+
+    private float distanceCovered;
 
     private IDictionary<string, bool> resistances = new Dictionary<string, bool>() {
                                         {"amox", false},
@@ -37,7 +38,6 @@ public class Enemy : MonoBehaviour {
     void Start () {
 		speedActual = speed;
         health = maxHealth;
-        lastWaypointSwitchTime = Time.time;
         game = GameObject.Find("Game");
 		level = GameObject.FindGameObjectsWithTag("Level")[0];
         appScript = GameObject.Find("__app").GetComponent<__app>();
@@ -60,11 +60,11 @@ public class Enemy : MonoBehaviour {
 		Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
     }
     private void move() {
-        // Figure out where it's currently at between the waypoints
-        currentTimeOnPath = Time.time - lastWaypointSwitchTime;
 
-        // The linear interpolant is the line between two points. Lerp returns the position upon that line.
-        gameObject.transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
+        //Get the total time between waypoints,  and multiply by speed for smooth enemy movement
+        distanceCovered += Time.deltaTime;
+        float step = distanceCovered * speed;
+        gameObject.transform.position = Vector3.MoveTowards(startPosition, endPosition, step);
     }
 
     private bool checkReachedDestination() {
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour {
             //If it's not the last waypoint "enemy has not made it to the base"
             if (currentWaypoint < waypoints.Length - 2) {
                 currentWaypoint++;
-                lastWaypointSwitchTime = Time.time;
+                distanceCovered = 0;
                 // TODO: Rotate into move direction
             } else {
 				reachOrgan();
@@ -90,10 +90,6 @@ public class Enemy : MonoBehaviour {
          // Retrieve the position of the last waypoint the enemy crossed and the next waypoint
         startPosition = waypoints[currentWaypoint].transform.position;
         endPosition = waypoints[currentWaypoint + 1].transform.position;
-
-        // Figure out length between waypoints and time to cover distance
-        float pathLength = Vector3.Distance(startPosition, endPosition);
-        totalTimeForPath = pathLength / speedActual;
     }
 
     private void reachOrgan() {

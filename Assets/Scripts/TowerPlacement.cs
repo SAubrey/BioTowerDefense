@@ -17,7 +17,7 @@ public class TowerPlacement : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.tag != "Tower"){
+		if(other.tag != "Tower" && other.tag !="Enemy"){
 			hitting += 1;
 
 		}
@@ -25,7 +25,7 @@ public class TowerPlacement : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if(other.tag != "Tower"){
+		if(other.tag != "Tower" && other.tag !="Enemy"){
 					hitting -= 1;
 				}
 	}

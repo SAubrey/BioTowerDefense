@@ -40,6 +40,7 @@ public class TowerManager : MonoBehaviour {
                 }
                 //Set null if no collider was clicked
                 else {
+                     disableSellButton();
                      SelectedTower = null;
                  }
                 
