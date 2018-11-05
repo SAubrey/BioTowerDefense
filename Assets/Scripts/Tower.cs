@@ -124,6 +124,7 @@ public class Tower : MonoBehaviour {
 		}
 	}
 	
+	/*
 	//Placement stuff
 	    private void OnMouseDown() {
     	if (gameObject.tag != "MenuItems") {
@@ -135,4 +136,5 @@ public class Tower : MonoBehaviour {
 			towerManager.enableSellButton();
 		}
 	}
+	*/
 }

@@ -11,92 +11,93 @@ public class __app : MonoBehaviour {
 
         // Dictionaries are arranged in order of effectiveness up to carb (1-5)
     // Linezolid is its own category, rifampicin and isoniazid are their own category.
-    private static IDictionary<string, float> amox = new Dictionary<string, float>() { // amoxicillin
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .4f},
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> meth = new Dictionary<string, float>() { // methicillin
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .4f},
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> vanc = new Dictionary<string, float>() { // vancomycin
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .4f},
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> carb = new Dictionary<string, float>() { // carbapenem
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", 1f}, // best. If resistant, 1, 2, 3 useless.
-                                        {"TB", 0f} };
-    private static IDictionary<string, float> line = new Dictionary<string, float>() { // linezolid
-                                        {"staph", 1f},
-                                        {"strep", 1f},
-                                        {"pneu", .9f}, // second best
-                                        {"TB", 0f} }; // 0-3 slider?
-    private static IDictionary<string, float> rifa = new Dictionary<string, float>() { // rifampicin
-                                        {"staph", .1f},
-                                        {"strep", .1f},
-                                        {"pneu", .1f},
-                                        {"TB", .5f} }; // Used in conjunction with isoniazid
-    private static IDictionary<string, float> ison = new Dictionary<string, float>() { // isoniazid
-                                        {"staph", .1f},
-                                        {"strep", .1f},
-                                        {"pneu", .1f},
-                                        {"TB", .5f} };                                                                                
-   
-    public IDictionary<string, IDictionary<string, float>> antibiotics = new Dictionary<string, IDictionary<string, float>>() {
-                                        {"amox", amox},
-                                        {"meth", meth},
-                                        {"vanc", vanc},
-                                        {"carb", carb},
-                                        {"line", line},
-                                        {"rifa", rifa},
-                                        {"ison", ison} };
+private static IDictionary<string, float> amox = new Dictionary<string, float>() { // amoxicillin
+					{"staph", 1f},
+					{"strep", 1f},
+					{"pneu", .4f},
+					{"TB", 0f} };
+private static IDictionary<string, float> meth = new Dictionary<string, float>() { // methicillin
+					{"staph", 1f},
+					{"strep", 1f},
+					{"pneu", .4f},
+					{"TB", 0f} };
+private static IDictionary<string, float> vanc = new Dictionary<string, float>() { // vancomycin
+					{"staph", 1f},
+					{"strep", 1f},
+					{"pneu", .4f},
+					{"TB", 0f} };
+private static IDictionary<string, float> carb = new Dictionary<string, float>() { // carbapenem
+					{"staph", 1f},
+					{"strep", 1f},
+					{"pneu", 1f}, // best. If resistant, 1, 2, 3 useless.
+					{"TB", 0f} };
+private static IDictionary<string, float> line = new Dictionary<string, float>() { // linezolid
+					{"staph", 1f},
+					{"strep", 1f},
+					{"pneu", .9f}, // second best
+					{"TB", 0f} }; // 0-3 slider?
+private static IDictionary<string, float> rifa = new Dictionary<string, float>() { // rifampicin
+					{"staph", .1f},
+					{"strep", .1f},
+					{"pneu", .1f},
+					{"TB", .5f} }; // Used in conjunction with isoniazid
+private static IDictionary<string, float> ison = new Dictionary<string, float>() { // isoniazid
+					{"staph", .1f},
+					{"strep", .1f},
+					{"pneu", .1f},
+					{"TB", .5f} };                                                                                
 
-    public static IDictionary<string, float> staphChances = new Dictionary<string, float>() {
-                                    {"amox", 0f},
-                                    {"meth", 0f},
-                                    {"vanc", 0f},
-                                    {"carb", 0f},
-                                    {"line", 0f},
-                                    {"rifa", 0f},
-                                    {"ison", 0f} };
-    public static IDictionary<string, float> strepChances = new Dictionary<string, float>() {
-                                    {"amox", 0f},
-                                    {"meth", 0f},
-                                    {"vanc", 0f},
-                                    {"carb", 0f},
-                                    {"line", 0f},
-                                    {"rifa", 0f},
-                                    {"ison", 0f} };
+public IDictionary<string, IDictionary<string, float>> antibiotics = new Dictionary<string, IDictionary<string, float>>() {
+					{"amox", amox},
+					{"meth", meth},
+					{"vanc", vanc},
+					{"carb", carb},
+					{"line", line},
+					{"rifa", rifa},
+					{"ison", ison} };
 
-    public static IDictionary<string, float> pneuChances = new Dictionary<string, float>() {
-                                    {"amox", 0f},
-                                    {"meth", 0f},
-                                    {"vanc", 0f},
-                                    {"carb", 0f},
-                                    {"line", 0f},
-                                    {"rifa", 0f},
-                                    {"ison", 0f} };
+public static IDictionary<string, float> staphChances = new Dictionary<string, float>() {
+					{"amox", 0f},
+					{"meth", 0f},
+					{"vanc", 0f},
+					{"carb", 0f},
+					{"line", 0f},
+					{"rifa", 0f},
+					{"ison", 0f} };
+					
+public static IDictionary<string, float> strepChances = new Dictionary<string, float>() {
+					{"amox", 0f},
+					{"meth", 0f},
+					{"vanc", 0f},
+					{"carb", 0f},
+					{"line", 0f},
+					{"rifa", 0f},
+					{"ison", 0f} };
 
-    public static IDictionary<string, float> TBChances = new Dictionary<string, float>() {
-                                    {"amox", 0f},
-                                    {"meth", 0f},
-                                    {"vanc", 0f},
-                                    {"carb", 0f},
-                                    {"line", 0f},
-                                    {"rifa", 0f},
-                                    {"ison", 0f} };
+public static IDictionary<string, float> pneuChances = new Dictionary<string, float>() {
+					{"amox", 0f},
+					{"meth", 0f},
+					{"vanc", 0f},
+					{"carb", 0f},
+					{"line", 0f},
+					{"rifa", 0f},
+					{"ison", 0f} };
 
-     public IDictionary<string, IDictionary<string, float>> mutationChances = 
-                                    new Dictionary<string, IDictionary<string, float>>() {
-                                        {"staph", staphChances},
-                                        {"strep", strepChances},
-                                        {"pneu", pneuChances},
-                                        {"TB", TBChances} };
+public static IDictionary<string, float> TBChances = new Dictionary<string, float>() {
+					{"amox", 0f},
+					{"meth", 0f},
+					{"vanc", 0f},
+					{"carb", 0f},
+					{"line", 0f},
+					{"rifa", 0f},
+					{"ison", 0f} };
+
+public IDictionary<string, IDictionary<string, float>> mutationChances = 
+				new Dictionary<string, IDictionary<string, float>>() {
+					{"staph", staphChances},
+					{"strep", strepChances},
+					{"pneu", pneuChances},
+					{"TB", TBChances} };
             
 
    	public float mutationIncrement = 0.02f;
@@ -107,7 +108,6 @@ public class __app : MonoBehaviour {
 		screenshake = new Screenshake();
 		particles = new particleManager();
 		level = "doi";
-		Debug.Log("STARTING APP!!!!");
 		mutationIncrement = 0.1f; // for testing
 	}
 	

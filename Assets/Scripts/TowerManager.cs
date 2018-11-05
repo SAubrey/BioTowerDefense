@@ -12,6 +12,7 @@ public class TowerManager : MonoBehaviour {
     public Button sellTowerButton;
 
     private Game gameManager;
+    public float sellPercentage = 0.7f;
 
 
     // Use this for initialization
@@ -26,8 +27,7 @@ public class TowerManager : MonoBehaviour {
         if (SelectedTower != null) {
             
             //Listen to Click events
-            if (Input.GetMouseButtonDown(0))
-            {
+            if (Input.GetMouseButtonDown(0)) {
                 Vector2 direction = new Vector2(0, 0);
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction);
 
@@ -43,20 +43,13 @@ public class TowerManager : MonoBehaviour {
                      disableSellButton();
                      SelectedTower = null;
                  }
-                
             }
- 
-        } else {
-            clearLabels();
-            if (lineRenderer != null) {
-                destroyCircle();
-            }
-        }      
+        }    
 	}
 
     //Destroys the currently selected tower and adds currecncy for it
     public void sellTower() {
-        gameManager.Currency += (int)Mathf.Round(SelectedTower.GetComponent<Tower>().cost * 0.7f);
+        gameManager.Currency += (int)Mathf.Round(SelectedTower.GetComponent<Tower>().cost * sellPercentage);
         Destroy(SelectedTower);
         clearLabels();
         SelectedTower = null;
@@ -64,23 +57,22 @@ public class TowerManager : MonoBehaviour {
     }
 
     //Sets the selected towers labels
-    public void setLabels(string towerName, int towerCost){
+    public void setLabels(string towerName, int towerCost) {
         towerNamelabel.text = towerName;
 
         //If MenuItem show buy price, if already bought, show sell price
         if (SelectedTower.tag == "Tower") {
            // sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
-           towerNamelabel.text += ("\n Sell for $" + Mathf.Round(towerCost * 0.7f));
+           towerNamelabel.text += ("\n Sell for $" + Mathf.Round(towerCost * sellPercentage));
         }
         else {
             //sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
             towerNamelabel.text += "\n $" + towerCost.ToString();
-
         }
     }
 
     //Clears the labels once tower is deselected or sold
-    void clearLabels() {
+    public void clearLabels() {
         towerNamelabel.text = "";
       //  sellTowerButton.GetComponent<Text>().text = "";
     }

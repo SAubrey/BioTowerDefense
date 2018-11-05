@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragAndDrop : MonoBehaviour
-{
-
+public class DragAndDrop : MonoBehaviour {
     private Color validColor = Color.green;
     private Color invalidColor = Color.red;
 
@@ -75,12 +73,14 @@ public class DragAndDrop : MonoBehaviour
     }
 
     //Moves tower back to menu if dropped on an invalid area
-    //Dissattaches sideMenu as parent if towers dropped on valid area
+    // Detaches sideMenu as parent if towers dropped on valid area
     void validateDropPosition() {
         if (validSpot()) {
             
             detachFromMenu();
             updateTheMenu();
+            towerManager.clearLabels();
+            towerManager.destroyCircle();
 
             gameManager.Currency -= myTower.cost;
             towerManager.SelectedTower = null;

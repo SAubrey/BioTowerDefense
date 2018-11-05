@@ -13,6 +13,7 @@ public class LoadTowers : MonoBehaviour {
         public static Sprite lineSprite;
         public static Sprite rifaSprite;
         public static Sprite isonSprite;
+
         public static GameObject projectile;
 
         public int showTowers;
@@ -24,6 +25,12 @@ public class LoadTowers : MonoBehaviour {
         private float destination;
         private IDictionary<int, Vector2> scrollCoordinates;
 
+        // TYPE
+        private static int projType = 0;
+        private static int laserType = 1;
+        private static int bombType = 2;
+
+        // COLOR
         public static Color amoxColor = Color.green;
         public static Color methColor = (Color)(new Color32(80, 80, 255, 255));
         public static Color vancColor = (Color)(new Color32(155, 0, 205, 255));
@@ -32,372 +39,299 @@ public class LoadTowers : MonoBehaviour {
         public static Color rifaColor = (Color)(new Color32(205, 205, 205, 255));
         public static Color isonColor = (Color)(new Color32(85, 85, 85, 255));
 
+        private static float posX = 8.0f;
+        private static Vector2 ppos = new Vector2(8.0f, 3.65f);
+        private static Vector2 lpos = new Vector2(8.0f, 11.2f);
+        private static Vector2 bpos = new Vector2(8.0f, 18.75f);
+        private static float yDist = 1f;
+        
+        // RADIUS
+        public static float baseRadius = 3f;
+        public static float extraBombRadius = -1f;
+        public static float extraLaserRadius = 1f;
+
+        // COOLDOWN
+        public static float baseCooldown = 30.0f;
+        public static float extraBombCooldown = 30f;
+        public static float extraLaserCooldown = 20f;
+
+        // COST
+        public static int baseCost = 25;
+        public static int extraBombCost = 20;
+        public static int extraLaserCost = 20;
+        public static int amoxCost = baseCost;
+        public static int methCost = baseCost;
+        public static int vancCost = baseCost;
+        public static int carbCost = baseCost;
+        public static int lineCost = baseCost;
+        public static int rifaCost = baseCost;
+        public static int isonCost = baseCost;
 
     public static IDictionary<string, object> amoxProjectile = new Dictionary<string, object>(){
-                                {"name", "Amoxicillin"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 2.6f},
-                                {"antibioticType", "amox"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 10},
-								{"type",2},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", amoxSprite},
-                                {"towerColor", amoxColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Amoxicillin"},
+                {"antibioticType", "amox"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 1)},
+                {"cost", amoxCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", amoxSprite},
+                {"towerColor", amoxColor} };
 
     public static IDictionary<string, object> methProjectile = new Dictionary<string, object>(){
-                                {"name", "Methicillin"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 1.6f},
-                                {"antibioticType", "meth"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 15},
-								{"type",1},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", methSprite},
-                                {"towerColor", methColor},
-                                {"projectileSprite", projectile} };
+                {"name", "Methicillin"},
+                {"antibioticType", "meth"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 2)},
+                {"cost", methCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", methSprite},
+                {"towerColor", methColor} };
 
     public static IDictionary<string, object> vancProjectile = new Dictionary<string, object>(){
-                                {"name", "Vancocymin"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 0.6f},
-                                {"antibioticType", "vanc"},
-                                {"towerType", 0},
-                                {"targetType", 0},
-                                {"cost", 20},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", vancSprite},
-                                {"towerColor", vancColor},
-                                {"projectileSprite", projectile},
-                                 };
+                {"name", "Vancomycin"},
+                {"antibioticType", "vanc"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 3)},
+                {"cost", vancCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", vancSprite},
+                {"towerColor", vancColor} };
 
     public static IDictionary<string, object> carbProjectile = new Dictionary<string, object>(){
-                                {"name", "Carbapenem"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", -0.4f},
-                                {"antibioticType", "carb"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", carbSprite},
-                                {"towerColor", carbColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Carbapenem"},
+                {"antibioticType", "carb"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 4)},
+                {"cost", carbCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", carbSprite},
+                {"towerColor", carbColor} };
 
     public static IDictionary<string, object> lineProjectile = new Dictionary<string, object>(){
-                                {"name", "Linezolid"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", -1.4f},
-                                {"antibioticType", "line"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 40},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", lineSprite},
-                                {"towerColor", lineColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Linezolid"},
+                {"antibioticType", "line"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 5)},
+                {"cost", lineCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", lineSprite},
+                {"towerColor", lineColor} };
 
     public static IDictionary<string, object> rifaProjectile = new Dictionary<string, object>(){
-                                {"name", "Rifampicin"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", -2.4f},
-                                {"antibioticType", "rifa"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", rifaSprite},
-                                {"towerColor", rifaColor},
-                                {"projectileSprite", projectile},
-                                 };
+                {"name", "Rifampicin"},
+                {"antibioticType", "rifa"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 6)},
+                {"cost", rifaCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", rifaSprite},
+                {"towerColor", rifaColor} };
 
     public static IDictionary<string, object> isonProjectile = new Dictionary<string, object>(){
-                                {"name", "Isoniazid"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", -3.4f},
-                                {"antibioticType", "ison"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", isonSprite},
-                                {"towerColor", isonColor},
-                                {"projectileSprite", projectile},
-                                 };
+                {"name", "Isoniazid"},
+                {"antibioticType", "ison"},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 7)},
+                {"cost", isonCost},
+                {"type", projType},
+                {"radius", baseRadius},
+                {"cooldown", baseCooldown},
+                {"towerSprite", isonSprite},
+                {"towerColor", isonColor} };
 
 public static IDictionary<string, object> amoxHitscan = new Dictionary<string, object>(){
-                                {"name", "AmoxHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 4.2f},
-                                {"antibioticType", "amox"},
-                                {"towerType", 1},
-                                {"targetType", 0}, 
-                                {"cost", 10},
-                                {"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", amoxSprite},
-                                {"towerColor", amoxColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Amoxicillin Laser"},
+                {"antibioticType", "amox"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 1)},
+                {"cost", amoxCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", amoxSprite},
+                {"towerColor", amoxColor} };
 
 public static IDictionary<string, object> methHitscan = new Dictionary<string, object>(){
-                                {"name", "MethHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 5.2f},
-                                {"antibioticType", "meth"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 15},
-								{"type",1},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", methSprite},
-                                {"towerColor", methColor},
-                                {"projectileSprite", projectile} };
+                {"name", "Methicillin Laser"},
+                {"antibioticType", "meth"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 2)},
+                {"cost", methCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", methSprite},
+                {"towerColor", methColor} };
 
  public static IDictionary<string, object> vancHitscan = new Dictionary<string, object>(){
-                                {"name", "VancHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 6.2f},
-                                {"antibioticType", "vanc"},
-                                {"towerType", 0},
-                                {"targetType", 0},
-                                {"cost", 20},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", vancSprite},
-                                {"towerColor", vancColor},
-                                {"projectileSprite", projectile},
-                                 };
+                {"name", "Vancomycin Laser"},
+                {"antibioticType", "vanc"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 3)},
+                {"cost", vancCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", vancSprite},
+                {"towerColor", vancColor} };
 
  public static IDictionary<string, object> carbHitscan = new Dictionary<string, object>(){
-                                {"name", "CarbHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 7.2f},
-                                {"antibioticType", "carb"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", carbSprite},
-                                {"towerColor", carbColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Carbapanem Laser"},
+                {"antibioticType", "carb"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 4)},
+                {"cost", carbCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", carbSprite},
+                {"towerColor", carbColor} };
 
  public static IDictionary<string, object> lineHitscan = new Dictionary<string, object>(){
-                                {"name", "LineHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 8.2f},
-                                {"antibioticType", "line"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 40},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", lineSprite},
-                                {"towerColor", lineColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Linezolid Laser"},
+                {"antibioticType", "line"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 5)},
+                {"cost", lineCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", lineSprite},
+                {"towerColor", lineColor} };
 
     public static IDictionary<string, object> rifaHitscan = new Dictionary<string, object>(){
-                                {"name", "RifaHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 9.2f},
-                                {"antibioticType", "rifa"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", rifaSprite},
-                                {"towerColor", rifaColor},
-                                {"projectileSprite", projectile},
-                                 };
+                {"name", "Rifampicin Laser"},
+                {"antibioticType", "rifa"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 6)},
+                {"cost", rifaCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", rifaSprite},
+                {"towerColor", rifaColor} };
 
     public static IDictionary<string, object> isonHitscan = new Dictionary<string, object>(){
-                                {"name", "IsonHitscan"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 10.2f},
-                                {"antibioticType", "ison"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", isonSprite},
-                                {"towerColor", isonColor},
-                                {"projectileSprite", projectile},
-                                 };
+                {"name", "Isoniazid Laser"},
+                {"antibioticType", "ison"},
+                {"position", new Vector2(lpos.x, lpos.y - yDist * 7)},
+                {"cost", isonCost + extraLaserCost},
+                {"type", laserType},
+                {"radius", baseRadius + extraLaserRadius},
+                {"cooldown", baseCooldown + extraLaserCooldown},
+                {"towerSprite", isonSprite},
+                {"towerColor", isonColor} };
 
 public static IDictionary<string, object> amoxAOE = new Dictionary<string, object>(){
-                                {"name", "AmoxAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 11.75f},
-                                {"antibioticType", "amox"},
-                                {"towerType", 1},
-                                {"targetType", 0}, 
-                                {"cost", 10},
-                                {"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", amoxSprite},
-                                {"towerColor", amoxColor},
-                                {"projectileSprite", projectile},
-                                };
+                {"name", "Amoxicillin Bomber"},
+                {"antibioticType", "amox"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 1)},
+                {"cost", amoxCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", amoxSprite},
+                {"towerColor", amoxColor} };
 
 public static IDictionary<string, object> methAOE = new Dictionary<string, object>(){
-                                {"name", "MethAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 12.75f},
-                                {"antibioticType", "meth"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 15},
-								{"type",1},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", methSprite},
-                                {"towerColor", methColor},
-                                {"projectileSprite", projectile} };
+                {"name", "Methicillin Bomber"},
+                {"antibioticType", "meth"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 2)},
+                {"cost", methCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", methSprite},
+                {"towerColor", methColor} };
 
- public static IDictionary<string, object> vancAOE = new Dictionary<string, object>(){
-                                {"name", "VancAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 13.75f},
-                                {"antibioticType", "vanc"},
-                                {"towerType", 0},
-                                {"targetType", 0},
-                                {"cost", 20},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", vancSprite},
-                                {"towerColor", vancColor},
-                                {"projectileSprite", projectile} };
+public static IDictionary<string, object> vancAOE = new Dictionary<string, object>(){
+                {"name", "Vancomycin Bomber"},
+                {"antibioticType", "vanc"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 3)},
+                {"cost", vancCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", vancSprite},
+                {"towerColor", vancColor} };
 
- public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
-                                {"name", "CarbAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 14.75f},
-                                {"antibioticType", "carb"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", carbSprite},
-                                {"towerColor", carbColor},
-                                {"projectileSprite", projectile} };
+public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
+                {"name", "Carbapanem Bomber"},
+                {"antibioticType", "carb"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 4)},
+                {"cost", carbCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", carbSprite},
+                {"towerColor", carbColor} };
 
- public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
-                                {"name", "LineAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 15.75f},
-                                {"antibioticType", "line"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 40},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", lineSprite},
-                                {"towerColor", lineColor},
-                                {"projectileSprite", projectile} };
+public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
+                {"name", "Linezolid Bomber"},
+                {"antibioticType", "line"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 5)},
+                {"cost", lineCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", lineSprite},
+                {"towerColor", lineColor} };
 
-    public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
-                                {"name", "RifaAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 16.75f},
-                                {"antibioticType", "rifa"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", rifaSprite},
-                                {"towerColor", rifaColor},
-                                {"projectileSprite", projectile} };
+public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
+                {"name", "Rifampicin Bomber"},
+                {"antibioticType", "rifa"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 6)},
+                {"cost", rifaCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", rifaSprite},
+                {"towerColor", rifaColor} };
 
-    public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
-                                {"name", "IsonAOE"},
-                                {"towerPositionX", 8f},
-                                {"towerPositionY", 17.75f},
-                                {"antibioticType", "ison"},
-                                {"towerType", 0},
-                                {"targetType", 0}, 
-                                {"cost", 30},
-								{"type",0},
-                                {"radius", 4f},
-                                {"cooldown", 30.0f},
-                                {"towerSprite", isonSprite},
-                                {"towerColor", isonColor},
-                                {"projectileSprite", projectile} };
+public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
+                {"name", "Isoniazid Bomber"},
+                {"antibioticType", "ison"},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 7)},
+                {"cost", isonCost + extraBombCost},
+                {"type", bombType},
+                {"radius", baseRadius + extraBombRadius},
+                {"cooldown", baseCooldown + extraBombCooldown},
+                {"towerSprite", isonSprite},
+                {"towerColor", isonColor} };
 
     public IDictionary<string, IDictionary<string, object>> towers = new Dictionary<string, IDictionary<string, object>>(){
-                                {"Amoxicillin", amoxProjectile},
-                                {"Methicillin", methProjectile},
-                                {"Vancocymin", vancProjectile},
-                                {"Carbapenem", carbProjectile},
-                                {"Linezolid", lineProjectile},
-                                {"Rifampicin", rifaProjectile},
-                                {"Isoniazid", isonProjectile},
-                                {"AmoxHitscan", amoxHitscan},
-                                {"MethHitscan", methHitscan},
-                                {"VancHitscan", vancHitscan},
-                                {"CarbHitscan", carbHitscan},
-                                {"LineHitscan", lineHitscan},
-                                {"RifaHitscan", rifaHitscan},
-                                {"IsonHitscan", isonHitscan},
-                                {"AmoxAOE", amoxAOE},
-                                {"MethAOE", methAOE},
-                                {"VancAOE", vancAOE},
-                                {"CarbAOE", carbAOE},
-                                {"LineAOE", lineAOE},
-                                {"RifaAOE", rifaAOE},
-                                {"IsonAOE", isonAOE} };
+                {"Amoxicillin", amoxProjectile},
+                {"Methicillin", methProjectile},
+                {"Vancomycin", vancProjectile},
+                {"Carbapenem", carbProjectile},
+                {"Linezolid", lineProjectile},
+                {"Rifampicin", rifaProjectile},
+                {"Isoniazid", isonProjectile},
+                {"Amoxicillin Laser", amoxHitscan},
+                {"Methicillin Laser", methHitscan},
+                {"Vancomycin Laser", vancHitscan},
+                {"Carbapenem Laser", carbHitscan},
+                {"Linezolid Laser", lineHitscan},
+                {"Rifampicin Laser", rifaHitscan},
+                {"Isoniazid Laser", isonHitscan},
+                {"Amoxicillin Bomber", amoxAOE},
+                {"Methicillin Bomber", methAOE},
+                {"Vancomycin Bomber", vancAOE},
+                {"Carbapanem Bomber", carbAOE},
+                {"Linezolid Bomber", lineAOE},
+                {"Rifampicin Bomber", rifaAOE},
+                {"Isoniazid Bomber", isonAOE} };
 
- // USE ADDITIONAL DICTIONARIES BASED ON TOWER TYPE TO ADJUST VALUES BEING SET
     private GameObject tower;
 
-    // Use this for initialization
     void Start() {
         tower = Resources.Load("Prefabs/Tower") as GameObject;
+        projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
         // Load the towers sprites, and assign them to their spots in the dictionaries
         List<string> towerKeys = new List<string> (towers.Keys);
         foreach (string key in towerKeys) {
             towers[key]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
         }
-
-        projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
         showTowers = 0;
         destination = 6;
@@ -410,16 +344,14 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
 							{2, new Vector2(0f, -8.1f)} };
     }
 
-    // Update is called once per frame
     void Update() {
-        if(scrolling) {
+        if (scrolling) {
             scrollTowers(destination);        
         }
     }
 
-    //Reloads towers, called by the DragAndDrop script attached to individual towers
+    // Creates a new tower, called by the DragAndDrop script attached to individual towers
     public void reloadTower(string towerName, Vector3 relativePosition) {
-      
         IDictionary <string, object> towerAttributes;
         towerAttributes = towers[towerName];
 
@@ -432,42 +364,36 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
     //Loads the first column of towers on start, will load the displayed column
     void LoadAllTowers() {
         foreach (KeyValuePair<string, IDictionary<string, object>> tow in towers) {    
-                  GameObject newTower = setTowerAttributes(tow.Value);
-                  Instantiate(newTower, gameObject.transform, true);                 
+            GameObject newTower = setTowerAttributes(tow.Value);
+            Instantiate(newTower, gameObject.transform, true);
         }
     }
 
-    //Set the towers attributes before spawning to the menu
+    // Set the towers attributes before spawning to the menu
     GameObject setTowerAttributes(IDictionary<string, object> attributes) {
-
         GameObject t = tower;
         Tower tScript = tower.GetComponent<Tower>();
 
+        // Could split by tower type here
         tScript.towerName = (string) attributes["name"];
         tScript.antibioticType = (string) attributes["antibioticType"];
-        tScript.type = (int) attributes["towerType"];
-        tScript.targetType = (int) attributes["targetType"]; 
+        tScript.targetType = 0;  //(int) attributes["targetType"]; 
         tScript.cost = (int) attributes["cost"];
 		tScript.type = (int) attributes["type"];
         tScript.detectionRadius = (float)attributes["radius"];
         tScript.coolDown = (float)attributes["cooldown"];
-        //tScript.specialEffect = (int) attributes["specialEffect"];
+    
         t.GetComponent<SpriteRenderer>().sprite = (Sprite) attributes["towerSprite"];
         t.GetComponent<SpriteRenderer>().color = (Color) attributes["towerColor"];
         tScript.projectileSprite = null;
 
-        float xPos =  (float) attributes["towerPositionX"];
-        float yPos =  (float) attributes["towerPositionY"];
-
-        tScript.transform.position = new Vector3(xPos, yPos, -2f);
-
-        tScript.tag = "MenuItems";
-
+        Vector2 pos = (Vector2) attributes["position"];
+        tScript.transform.position = new Vector3(pos.x, pos.y, -2f);
+        tScript.tag = "MenuItems"; 
         return t;
     }
 
     public void ShowTowerColumn(int step) {
-        
         showTowers += step;
         scrolling = true;
 
@@ -484,7 +410,6 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
     }
 
     void scrollTowers(float y) {
-        
         Vector3 position = transform.position;
         Vector2 dest = scrollCoordinates[showTowers];
 
