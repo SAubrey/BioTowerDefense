@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Game : MonoBehaviour {
 	public static bool game = false; // True so long as there is a running game state, paused or not. False when gameOver
 	public static bool paused = false;
+	[HideInInspector] 
 	public GameObject[] waypoints;
 	
 	public int HP;
@@ -16,10 +17,13 @@ public class Game : MonoBehaviour {
 	public static bool gameOver = false;
 	private GameObject app;
 	private __app appScript;
+	private GameObject level;
+	public float timescale;
 
 
 	void Start () {
 		game = false;
+		timescale = 1f;
 		gameOver = false;
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
@@ -27,6 +31,19 @@ public class Game : MonoBehaviour {
 		GameOverText.text = "";
 		Gray.SetActive(false);
         Currency = 150;
+		//Load Level
+		level = Resources.Load("Prefabs/Levels/"+appScript.getLevel()) as GameObject;
+		Instantiate(level);
+		GameObject[] foundWaypoints = GameObject.FindGameObjectsWithTag("Waypoint");
+		waypoints = new GameObject[foundWaypoints.Length];
+		Debug.Log("Waypoints: "+foundWaypoints.Length.ToString());
+		for( int i = 0;i<foundWaypoints.Length;i++){
+			foreach( GameObject way in foundWaypoints ){
+				if(way.name == "Waypoint"+i.ToString()){
+					waypoints[i] = way;
+				}
+			}
+		}
 	}
 	
 	// Use this for initialization
@@ -75,6 +92,15 @@ public class Game : MonoBehaviour {
 
 	public void pauseGame() {
 		paused = true;
+	}
+	
+	public void toggleTimescale(){
+		if(timescale == 1f){
+			timescale = 2f;
+		}
+		else{
+			timescale = 1f;
+		}
 	}
 
     private int _currency;

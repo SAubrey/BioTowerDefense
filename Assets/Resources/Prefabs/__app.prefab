@@ -20,12 +20,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4491872959331870}
   - component: {fileID: 114634413618890838}
+  - component: {fileID: 114458462412772330}
   - component: {fileID: 114584442154356618}
   - component: {fileID: 114466907172758552}
   - component: {fileID: 82804828159905940}
   - component: {fileID: 114719716011435790}
   - component: {fileID: 82112572026316534}
-  - component: {fileID: 114458462412772330}
   m_Layer: 0
   m_Name: __app
   m_TagString: Untagged
@@ -247,8 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570aac1117376df438dbcded5b88250b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMutationChance: 0
-  mutationIncrement: 0.05
+  mutationIncrement: 0.02
 --- !u!114 &114466907172758552
 MonoBehaviour:
   m_ObjectHideFlags: 1

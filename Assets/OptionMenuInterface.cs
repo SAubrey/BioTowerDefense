@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class OptionMenuInterface : MonoBehaviour {
 	public Text musicText;
 	public Text sfxText;
+	public Text screenshakeText;
 	private GameObject app;
 	private __app appScript;
 
@@ -16,6 +17,7 @@ public class OptionMenuInterface : MonoBehaviour {
 		appScript = app.GetComponent<__app>();
 		updateMusicText();
 		updateSFXText();
+		updateScreenshakeText();
 	}
 	
 	// Update is called once per frame
@@ -47,5 +49,18 @@ public class OptionMenuInterface : MonoBehaviour {
 		var txt = "On";
 		if(!sfx) txt = "Off";//This has to be inverted because we grab it before we set it
 		sfxText.text = "SFX: "+txt;
+	}
+	
+	public void toggleScreenshake(){
+		var ss = appScript.getScreenshake();
+		appScript.setScreenshake(!ss);
+		updateScreenshakeText();
+	}
+	
+	private void updateScreenshakeText(){
+		var ss = appScript.getScreenshake();
+		var txt = "On";
+		if(!ss) txt = "Off";//This has to be inverted because we grab it before we set it
+		screenshakeText.text = "Screenshake: "+txt;
 	}
 }
