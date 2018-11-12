@@ -19,18 +19,15 @@ public class MenuCamera : MonoBehaviour {
 	private float xOffset;
 	private float yOffset;
 	private __app appScript;
-	void Awake() {
-	}
 
 	void Start() {
-		mainMenuCoordinates = new Dictionary<string, Vector2>() 
-													{
-														{"MainMenu", new Vector2(0f, 0f)},
-														{"PlayMenu", new Vector2(0f, 10f)},
-														{"Game", new Vector2(0f, 30f)},
-														{"OptionsMenu", new Vector2(0f, -10f)},
-														{"Encyclopedia", new Vector2(-30f, 0f)}
-													};
+		mainMenuCoordinates = new Dictionary<string, Vector2>() {
+					{"MainMenu", new Vector2(0f, 0f)},
+					{"PlayMenu", new Vector2(0f, 10f)},
+					{"Game", new Vector2(0f, 30f)},
+					{"OptionsMenu", new Vector2(0f, -10f)},
+					{"Encyclopedia", new Vector2(-30f, 0f)} };
+
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
 		sceneGuy = app.GetComponent<SceneGuy>();
@@ -41,11 +38,17 @@ public class MenuCamera : MonoBehaviour {
 		xOffset = 0;
 		yOffset = 0;
 
-		if (SceneManager.GetActiveScene().name == "MainMenu") {
+		if (scene == "MainMenu") {
 			GameObject.Find("Strep").GetComponent<Animator>().Play("strep");
 			GameObject.Find("Staph").GetComponent<Animator>().Play("staph");
 			GameObject.Find("TB").GetComponent<Animator>().Play("TB");
 			GameObject.Find("Pneu").GetComponent<Animator>().Play("pneu");
+		} 
+		else if ( scene == "Encyclopedia") {
+			GameObject.Find("Strep/Enemy").GetComponent<Animator>().Play("strep");
+			GameObject.Find("Staph/Enemy").GetComponent<Animator>().Play("staph");
+			GameObject.Find("TB/Enemy").GetComponent<Animator>().Play("TB");
+			GameObject.Find("Pneu/Enemy").GetComponent<Animator>().Play("pneu");
 		}
 	}
 
@@ -62,8 +65,7 @@ public class MenuCamera : MonoBehaviour {
 		else{
 			xOffset = 0;
 			yOffset = 0;
-		}
-		
+		}	
 	}
 
 	private void determineStartPos() {

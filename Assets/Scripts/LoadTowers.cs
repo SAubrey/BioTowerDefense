@@ -6,13 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LoadTowers : MonoBehaviour {
-        public static Sprite amoxSprite;
-        public static Sprite methSprite;
-        public static Sprite vancSprite;
-        public static Sprite carbSprite;
-        public static Sprite lineSprite;
-        public static Sprite rifaSprite;
-        public static Sprite isonSprite;
+        public Sprite pelletTower;
+        public Sprite laserTower;
+        public Sprite bombTower;
 
         public static GameObject projectile;
 
@@ -75,7 +71,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", amoxSprite},
                 {"towerColor", amoxColor} };
 
     public static IDictionary<string, object> methProjectile = new Dictionary<string, object>(){
@@ -86,7 +81,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", methSprite},
                 {"towerColor", methColor} };
 
     public static IDictionary<string, object> vancProjectile = new Dictionary<string, object>(){
@@ -97,7 +91,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", vancSprite},
                 {"towerColor", vancColor} };
 
     public static IDictionary<string, object> carbProjectile = new Dictionary<string, object>(){
@@ -108,7 +101,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", carbSprite},
                 {"towerColor", carbColor} };
 
     public static IDictionary<string, object> lineProjectile = new Dictionary<string, object>(){
@@ -119,7 +111,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", lineSprite},
                 {"towerColor", lineColor} };
 
     public static IDictionary<string, object> rifaProjectile = new Dictionary<string, object>(){
@@ -130,7 +121,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", rifaSprite},
                 {"towerColor", rifaColor} };
 
     public static IDictionary<string, object> isonProjectile = new Dictionary<string, object>(){
@@ -141,7 +131,6 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerSprite", isonSprite},
                 {"towerColor", isonColor} };
 
 public static IDictionary<string, object> amoxHitscan = new Dictionary<string, object>(){
@@ -152,7 +141,6 @@ public static IDictionary<string, object> amoxHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", amoxSprite},
                 {"towerColor", amoxColor} };
 
 public static IDictionary<string, object> methHitscan = new Dictionary<string, object>(){
@@ -163,7 +151,6 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", methSprite},
                 {"towerColor", methColor} };
 
  public static IDictionary<string, object> vancHitscan = new Dictionary<string, object>(){
@@ -174,7 +161,6 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", vancSprite},
                 {"towerColor", vancColor} };
 
  public static IDictionary<string, object> carbHitscan = new Dictionary<string, object>(){
@@ -185,7 +171,6 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", carbSprite},
                 {"towerColor", carbColor} };
 
  public static IDictionary<string, object> lineHitscan = new Dictionary<string, object>(){
@@ -196,7 +181,6 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", lineSprite},
                 {"towerColor", lineColor} };
 
     public static IDictionary<string, object> rifaHitscan = new Dictionary<string, object>(){
@@ -207,7 +191,6 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", rifaSprite},
                 {"towerColor", rifaColor} };
 
     public static IDictionary<string, object> isonHitscan = new Dictionary<string, object>(){
@@ -218,7 +201,6 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerSprite", isonSprite},
                 {"towerColor", isonColor} };
 
 public static IDictionary<string, object> amoxAOE = new Dictionary<string, object>(){
@@ -229,7 +211,6 @@ public static IDictionary<string, object> amoxAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", amoxSprite},
                 {"towerColor", amoxColor} };
 
 public static IDictionary<string, object> methAOE = new Dictionary<string, object>(){
@@ -240,7 +221,6 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", methSprite},
                 {"towerColor", methColor} };
 
 public static IDictionary<string, object> vancAOE = new Dictionary<string, object>(){
@@ -251,7 +231,6 @@ public static IDictionary<string, object> vancAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", vancSprite},
                 {"towerColor", vancColor} };
 
 public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
@@ -262,7 +241,6 @@ public static IDictionary<string, object> carbAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", carbSprite},
                 {"towerColor", carbColor} };
 
 public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
@@ -273,7 +251,6 @@ public static IDictionary<string, object> lineAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", lineSprite},
                 {"towerColor", lineColor} };
 
 public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
@@ -284,7 +261,6 @@ public static IDictionary<string, object> rifaAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", rifaSprite},
                 {"towerColor", rifaColor} };
 
 public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
@@ -295,7 +271,6 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerSprite", isonSprite},
                 {"towerColor", isonColor} };
 
     public IDictionary<string, IDictionary<string, object>> towers = new Dictionary<string, IDictionary<string, object>>(){
@@ -373,19 +348,25 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
     GameObject setTowerAttributes(IDictionary<string, object> attributes) {
         GameObject t = tower;
         Tower tScript = tower.GetComponent<Tower>();
+        SpriteRenderer sr = t.GetComponent<SpriteRenderer>();
 
-        // Could split by tower type here
+        tScript.type = (int) attributes["type"];
+        if (tScript.type == projType) {
+            sr.sprite = pelletTower;
+        } 
+        else if (tScript.type == laserType) {
+            sr.sprite = laserTower;
+        }
+        else if (tScript.type == bombType) {
+            sr.sprite = bombTower;
+        }
+
         tScript.towerName = (string) attributes["name"];
         tScript.antibioticType = (string) attributes["antibioticType"];
-        tScript.targetType = 0;  //(int) attributes["targetType"]; 
         tScript.cost = (int) attributes["cost"];
-		tScript.type = (int) attributes["type"];
         tScript.detectionRadius = (float)attributes["radius"];
         tScript.coolDown = (float)attributes["cooldown"];
-    
-        t.GetComponent<SpriteRenderer>().sprite = (Sprite) attributes["towerSprite"];
-        t.GetComponent<SpriteRenderer>().color = (Color) attributes["towerColor"];
-        tScript.projectileSprite = null;
+        sr.color = (Color) attributes["towerColor"];
 
         Vector2 pos = (Vector2) attributes["position"];
         tScript.transform.position = new Vector3(pos.x, pos.y, -2f);
@@ -397,12 +378,12 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
         showTowers += step;
         scrolling = true;
 
-        if(showTowers == 0){
+        if (showTowers == 0) {
              navUp.interactable = false;
         } else {
              navUp.interactable = true;
         }
-        if(showTowers == 2){
+        if (showTowers == 2) {
               navDown.interactable = false;
         } else {
             navDown.interactable = true;
@@ -418,7 +399,7 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
 		transform.position = position;
 
         if (Math.Abs(dy) < .02) {
-				scrolling = false;
-			}
+			scrolling = false;
+		}
     }
 }

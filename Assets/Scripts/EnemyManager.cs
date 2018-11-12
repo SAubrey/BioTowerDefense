@@ -34,17 +34,18 @@ public class EnemyManager : MonoBehaviour {
 	private Text EnemyText;
 	private Text TimerText; 
 	private float enemiesDead;
+	public int waveCompleteReward = 20; 
 
 	void Start () {
 		game = GameObject.Find("Game").GetComponentInParent<Game>();
 		EnemyText = GameObject.Find("EnemyText").GetComponent<Text>();
 		TimerText = GameObject.Find("TimerText").GetComponent<Text>();
-		updateEnemyText();
+		updateEnemyCountText();
 		enemySprites = new Dictionary<string, Sprite>() {
-												{"pneu", pneuSprite},
-												{"staph", staphSprite}, 
-												{"strep", strepSprite},
-												{"TB", TBSprite} };
+					{"pneu", pneuSprite},
+					{"staph", staphSprite}, 
+					{"strep", strepSprite},
+					{"TB", TBSprite} };
 	}
 	 
 	void Update () {
@@ -87,7 +88,7 @@ public class EnemyManager : MonoBehaviour {
 
 	private void initiateBurst() {
 		burstSpawn = true;
-		burstEnemy = chooseRandomEnemy(25, 25, 25, 25);
+		burstEnemy = chooseRandomEnemy(26, 26, 26, 21);
 		burstEnemiesRemaining = burstEnemyCount;
 		burstTimer = 0;
 		print("Burst initiated for " + burstEnemyCount + " enemies.");
@@ -140,29 +141,30 @@ public class EnemyManager : MonoBehaviour {
 		burstSpawn = false;
 		enemiesDead = 0;
 
-
 		// Advance and toggle spawning.
 		currentWave++;
 		waveActive = true;
 		spawningActive = true;
 
-		GameObject.Find("__app").GetComponent<__app>().lowerAllChances(0.5f);
-		updateEnemyText();
+		if (currentWave > 0) {
+			GameObject.Find("__app").GetComponent<__app>().lowerAllChances(0.5f);
+
+		}
+		updateEnemyCountText();
 		print("Beginning wave " + currentWave);
 	}
 
 	public void incEnemiesDead() {
 		enemiesDead++;
-		updateEnemyText();
+		updateEnemyCountText();
 
 		if (enemiesDead >= wavesEnemyCounts[currentWave]) {
 			waveActive = false;
-            game.Currency += 50;
-
+            game.Currency += waveCompleteReward;
         }
     }
 
-	private void updateEnemyText() {
+	private void updateEnemyCountText() {
 		EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesDead);
 	}
 }

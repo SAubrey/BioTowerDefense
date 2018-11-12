@@ -31,33 +31,36 @@ public class Game : MonoBehaviour {
 		GameOverText.text = "";
 		Gray.SetActive(false);
         Currency = 150;
-		//Load Level
+
+		// Load Level
 		level = Resources.Load("Prefabs/Levels/"+appScript.getLevel()) as GameObject;
 		Instantiate(level);
+
+		// Find and load waypoints
 		GameObject[] foundWaypoints = GameObject.FindGameObjectsWithTag("Waypoint");
 		waypoints = new GameObject[foundWaypoints.Length];
-		Debug.Log("Waypoints: "+foundWaypoints.Length.ToString());
-		for( int i = 0;i<foundWaypoints.Length;i++){
-			foreach( GameObject way in foundWaypoints ){
-				if(way.name == "Waypoint"+i.ToString()){
+		// Debug.Log("Waypoints: " + foundWaypoints.Length.ToString());
+		for (int i = 0; i<foundWaypoints.Length; i++) {
+			foreach (GameObject way in foundWaypoints) {
+				if (way.name == "Waypoint" + i.ToString()) {
 					waypoints[i] = way;
 				}
 			}
 		}
 	}
 	
-	// Use this for initialization
+	// Called by start button
 	public void startGame () {
 		game = true;
 		paused = false;
-		gameOver = false;
-		HPText.text = "HP: " + HP;
-		GameOverText.text = "";
-		Gray.SetActive(false);
+		//gameOver = false;
+		//HPText.text = "HP: " + HP;
+		//GameOverText.text = "";
+		//Gray.SetActive(false);
 	}
 	
-	// Update is called once per frame
 	void Update () {
+		/* 
 		if (game) {
 			//if (!paused) {
 			//}
@@ -66,6 +69,7 @@ public class Game : MonoBehaviour {
 				endGame();
 			}
 		}
+		*/
 	}
 
 	private void endGame() {
@@ -90,8 +94,8 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	public void pauseGame() {
-		paused = true;
+	public void togglePaused() {
+		paused = !paused;
 	}
 	
 	public void toggleTimescale(){
@@ -110,7 +114,7 @@ public class Game : MonoBehaviour {
         }
         set {
             _currency = value;
-            currencyText.GetComponent<Text>().text = "$: " + _currency;
+            currencyText.GetComponent<Text>().text = "$" + _currency;
         }
     }
 }
