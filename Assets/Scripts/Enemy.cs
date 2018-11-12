@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour {
     public GameObject[] waypoints;
 
     private float distanceCovered;
+    private Color particleColor;
+    public int baseProfitPerEnemy = 2;
 
     private IDictionary<string, bool> resistances = new Dictionary<string, bool>() {
                                         {"amox", false},
@@ -39,9 +41,11 @@ public class Enemy : MonoBehaviour {
 		speedActual = speed;
         health = maxHealth;
         game = GameObject.Find("Game");
-		level = GameObject.FindGameObjectsWithTag("Level")[0];
+		//level = GameObject.FindGameObjectsWithTag("Level")[0];
+        level = GameObject.FindGameObjectWithTag("Level");
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
+        particleColor = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color;
 
         setDestination();
     }
@@ -74,7 +78,6 @@ public class Enemy : MonoBehaviour {
             if (currentWaypoint < waypoints.Length - 2) {
                 currentWaypoint++;
                 distanceCovered = 0;
-                // TODO: Rotate into move direction
             } else {
 				reachOrgan();
                 return false;
@@ -90,6 +93,9 @@ public class Enemy : MonoBehaviour {
          // Retrieve the position of the last waypoint the enemy crossed and the next waypoint
         startPosition = waypoints[currentWaypoint].transform.position;
         endPosition = waypoints[currentWaypoint + 1].transform.position;
+        // TODO: Rotate into move direction
+        //transform.LookAt(endPosition);
+        //transform.up = endPosition;
     }
 
     private void reachOrgan() {
@@ -123,14 +129,14 @@ public class Enemy : MonoBehaviour {
         }
 	}
 
-    // Mutation check happens at each projectile hit.
+    // Mutation check happens at each projectile hit against that antibiotic type.
     public void rollForMutate(string antibioticType) {
         
         var chance = appScript.mutationChances[species][antibioticType];
         if (Random.Range(0, 100) < chance * 100) {
             print(species + " has mutated against " + antibioticType + "! Likelihood: " + (chance * 100) + "%");
             setResistance(antibioticType);
-			appScript.newParticles(transform.position,30,0.8f,Color.black);
+			appScript.newParticles(transform.position, 30, 0.8f, __app.colors[antibioticType]);
         }
     }
 
@@ -138,31 +144,31 @@ public class Enemy : MonoBehaviour {
         switch(antibioticType) {
             case "amox":
                 setResistances(new string[] {"amox"});
-                healthBar.color = LoadTowers.amoxColor;
+                healthBar.color = __app.amoxColor;
                 break;
             case "meth":
                 setResistances(new string[] {"amox", "meth"});
-                healthBar.color = LoadTowers.methColor;
+                healthBar.color = __app.methColor;
                 break;
             case "vanc":
                 setResistances(new string[] {"amox", "meth", "vanc"});
-                healthBar.color = LoadTowers.vancColor;
+                healthBar.color = __app.vancColor;
                 break;
             case "carb":
                 setResistances(new string[] {"amox", "meth", "vanc", "carb"});
-                healthBar.color = LoadTowers.carbColor;
+                healthBar.color = __app.carbColor;
                 break;
             case "line":
                 setResistances(new string[] {"amox", "meth", "vanc", "carb", "line"});
-                healthBar.color = LoadTowers.lineColor;
+                healthBar.color = __app.lineColor;
                 break;
             case "rifa":
                 resistances["rifa"] = true;
-                healthBar.color = LoadTowers.rifaColor;
+                healthBar.color = __app.rifaColor;
                 break;
             case "ison":
                 resistances["ison"] = true;
-                healthBar.color = LoadTowers.isonColor;
+                healthBar.color = __app.isonColor;
                 break;
         }
     }
@@ -176,10 +182,10 @@ public class Enemy : MonoBehaviour {
     private void die() {
         // queue SFX
         level.GetComponent<EnemyManager>().incEnemiesDead();
-        game.GetComponent<Game>().Currency += 2;
+        game.GetComponent<Game>().Currency += baseProfitPerEnemy;
         
 		//Particles
-		appScript.newParticles(transform.position,10,0.05f,transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color);
+		appScript.newParticles(transform.position, 10, 0.05f, particleColor);
         Destroy(gameObject);
     }
 
@@ -190,19 +196,20 @@ public class Enemy : MonoBehaviour {
     public void setSpecies(string type) {
         species = type;
         GetComponent<Animator>().Play(type);
+
 		//Set 'Color'
 		switch(type){
 			case("strep"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+				particleColor = (Color)new Color32(132, 60, 211, 255);
 				break;
 			case("staph"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+				particleColor = (Color)new Color32(132, 60, 211, 255);
 				break;
 			case("pneu"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+				particleColor = (Color)new Color32(255, 52, 166, 255);
 				break;
 			case("TB"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+				particleColor = (Color)new Color32(255, 52, 166, 255);
 				break;
 		}
 		

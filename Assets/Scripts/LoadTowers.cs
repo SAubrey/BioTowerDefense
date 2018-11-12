@@ -26,14 +26,7 @@ public class LoadTowers : MonoBehaviour {
         private static int laserType = 1;
         private static int bombType = 2;
 
-        // COLOR
-        public static Color amoxColor = Color.green;
-        public static Color methColor = (Color)(new Color32(80, 80, 255, 255));
-        public static Color vancColor = (Color)(new Color32(155, 0, 205, 255));
-        public static Color carbColor = (Color)(new Color32(255, 60, 0, 255));
-        public static Color lineColor = Color.red;
-        public static Color rifaColor = (Color)(new Color32(205, 205, 205, 255));
-        public static Color isonColor = (Color)(new Color32(85, 85, 85, 255));
+        
 
         private static float posX = 8.0f;
         private static Vector2 ppos = new Vector2(8.0f, 3.65f);
@@ -71,7 +64,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", amoxColor} };
+                {"towerColor", __app.amoxColor} };
 
     public static IDictionary<string, object> methProjectile = new Dictionary<string, object>(){
                 {"name", "Methicillin"},
@@ -81,7 +74,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", methColor} };
+                {"towerColor",  __app.methColor} };
 
     public static IDictionary<string, object> vancProjectile = new Dictionary<string, object>(){
                 {"name", "Vancomycin"},
@@ -91,7 +84,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", vancColor} };
+                {"towerColor",  __app.vancColor} };
 
     public static IDictionary<string, object> carbProjectile = new Dictionary<string, object>(){
                 {"name", "Carbapenem"},
@@ -101,7 +94,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", carbColor} };
+                {"towerColor",  __app.carbColor} };
 
     public static IDictionary<string, object> lineProjectile = new Dictionary<string, object>(){
                 {"name", "Linezolid"},
@@ -111,7 +104,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", lineColor} };
+                {"towerColor",  __app.lineColor} };
 
     public static IDictionary<string, object> rifaProjectile = new Dictionary<string, object>(){
                 {"name", "Rifampicin"},
@@ -121,7 +114,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", rifaColor} };
+                {"towerColor",  __app.rifaColor} };
 
     public static IDictionary<string, object> isonProjectile = new Dictionary<string, object>(){
                 {"name", "Isoniazid"},
@@ -131,7 +124,7 @@ public class LoadTowers : MonoBehaviour {
                 {"type", projType},
                 {"radius", baseRadius},
                 {"cooldown", baseCooldown},
-                {"towerColor", isonColor} };
+                {"towerColor",  __app.isonColor} };
 
 public static IDictionary<string, object> amoxHitscan = new Dictionary<string, object>(){
                 {"name", "Amoxicillin Laser"},
@@ -141,7 +134,7 @@ public static IDictionary<string, object> amoxHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", amoxColor} };
+                {"towerColor",  __app.amoxColor} };
 
 public static IDictionary<string, object> methHitscan = new Dictionary<string, object>(){
                 {"name", "Methicillin Laser"},
@@ -151,7 +144,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", methColor} };
+                {"towerColor", __app.methColor} };
 
  public static IDictionary<string, object> vancHitscan = new Dictionary<string, object>(){
                 {"name", "Vancomycin Laser"},
@@ -161,7 +154,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", vancColor} };
+                {"towerColor", __app.vancColor} };
 
  public static IDictionary<string, object> carbHitscan = new Dictionary<string, object>(){
                 {"name", "Carbapanem Laser"},
@@ -171,7 +164,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", carbColor} };
+                {"towerColor", __app.carbColor} };
 
  public static IDictionary<string, object> lineHitscan = new Dictionary<string, object>(){
                 {"name", "Linezolid Laser"},
@@ -181,7 +174,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", lineColor} };
+                {"towerColor", __app.lineColor} };
 
     public static IDictionary<string, object> rifaHitscan = new Dictionary<string, object>(){
                 {"name", "Rifampicin Laser"},
@@ -191,7 +184,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", rifaColor} };
+                {"towerColor", __app.rifaColor} };
 
     public static IDictionary<string, object> isonHitscan = new Dictionary<string, object>(){
                 {"name", "Isoniazid Laser"},
@@ -201,7 +194,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"type", laserType},
                 {"radius", baseRadius + extraLaserRadius},
                 {"cooldown", baseCooldown + extraLaserCooldown},
-                {"towerColor", isonColor} };
+                {"towerColor", __app.isonColor} };
 
 public static IDictionary<string, object> amoxAOE = new Dictionary<string, object>(){
                 {"name", "Amoxicillin Bomber"},
@@ -211,7 +204,7 @@ public static IDictionary<string, object> amoxAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", amoxColor} };
+                {"towerColor", __app.amoxColor} };
 
 public static IDictionary<string, object> methAOE = new Dictionary<string, object>(){
                 {"name", "Methicillin Bomber"},
@@ -221,7 +214,7 @@ public static IDictionary<string, object> methAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", methColor} };
+                {"towerColor", __app.methColor} };
 
 public static IDictionary<string, object> vancAOE = new Dictionary<string, object>(){
                 {"name", "Vancomycin Bomber"},
@@ -231,7 +224,7 @@ public static IDictionary<string, object> vancAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", vancColor} };
+                {"towerColor", __app.vancColor} };
 
 public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
                 {"name", "Carbapanem Bomber"},
@@ -241,7 +234,7 @@ public static IDictionary<string, object> carbAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", carbColor} };
+                {"towerColor", __app.carbColor} };
 
 public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
                 {"name", "Linezolid Bomber"},
@@ -251,7 +244,7 @@ public static IDictionary<string, object> lineAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", lineColor} };
+                {"towerColor", __app.lineColor} };
 
 public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
                 {"name", "Rifampicin Bomber"},
@@ -261,7 +254,7 @@ public static IDictionary<string, object> rifaAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", rifaColor} };
+                {"towerColor", __app.rifaColor} };
 
 public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
                 {"name", "Isoniazid Bomber"},
@@ -271,7 +264,7 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
                 {"cooldown", baseCooldown + extraBombCooldown},
-                {"towerColor", isonColor} };
+                {"towerColor", __app.isonColor} };
 
     public IDictionary<string, IDictionary<string, object>> towers = new Dictionary<string, IDictionary<string, object>>(){
                 {"Amoxicillin", amoxProjectile},

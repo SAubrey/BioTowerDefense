@@ -9,6 +9,24 @@ public class __app : MonoBehaviour {
 	private particleManager particles;
 	private string level;
 
+	// COLOR
+	public static Color amoxColor = Color.green;
+	public static Color methColor = (Color)(new Color32(80, 80, 255, 255));
+	public static Color vancColor = (Color)(new Color32(155, 0, 205, 255));
+	public static Color carbColor = (Color)(new Color32(255, 60, 0, 255));
+	public static Color lineColor = Color.red;
+	public static Color rifaColor = (Color)(new Color32(205, 205, 205, 255));
+	public static Color isonColor = (Color)(new Color32(85, 85, 85, 255));
+
+	public static IDictionary<string, Color> colors = new Dictionary<string, Color>() { 
+					{"amox", amoxColor},
+					{"meth", methColor},
+					{"vanc", vancColor},
+					{"carb", carbColor},
+					{"line", lineColor},
+					{"rifa", rifaColor},
+					{"ison", isonColor} };
+
         // Dictionaries are arranged in order of effectiveness up to carb (1-5)
     // Linezolid is its own category, rifampicin and isoniazid are their own category.
 private static IDictionary<string, float> amox = new Dictionary<string, float>() { // amoxicillin

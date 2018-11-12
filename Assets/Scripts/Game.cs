@@ -51,12 +51,10 @@ public class Game : MonoBehaviour {
 	
 	// Called by start button
 	public void startGame () {
-		game = true;
-		paused = false;
-		//gameOver = false;
-		//HPText.text = "HP: " + HP;
-		//GameOverText.text = "";
-		//Gray.SetActive(false);
+		if (HP > 0) {
+			game = true;
+			paused = false;
+		}
 	}
 	
 	void Update () {
