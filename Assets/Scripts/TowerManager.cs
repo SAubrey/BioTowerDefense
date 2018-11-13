@@ -32,19 +32,15 @@ public class TowerManager : MonoBehaviour {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction);
 
                 //Set selected tower to null if a collider was hit that's not of another tower or menu.
-                if(hit.collider != null) {
-                    if(hit.collider.tag != "Tower" && hit.collider.tag != "Menu"){
-                        Debug.Log(hit.collider.tag);
+                if((hit.collider == null) || (hit.collider.tag != "Tower" && hit.collider.tag != "Menu")) {
+                        disableSellButton();
+                        clearLabels();
+                        destroyCircle();
                         SelectedTower = null;
-                    }
                 }
-                //Set null if no collider was clicked
-                else {
-                     disableSellButton();
-                     SelectedTower = null;
-                 }
+               
             }
-        }    
+        } 
 	}
 
     //Destroys the currently selected tower and adds currecncy for it
@@ -62,11 +58,9 @@ public class TowerManager : MonoBehaviour {
 
         //If MenuItem show buy price, if already bought, show sell price
         if (SelectedTower.tag == "Tower") {
-           // sellTowerButton.GetComponent<Text>().text = "Sell for $" + (towerCost / 2);
            towerNamelabel.text += ("\n Sell for $" + Mathf.Round(towerCost * sellPercentage));
         }
         else {
-            //sellTowerButton.GetComponent<Text>().text = "$" + towerCost.ToString();
             towerNamelabel.text += "\n $" + towerCost.ToString();
         }
     }
@@ -74,7 +68,6 @@ public class TowerManager : MonoBehaviour {
     //Clears the labels once tower is deselected or sold
     public void clearLabels() {
         towerNamelabel.text = "";
-      //  sellTowerButton.GetComponent<Text>().text = "";
     }
 
     //Draws the Towers radius when it's selected
@@ -101,8 +94,6 @@ public class TowerManager : MonoBehaviour {
     public void disableSellButton() {
         sellTowerButton.enabled = false;
         sellTowerButton.GetComponent<Image>().color = Color.white;
-
-    //    sellTowerButton.GetComponent<Text>().enabled = false;
     }
 
     //Erases the circle when tower is "deselected"
