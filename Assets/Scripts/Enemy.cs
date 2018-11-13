@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour {
     public GameObject[] waypoints;
 
     private float distanceCovered;
+    //private SpriteRenderer particleSR; // SPrite Renderer
     private Color particleColor;
     public int baseProfitPerEnemy = 2;
 
@@ -45,7 +46,7 @@ public class Enemy : MonoBehaviour {
         level = GameObject.FindGameObjectWithTag("Level");
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
-        particleColor = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color;
+       // particleSR = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>();
 
         setDestination();
     }
@@ -94,8 +95,9 @@ public class Enemy : MonoBehaviour {
         startPosition = waypoints[currentWaypoint].transform.position;
         endPosition = waypoints[currentWaypoint + 1].transform.position;
         // TODO: Rotate into move direction
-        //transform.LookAt(endPosition);
-        //transform.up = endPosition;
+        //transform.LookAt((Vector2)endPosition);
+        //transform.up = (Vector2)endPosition;
+        //transform.right = (Vector2)endPosition;
     }
 
     private void reachOrgan() {
@@ -103,7 +105,7 @@ public class Enemy : MonoBehaviour {
        // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
         level.GetComponent<EnemyManager>().incEnemiesDead();
-		appScript.newScreenshake(6, 0.1f);
+		appScript.newScreenshake(6, 0.05f);
         Destroy(gameObject);
     }
 
@@ -200,13 +202,13 @@ public class Enemy : MonoBehaviour {
 		//Set 'Color'
 		switch(type){
 			case("strep"):
-				particleColor = (Color)new Color32(132, 60, 211, 255);
+				particleColor = (Color)new Color32(132, 60, 211, 255); // purple
 				break;
 			case("staph"):
 				particleColor = (Color)new Color32(132, 60, 211, 255);
 				break;
 			case("pneu"):
-				particleColor = (Color)new Color32(255, 52, 166, 255);
+				particleColor = (Color)new Color32(255, 52, 166, 255); // pinkish
 				break;
 			case("TB"):
 				particleColor = (Color)new Color32(255, 52, 166, 255);

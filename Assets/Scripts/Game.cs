@@ -12,14 +12,15 @@ public class Game : MonoBehaviour {
 	public int HP;
 	public Text HPText;
 	public Text GameOverText;
+	private string _gameOverText = "";
     public Text currencyText;
+	public Text waveText;
 	public GameObject Gray;
 	public static bool gameOver = false;
 	private GameObject app;
 	private __app appScript;
 	private GameObject level;
 	public float timescale;
-
 
 	void Start () {
 		game = false;
@@ -28,8 +29,7 @@ public class Game : MonoBehaviour {
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
 		HPText.text = "HP: " + HP;
-		GameOverText.text = "";
-		Gray.SetActive(false);
+		gameOverText = "";
         Currency = 150;
 
 		// Load Level
@@ -62,25 +62,33 @@ public class Game : MonoBehaviour {
 		if (game) {
 			//if (!paused) {
 			//}
-
-			if (HP <= 0) {
-				endGame();
-			}
 		}
 		*/
 	}
 
 	private void endGame() {
-		GameOverText.text = "GAME OVER";
-		Gray.SetActive(true);
+		gameOverText = "GAME OVER";
 		var audioObject = GameObject.Find("AudioObject");
 		audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/lose") as AudioClip;
-		if(appScript.getSFX()){
+		if (appScript.getSFX()) {
 			audioObject.GetComponent<AudioSource>().Play();
 		}
 		game = false;
 		gameOver = true;
 		app.GetComponent<MusicPlayer>().NewSong("death");
+	}
+
+	public void passLevel() {
+		gameOverText = "YOU WIN!";
+		game = false;
+		gameOver = true;
+/*
+		var audioObject = GameObject.Find("AudioObject");
+		audioObject.GetComponent<AudioSource>().clip = Resources.Load("Sounds/win") as AudioClip;
+		if (appScript.getSFX()) {
+			audioObject.GetComponent<AudioSource>().Play();
+		}
+*/
 	}
 	
 	public void takeDamage(int damage){
@@ -96,11 +104,11 @@ public class Game : MonoBehaviour {
 		paused = !paused;
 	}
 	
-	public void toggleTimescale(){
-		if(timescale == 1f){
+	public void toggleTimescale() {
+		if (timescale == 1f){
 			timescale = 2f;
 		}
-		else{
+		else {
 			timescale = 1f;
 		}
 	}
@@ -115,4 +123,20 @@ public class Game : MonoBehaviour {
             currencyText.GetComponent<Text>().text = "$" + _currency;
         }
     }
+
+	public string gameOverText {
+		get {
+			return _gameOverText;
+		}
+		set {
+			_gameOverText = value;
+			if (value == "") {
+				GameOverText.text = "";
+				Gray.SetActive(false);
+			} else {
+				GameOverText.text = value;
+				Gray.SetActive(true);
+			}
+		}
+	}
 }

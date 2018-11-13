@@ -9,11 +9,6 @@ public class EnemyManager : MonoBehaviour {
 	private float spawnTimer = 0f;
 	public float spawnInterval = .9f; // seconds
 	public GameObject Enemy;
-	public Sprite pneuSprite;
-	public Sprite staphSprite;
-	public Sprite strepSprite;
-	public Sprite TBSprite;
-	private IDictionary<string, Sprite> enemySprites;
 
 	// Burst Spawning Mode Management
 	private bool burstSpawn = false;
@@ -24,8 +19,8 @@ public class EnemyManager : MonoBehaviour {
 	private string burstEnemy;
 
 	// Wave Management
-	public int[] wavesEnemyCounts = {9, 12, 16, 19, 21, 23, 25, 27, 29, 31};
-	public int currentWave = 0;
+	public int[] wavesEnemyCounts = {0, 9, 12, 16, 19, 21, 23, 25, 27, 29, 31};
+	private int _currentWave = 1;
 	private int enemiesSpawnedInWave = 0;
 	private bool waveActive = true;
 	private bool spawningActive = true;
@@ -33,19 +28,16 @@ public class EnemyManager : MonoBehaviour {
 	private float waveIntervalTimer = 0f;
 	private Text EnemyText;
 	private Text TimerText; 
-	private float enemiesDead;
+	private int _enemiesDead = 0;
 	public int waveCompleteReward = 20; 
+	public float waveCompleteMutMult = 0.5f;
 
 	void Start () {
 		game = GameObject.Find("Game").GetComponentInParent<Game>();
 		EnemyText = GameObject.Find("EnemyText").GetComponent<Text>();
 		TimerText = GameObject.Find("TimerText").GetComponent<Text>();
-		updateEnemyCountText();
-		enemySprites = new Dictionary<string, Sprite>() {
-					{"pneu", pneuSprite},
-					{"staph", staphSprite}, 
-					{"strep", strepSprite},
-					{"TB", TBSprite} };
+		enemiesDead = 0;
+		currentWave = 1;
 	}
 	 
 	void Update () {
@@ -69,7 +61,7 @@ public class EnemyManager : MonoBehaviour {
 		else if (spawningActive) {
 			burstTimer += deltaTime;
 			if (burstTimer >= burstInterval) {
-				initiateBurst();
+				initiateBurst(burstEnemyCount);
 			}
 
 			// Special spawning is still bound by the general spawn timer.
@@ -86,12 +78,12 @@ public class EnemyManager : MonoBehaviour {
 		}
 	}
 
-	private void initiateBurst() {
+	private void initiateBurst(int count) {
 		burstSpawn = true;
 		burstEnemy = chooseRandomEnemy(26, 26, 26, 21);
-		burstEnemiesRemaining = burstEnemyCount;
+		burstEnemiesRemaining = count;
 		burstTimer = 0;
-		print("Burst initiated for " + burstEnemyCount + " enemies.");
+		print("Burst initiated for " + count + " enemies.");
 	}
 	private void spawnBurstEnemy() {
 		spawnEnemy(burstEnemy);
@@ -139,32 +131,48 @@ public class EnemyManager : MonoBehaviour {
 		burstTimer = 0;
 		burstEnemiesRemaining = 0;
 		burstSpawn = false;
-		enemiesDead = 0;
+		currentWave++;
+		enemiesDead = 0; // set after inc wave
 
 		// Advance and toggle spawning.
-		currentWave++;
 		waveActive = true;
 		spawningActive = true;
 
-		if (currentWave > 0) {
-			GameObject.Find("__app").GetComponent<__app>().lowerAllChances(0.5f);
-
+		if (currentWave > 1) {
+			GameObject.Find("__app").GetComponent<__app>().lowerAllChances(waveCompleteMutMult);
 		}
-		updateEnemyCountText();
-		print("Beginning wave " + currentWave);
 	}
 
 	public void incEnemiesDead() {
 		enemiesDead++;
-		updateEnemyCountText();
 
 		if (enemiesDead >= wavesEnemyCounts[currentWave]) {
 			waveActive = false;
             game.Currency += waveCompleteReward;
+			
+			if (currentWave >= wavesEnemyCounts.Length - 1) { // Win condition
+				game.passLevel();
+			}
         }
     }
 
-	private void updateEnemyCountText() {
-		EnemyText.text = "Enemies: "+ (wavesEnemyCounts[currentWave] - enemiesDead);
-	}
+    public int currentWave {
+        get {
+            return _currentWave;
+        }
+        set {
+            _currentWave = value;
+            game.waveText.GetComponent<Text>().text = "Wave: " + _currentWave;
+        }
+    }
+
+	public int enemiesDead {
+        get {
+            return _enemiesDead;
+        }
+        set {
+            _enemiesDead = value;
+            EnemyText.GetComponent<Text>().text = "Enemies: " + (wavesEnemyCounts[currentWave] - _enemiesDead);
+        }
+    }
 }
