@@ -10,6 +10,8 @@ public class Game : MonoBehaviour {
 	public GameObject[] waypoints;
 	
 	public int HP;
+
+	public GameObject startButton;
 	public Text HPText;
 	public Text GameOverText;
 	private string _gameOverText = "";
@@ -47,6 +49,9 @@ public class Game : MonoBehaviour {
 				}
 			}
 		}
+
+		startGame();
+		startNextWave = false;
 	}
 	
 	// Called by start button
@@ -139,4 +144,14 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
+
+	private bool _startNextWave;
+    public bool startNextWave {
+        get {
+            return _startNextWave;
+        }
+        set {
+            _startNextWave = value;
+        }
+    }
 }

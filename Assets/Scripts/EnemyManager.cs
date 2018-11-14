@@ -22,7 +22,8 @@ public class EnemyManager : MonoBehaviour {
 	public int[] wavesEnemyCounts = {0, 9, 12, 16, 19, 21, 23, 25, 27, 29, 31};
 	private int _currentWave = 1;
 	private int enemiesSpawnedInWave = 0;
-	private bool waveActive = true;
+	private bool waveActive = false;
+
 	private bool spawningActive = true;
 	public float waveInterval = 8f;
 	private float waveIntervalTimer = 0f;
@@ -50,11 +51,13 @@ public class EnemyManager : MonoBehaviour {
 
 	private void manageSpawn(float deltaTime) {
 		if (!waveActive) {
-			waveIntervalTimer += deltaTime;
-			TimerText.text = "Next Wave In: " + (Mathf.RoundToInt(waveInterval - waveIntervalTimer));
-			if (waveIntervalTimer >= waveInterval) {
+		
+			game.startButton.SetActive(true);
+
+			if (game.startNextWave) {
 				progressWave();
-				TimerText.text = "";
+				game.startNextWave = false;
+				game.startButton.SetActive(false);
 			}
 			return;
 		} 
@@ -147,6 +150,7 @@ public class EnemyManager : MonoBehaviour {
 		enemiesDead++;
 
 		if (enemiesDead >= wavesEnemyCounts[currentWave]) {
+
 			waveActive = false;
             game.Currency += waveCompleteReward;
 			
@@ -175,4 +179,5 @@ public class EnemyManager : MonoBehaviour {
             EnemyText.GetComponent<Text>().text = "Enemies: " + (wavesEnemyCounts[currentWave] - _enemiesDead);
         }
     }
+	
 }
