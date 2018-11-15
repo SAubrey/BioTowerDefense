@@ -22,6 +22,8 @@ public class Game : MonoBehaviour {
 	private GameObject app;
 	private __app appScript;
 	private GameObject level;
+
+	public GameObject pauseMenu;
 	public float timescale;
 
 	void Start () {
@@ -107,6 +109,7 @@ public class Game : MonoBehaviour {
 
 	public void togglePaused() {
 		paused = !paused;
+		pauseMenu.SetActive(paused);
 	}
 	
 	public void toggleTimescale() {
@@ -154,4 +157,5 @@ public class Game : MonoBehaviour {
             _startNextWave = value;
         }
     }
+
 }

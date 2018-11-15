@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour {
 	void Start () {
 		game = GameObject.Find("Game").GetComponentInParent<Game>();
 		EnemyText = GameObject.Find("EnemyText").GetComponent<Text>();
-		TimerText = GameObject.Find("TimerText").GetComponent<Text>();
+		//TimerText = GameObject.Find("TimerText").GetComponent<Text>();
 		enemiesDead = 0;
 		currentWave = 1;
 	}
