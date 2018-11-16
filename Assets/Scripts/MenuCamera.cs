@@ -139,8 +139,8 @@ public class MenuCamera : MonoBehaviour {
 	// Called by menu buttons
 	public void changeScreen(string scr) {
 
-		Time.timeScale = 1;
-		
+		Time.timeScale = 1f;
+
 		dest = mainMenuCoordinates[scr]; // Gives coordinates assuming scene is MainMenu
 		setSceneFromScreen(scr);
 		moving = true;
