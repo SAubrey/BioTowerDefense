@@ -10,6 +10,10 @@ public class Game : MonoBehaviour {
 	public GameObject[] waypoints;
 	
 	public int HP;
+
+	public GameObject startButton;
+
+	public GameObject speedButton;
 	public Text HPText;
 	public Text GameOverText;
 	private string _gameOverText = "";
@@ -20,11 +24,11 @@ public class Game : MonoBehaviour {
 	private GameObject app;
 	private __app appScript;
 	private GameObject level;
-	public float timescale;
+
+	public GameObject pauseMenu;
 
 	void Start () {
 		game = false;
-		timescale = 1f;
 		gameOver = false;
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
@@ -47,6 +51,9 @@ public class Game : MonoBehaviour {
 				}
 			}
 		}
+
+		startGame();
+		startNextWave = false;
 	}
 	
 	// Called by start button
@@ -75,6 +82,7 @@ public class Game : MonoBehaviour {
 		}
 		game = false;
 		gameOver = true;
+		
 		app.GetComponent<MusicPlayer>().NewSong("death");
 	}
 
@@ -102,14 +110,18 @@ public class Game : MonoBehaviour {
 
 	public void togglePaused() {
 		paused = !paused;
+		pauseMenu.SetActive(paused);
 	}
 	
 	public void toggleTimescale() {
-		if (timescale == 1f){
-			timescale = 2f;
+		if (Time.timeScale == 1f){
+			Time.timeScale = 2f;
+			speedButton.GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/HUD/2x");
 		}
 		else {
-			timescale = 1f;
+			Time.timeScale = 1f;
+			speedButton.GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/HUD/1x");
+
 		}
 	}
 
@@ -139,4 +151,15 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
+
+	private bool _startNextWave;
+    public bool startNextWave {
+        get {
+            return _startNextWave;
+        }
+        set {
+            _startNextWave = value;
+        }
+    }
+
 }
