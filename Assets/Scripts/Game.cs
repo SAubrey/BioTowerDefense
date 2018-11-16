@@ -54,6 +54,7 @@ public class Game : MonoBehaviour {
 
 		startGame();
 		startNextWave = false;
+		Time.timeScale = 1f;
 	}
 	
 	// Called by start button
