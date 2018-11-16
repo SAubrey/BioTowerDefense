@@ -82,6 +82,7 @@ public class Game : MonoBehaviour {
 		}
 		game = false;
 		gameOver = true;
+		
 		app.GetComponent<MusicPlayer>().NewSong("death");
 	}
 
