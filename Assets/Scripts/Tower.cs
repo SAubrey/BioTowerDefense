@@ -47,7 +47,7 @@ public class Tower : MonoBehaviour {
 			if (cdTime <= 0f) {
 				coolingDown = false;
 			}
-			cdTime -= 1f;
+			cdTime -= 1f * Time.timeScale;
 		}
 	}
 

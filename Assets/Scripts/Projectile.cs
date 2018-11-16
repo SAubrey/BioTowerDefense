@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 		//Move
-		transform.position += velocity;
+		transform.position += velocity * Time.timeScale;
 	}
 	
 	public void setVals(GameObject pTow, string abType, float pSize, 
