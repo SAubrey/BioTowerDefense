@@ -127,7 +127,7 @@ public class Tower : MonoBehaviour {
 	
 	//Placement stuff
 	    private void OnMouseDown() {
-    	if (gameObject.tag != "MenuItems") {
+    	if (gameObject.tag != "MenuItems" && !Game.paused) {
 			towerManager.destroyCircle();
 			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
 			towerManager.SelectedTower = gameObject;

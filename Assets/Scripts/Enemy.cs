@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
             setDestination();
         }
         move();
-		speedActual = speed*game.GetComponent<Game>().timescale;
+	 //	speedActual = speed*game.GetComponent<Game>().timescale;
 		//Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
     }
     private void move() {
