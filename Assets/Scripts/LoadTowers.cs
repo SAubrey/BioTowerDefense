@@ -40,9 +40,9 @@ public class LoadTowers : MonoBehaviour {
         public static float extraLaserRadius = 1f;
 
         // COOLDOWN
-        public static float baseCooldown = 30.0f;
-        public static float extraBombCooldown = 30f;
-        public static float extraLaserCooldown = 20f;
+        public static float baseCooldown = 0.5f; // seconds
+        public static float extraBombCooldown = 1f;
+        public static float extraLaserCooldown = 1f;
 
         // COST
         public static int baseCost = 25;

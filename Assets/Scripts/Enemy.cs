@@ -55,7 +55,6 @@ public class Enemy : MonoBehaviour {
 		if (Game.paused || !Game.game) {
 			return;
 		}
-        //bool reachedDestination = checkReachedDestination();
 		
         if (checkReachedDestination()) {
             setDestination();
@@ -66,7 +65,7 @@ public class Enemy : MonoBehaviour {
     }
     private void move() {
 
-        //Get the total time between waypoints,  and multiply by speed for smooth enemy movement
+        // Get the total time between waypoints,  and multiply by speed for smooth enemy movement
         distanceCovered += Time.deltaTime;
         float step = distanceCovered * speed;
         gameObject.transform.position = Vector3.MoveTowards(startPosition, endPosition, step);
@@ -109,19 +108,26 @@ public class Enemy : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void hurt(int baseDamage, string antibioticType) {
+    public void hurt(float baseDamage, Tower towerScript) {
+        string antibioticType = towerScript.antibioticType;
+
         if (resistances[antibioticType] == false) {
-            float effectiveness = 0;
+            float effectiveness = __app.antibiotics[antibioticType][species];
+            bool mutated = false;
+
             // So that pneu, staph, strep cannot mutate to rifa and ison.
             if (!(species != "TB" && (antibioticType == "rifa" || antibioticType == "ison"))) {
-                effectiveness = appScript.antibiotics[antibioticType][species];
+                
                 if (effectiveness > 0) { // So that TB doesn't mutate against 1-5
-                    rollForMutate(antibioticType);
+                    mutated = rollForMutate(antibioticType);
                 }
             }
 
-            if (resistances[antibioticType] == false) {
+            if (mutated) {
+                towerScript.decoupleTarget();
+            } else {
                 health -= baseDamage * effectiveness;
+                print(species + " taking " + baseDamage * effectiveness + " damage from " + antibioticType);
                 updateHealthBar();
 
                 if (health <= 0) {
@@ -132,14 +138,15 @@ public class Enemy : MonoBehaviour {
 	}
 
     // Mutation check happens at each projectile hit against that antibiotic type.
-    public void rollForMutate(string antibioticType) {
-        
+    private bool rollForMutate(string antibioticType) {
         var chance = appScript.mutationChances[species][antibioticType];
         if (Random.Range(0, 100) < chance * 100) {
             print(species + " has mutated against " + antibioticType + "! Likelihood: " + (chance * 100) + "%");
             setResistance(antibioticType);
 			appScript.newParticles(transform.position, 30, 0.8f, __app.colors[antibioticType]);
+            return true;
         }
+        return false;
     }
 
     private void setResistance(string antibioticType) {
@@ -215,5 +222,9 @@ public class Enemy : MonoBehaviour {
 				break;
 		}
 		
+    }
+
+    public bool checkResistance(string antibioticType) {
+        return resistances[antibioticType];
     }
 }
