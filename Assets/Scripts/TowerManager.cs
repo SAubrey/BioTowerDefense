@@ -33,12 +33,11 @@ public class TowerManager : MonoBehaviour {
 
                 //Set selected tower to null if a collider was hit that's not of another tower or menu.
                 if((hit.collider == null) || (hit.collider.tag != "Tower" && hit.collider.tag != "Menu")) {
-                        disableSellButton();
-                        clearLabels();
-                        destroyCircle();
-                        SelectedTower = null;
+                    disableSellButton();
+                    clearLabels();
+                    destroyCircle();
+                    SelectedTower = null;
                 }
-               
             }
         } 
 	}

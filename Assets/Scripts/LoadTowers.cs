@@ -40,14 +40,14 @@ public class LoadTowers : MonoBehaviour {
         public static float extraLaserRadius = 1f;
 
         // COOLDOWN
-        public static float baseCooldown = 30.0f;
-        public static float extraBombCooldown = 30f;
-        public static float extraLaserCooldown = 20f;
+        public static float baseCooldown = 0.5f; // seconds
+        public static float extraBombCooldown = 1f;
+        public static float extraLaserCooldown = 1f;
 
         // COST
         public static int baseCost = 25;
-        public static int extraBombCost = 20;
-        public static int extraLaserCost = 20;
+        public static int extraBombCost = 25;
+        public static int extraLaserCost = 25;
         public static int amoxCost = baseCost;
         public static int methCost = baseCost;
         public static int vancCost = baseCost;
@@ -157,7 +157,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
                 {"towerColor", __app.vancColor} };
 
  public static IDictionary<string, object> carbHitscan = new Dictionary<string, object>(){
-                {"name", "Carbapanem Laser"},
+                {"name", "Carbapenem Laser"},
                 {"antibioticType", "carb"},
                 {"position", new Vector2(lpos.x, lpos.y - yDist * 4)},
                 {"cost", carbCost + extraLaserCost},
@@ -227,7 +227,7 @@ public static IDictionary<string, object> vancAOE = new Dictionary<string, objec
                 {"towerColor", __app.vancColor} };
 
 public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
-                {"name", "Carbapanem Bomber"},
+                {"name", "Carbapenem Bomber"},
                 {"antibioticType", "carb"},
                 {"position", new Vector2(bpos.x, bpos.y - yDist * 4)},
                 {"cost", carbCost + extraBombCost},
@@ -284,7 +284,7 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
                 {"Amoxicillin Bomber", amoxAOE},
                 {"Methicillin Bomber", methAOE},
                 {"Vancomycin Bomber", vancAOE},
-                {"Carbapanem Bomber", carbAOE},
+                {"Carbapenem Bomber", carbAOE},
                 {"Linezolid Bomber", lineAOE},
                 {"Rifampicin Bomber", rifaAOE},
                 {"Isoniazid Bomber", isonAOE} };

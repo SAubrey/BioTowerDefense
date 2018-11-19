@@ -40,8 +40,6 @@ public class DragAndDrop : MonoBehaviour {
             else {
                 towerManager.colorCircle(invalidColor);
             }
-
-            
         }
     }
 
@@ -70,22 +68,20 @@ public class DragAndDrop : MonoBehaviour {
 
     //Invoked when towers released
     void OnMouseUp() {
-            if(!Game.paused){
+        if(!Game.paused) {
 
-
-        if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {
-            validateDropPosition();
-        }
-        dragging = false;
-        gameObject.layer = 0;
+            if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {
+                validateDropPosition();
             }
+            dragging = false;
+            gameObject.layer = 0;
+        }
     }
 
     //Moves tower back to menu if dropped on an invalid area
     // Detaches sideMenu as parent if towers dropped on valid area
     void validateDropPosition() {
         if (validSpot()) {
-            
             detachFromMenu();
             updateTheMenu();
             towerManager.clearLabels();

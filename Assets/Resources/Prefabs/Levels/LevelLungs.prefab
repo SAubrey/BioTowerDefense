@@ -145,10 +145,10 @@ GameObject:
   - component: {fileID: 4614430380676036}
   - component: {fileID: 212702220948948574}
   - component: {fileID: 95610429997609216}
-  - component: {fileID: 61103118158149616}
   - component: {fileID: 114882413274926498}
+  - component: {fileID: 61608254271796358}
   m_Layer: 0
-  m_Name: Heart
+  m_Name: Lung
   m_TagString: Base
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,8 +247,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1913818747233336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.0285313, y: 3.5931678, z: -215.1}
-  m_LocalScale: {x: 1.2006761, y: 1.0751549, z: 1}
+  m_LocalPosition: {x: -2.79, y: 3.52, z: -215.1}
+  m_LocalScale: {x: 0.5271051, y: 0.45251086, z: 1}
   m_Children: []
   m_Father: {fileID: 4077385517603102}
   m_RootOrder: 7
@@ -321,31 +321,6 @@ PolygonCollider2D:
       - {x: 6.610962, y: -1.9342028}
       - {x: 6.569746, y: -1.597181}
       - {x: 4.3587136, y: 0.20887113}
---- !u!61 &61103118158149616
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1913818747233336}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.56, y: 1.56}
-    newSize: {x: 1.28, y: 1.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.25}
-  m_EdgeRadius: 0
 --- !u!61 &61472782475586116
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -370,6 +345,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 19.2, y: 0.9661298}
+  m_EdgeRadius: 0
+--- !u!61 &61608254271796358
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913818747233336}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.42, y: 4.56}
+    newSize: {x: 1.28, y: 1.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
 --- !u!95 &95610429997609216
 Animator:
@@ -402,14 +402,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnInterval: 0.5
   Enemy: {fileID: 1071442852959598, guid: ff73c5c4367544d0c8e972112fc1ab06, type: 2}
-  pneuSprite: {fileID: 21300000, guid: f06cdb0bb64b83640984ff23d88654eb, type: 3}
-  staphSprite: {fileID: 21300000, guid: 0e043f1a1782c534488b88e156267de5, type: 3}
-  strepSprite: {fileID: 21300000, guid: b00ad864ec1c81342934729cbbdb9e81, type: 3}
-  TBSprite: {fileID: 21300000, guid: e3b50da098c28a24aaac2fd52705e290, type: 3}
   burstInterval: 4
   burstEnemyCount: 4
   wavesEnemyCounts: 00000000090000000c00000010000000130000001500000017000000190000001b0000001d0000001f000000
-  _currentWave: 1
   waveInterval: 8
   waveCompleteReward: 20
   waveCompleteMutMult: 0.5
@@ -508,7 +503,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 648c402f3620f834da225dad1950e7d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd6a3a77b46b04f9c836c9bc142295df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

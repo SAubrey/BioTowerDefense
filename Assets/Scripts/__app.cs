@@ -65,7 +65,7 @@ private static IDictionary<string, float> ison = new Dictionary<string, float>()
 					{"pneu", .1f},
 					{"TB", .5f} };                                                                                
 
-public IDictionary<string, IDictionary<string, float>> antibiotics = new Dictionary<string, IDictionary<string, float>>() {
+public static IDictionary<string, IDictionary<string, float>> antibiotics = new Dictionary<string, IDictionary<string, float>>() {
 					{"amox", amox},
 					{"meth", meth},
 					{"vanc", vanc},
@@ -120,7 +120,6 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 
    	public float mutationIncrement = 0.02f;
 
-	// Use this for initialization
 	void Awake () {
 		options = new Options();
 		screenshake = new Screenshake();
@@ -129,7 +128,6 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 		mutationIncrement = 0.1f; // for testing
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		screenshake.Update();
 	}
@@ -144,12 +142,6 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 	public string getLevel(){
 		Debug.Log("RETURNING!!!"+level);
 		return level;
-	}
-
-	public void increaseMutationChance(string species, string antibioticType) {
-        // Called by Enemy on death. Increase mutation chance by mutationIncrement relative to the bacteria species/antibioticType
-        mutationChances[species][antibioticType] += mutationIncrement;
-		print("HEY TURN ME OFF");
 	}
 
 	public void increaseMutationChanceForAntibiotic(string antibioticType) {
