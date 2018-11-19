@@ -29,13 +29,13 @@ public class Enemy : MonoBehaviour {
     public int baseProfitPerEnemy = 2;
 
     private IDictionary<string, bool> resistances = new Dictionary<string, bool>() {
-                                        {"amox", false},
-                                        {"meth", false},
-                                        {"vanc", false},
-                                        {"carb", false},
-                                        {"line", false},
-                                        {"rifa", false},
-                                        {"ison", false} };
+                            {"amox", false},
+                            {"meth", false},
+                            {"vanc", false},
+                            {"carb", false},
+                            {"line", false},
+                            {"rifa", false},
+                            {"ison", false} };
 
     // Use this for initialization
     void Start () {
@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour {
        // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
         level.GetComponent<EnemyManager>().incEnemiesDead();
-		appScript.newScreenshake(6, 0.05f);
+		appScript.newScreenshake(6, 0.04f);
         Destroy(gameObject);
     }
 
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour {
         if (Random.Range(0, 100) < chance * 100) {
             print(species + " has mutated against " + antibioticType + "! Likelihood: " + (chance * 100) + "%");
             setResistance(antibioticType);
-			appScript.newParticles(transform.position, 30, 0.8f, __app.colors[antibioticType]);
+			appScript.newParticles(transform.position, 10, 0.8f, __app.colors[antibioticType]);
             return true;
         }
         return false;
@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour {
         game.GetComponent<Game>().Currency += baseProfitPerEnemy;
         
 		//Particles
-		appScript.newParticles(transform.position, 10, 0.05f, particleColor);
+		appScript.newParticles(transform.position, 7, 0.01f, particleColor);
         Destroy(gameObject);
     }
 
