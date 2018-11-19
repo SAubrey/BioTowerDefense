@@ -12,22 +12,33 @@ public class Tower : MonoBehaviour {
 	public float coolDown = 0f; 
 	//public int targetType = 0;//0=first, 1=last, 2=lowestHP, 3=highestHP, 4=self(aoe), 5=all in radius
 	public float detectionRadius;
-	//public Sprite projectileSprite;
 	public float projectileSize = 0.5f;
 	public float projectileSpeed = 0.6f;
 	public int projectilePierce = 1;
-	// public int specialEffect = 0; //0 = none, 1 = slow, 2 = increase damage taken, etc.
     private GameObject target = null;
     private GameObject projectile;
 	private TowerManager towerManager;
     bool coolingDown = false;
     float cdTime = 0f;
 	private IDictionary<string, float> baseDamages;
+	private float bestDamage = 0f;
+
+	// Laser specific
+	private LineRenderer lr;
+	private bool firingLaser = false;
 
     void Start () {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
 		baseDamages = __app.antibiotics[antibioticType];
+
+		if (type == 1) {
+			lr = gameObject.transform.GetChild(1).GetComponent<LineRenderer>();
+			lr.positionCount = 2;
+			Color startColor = __app.colors[antibioticType];
+			lr.startColor = startColor;
+			lr.endColor = startColor;
+		}
     }
 	
 	void Update () {
@@ -44,10 +55,27 @@ public class Tower : MonoBehaviour {
 			activate();
 		}
 		else {
+			cdTime -= Time.deltaTime;
 			if (cdTime <= 0f) {
 				coolingDown = false;
 			}
-			cdTime -= Time.deltaTime;
+			if (firingLaser) {
+				updateLaser();
+			}
+		}
+	}
+
+	private void updateLaser() {
+		Color c = lr.startColor;
+
+		// Decrease alpha of laser color until gone, then reset.
+		if (c.a > 0) {
+			Color color = new Color(c.r, c.g, c.b, c.a - 0.05f);
+			lr.startColor =color;
+			lr.endColor = color;
+		} else {
+			firingLaser = false;
+			lr.enabled = false;
 		}
 	}
 
@@ -57,7 +85,7 @@ public class Tower : MonoBehaviour {
     private GameObject findTarget() {
 		var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		GameObject bestCandidate = null;
-		float bestDamage = 0f;
+		bestDamage = 0f;
 
 		foreach (var enemy in enemies) {
 			// Get distance
@@ -88,22 +116,24 @@ public class Tower : MonoBehaviour {
 	
 	private void activate() {
 		if (type == 0 || type == 1) { 
-			if (target == null) {
+			
+			// If there's no target or if the target could be better, re-search.
+			if (target == null || bestDamage != 1f) {
 				target = findTarget();
 			}
 			if (target != null) { 
-				//Check if target is out of bounds
+				// Check if target is out of bounds
 				var targetDist = Mathf.Sqrt(Mathf.Pow(target.transform.position.x - transform.position.x, 2f) + 
 											Mathf.Pow(target.transform.position.y - transform.position.y, 2f));
 				if (targetDist > detectionRadius) {
-					target = null;
+					decoupleTarget();
 				}
 				else {
 					if (type == 0) { // PELLET
 						shoot(target);
 					}
 					else if(type == 1) { // LASER
-						target.GetComponent<Enemy>().hurt(5, this);
+						fireLaser(target);
 					}
 				}
 			}
@@ -124,6 +154,34 @@ public class Tower : MonoBehaviour {
 		coolingDown = true;
 		cdTime = coolDown;
 	}
+
+	private void fireLaser(GameObject enemy) {
+		Vector3 tPos = new Vector3(enemy.transform.position.x - transform.position.x, 
+								enemy.transform.position.y - transform.position.y, 2f);
+	
+		// Physical
+		Collider2D c = new Collider2D();
+		RaycastHit2D[] rc;
+		rc = Physics2D.RaycastAll(transform.position, tPos, detectionRadius);
+		//rc = Physics2D.LinecastAll(transform.position, target.transform.position); // can specify depth/layers
+		foreach (var r in rc) {
+			GameObject go = r.collider.gameObject;
+			if (go.tag == "Enemy") {
+				go.GetComponent<Enemy>().hurt(5, this);
+			}
+		}
+
+		// Visual
+		firingLaser = true;
+		if (!lr.enabled) {
+			lr.enabled = true;
+		}
+
+		lr.startColor = __app.colors[antibioticType];
+		lr.endColor = lr.startColor;
+		lr.SetPosition(0, new Vector3(0, 0, 0));
+		lr.SetPosition(1, tPos);
+	}
 	
 	private void shoot(GameObject enemy) {
 		if (type == 0) {
@@ -143,10 +201,15 @@ public class Tower : MonoBehaviour {
 	// Called by an Enemy that has mutated against this tower.
 	public void decoupleTarget() {
 		target = null;
+		bestDamage = 0;
+	}
+
+	private void OnTriggerEnter2D(Collider2D col) {
+
 	}
 	
 	//Placement stuff
-	    private void OnMouseDown() {
+	private void OnMouseDown() {
     	if (gameObject.tag != "MenuItems" && !Game.paused) {
 			towerManager.destroyCircle();
 			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -156,5 +219,6 @@ public class Tower : MonoBehaviour {
 			towerManager.enableSellButton();
 		}
 	}
+
 	
 }
