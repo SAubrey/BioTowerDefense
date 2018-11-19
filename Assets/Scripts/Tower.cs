@@ -22,22 +22,31 @@ public class Tower : MonoBehaviour {
     float cdTime = 0f;
 	private IDictionary<string, float> baseDamages;
 	private float bestDamage = 0f;
+	private Color color;
+	private __app appScript;
 
 	// Laser specific
 	private LineRenderer lr;
 	private bool firingLaser = false;
 
+	private LayerMask enemyMask;
+
     void Start () {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
 		baseDamages = __app.antibiotics[antibioticType];
+		color = __app.colors[antibioticType];
+		enemyMask = LayerMask.GetMask("Enemy");
 
 		if (type == 1) {
 			lr = gameObject.transform.GetChild(1).GetComponent<LineRenderer>();
 			lr.positionCount = 2;
-			Color startColor = __app.colors[antibioticType];
-			lr.startColor = startColor;
-			lr.endColor = startColor;
+			lr.startColor = color;
+			lr.endColor = color;
+			lr.SetPosition(0, new Vector3(0, 0, 0));
+		}
+		if (type == 2) {
+			appScript = GameObject.Find("__app").GetComponent<__app>();
 		}
     }
 	
@@ -79,32 +88,21 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
-	// From all existing enemies, a list of harmable enemies is found. 
-	// (Within detection radius & non-zero effectiveness)
-	// The first most harmable enmy from this list is chosen.
-    private GameObject findTarget() {
-		var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+	private GameObject findTarget() {
+		Collider2D[] enemies = Physics2D.OverlapCircleAll((Vector2)gameObject.transform.position, detectionRadius, enemyMask);
 		GameObject bestCandidate = null;
 		bestDamage = 0f;
 
-		foreach (var enemy in enemies) {
-			// Get distance
-			var dist = Mathf.Sqrt(Mathf.Pow(enemy.transform.position.x - transform.position.x, 2f) +
-									 Mathf.Pow(enemy.transform.position.y - transform.position.y, 2f));
+		foreach (Collider2D enemy in enemies) {
+			Enemy enemyScript = enemy.GetComponent<Enemy>();
+			float damage = baseDamages[enemyScript.species];
 
-			if (dist <= detectionRadius) {
-				var enemyScript = enemy.GetComponent<Enemy>();
-				float damage = baseDamages[enemyScript.species];
-
-				// If tower can do damage to the enemy && If the enemy has not mutated against tower
-				if (damage > 0 && !enemyScript.checkResistance(antibioticType)) { 
-					if (damage > bestDamage) { 
-						bestCandidate = enemy;
-						bestDamage = damage;
-						if (damage == 1) { // No need to continue if we found a prime target
-							break;
-						}
-					}
+			// If tower can do damage to the enemy && If the enemy has not mutated against tower
+			if (damage > bestDamage && !enemyScript.checkResistance(antibioticType)) { 
+				bestCandidate = enemy.gameObject;
+				bestDamage = damage;
+				if (damage == 1) { // No need to continue if we found a prime target
+					break;
 				}
 			}
 		}
@@ -139,47 +137,44 @@ public class Tower : MonoBehaviour {
 			}
 		}
 		else if (type == 2) { // AOE
-			var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-			var objectCount = enemies.Length;
-
-			foreach (var enemy in enemies) {
-				//Get Distance
-				var dist = Mathf.Sqrt(Mathf.Pow(enemy.transform.position.x - transform.position.x, 2f) +
-										 Mathf.Pow(enemy.transform.position.y - transform.position.y, 2f));
-				if (dist <= detectionRadius) {
-					enemy.GetComponent<Enemy>().hurt(5, this);
-				}
-			}
+			explode();
 		}
 		coolingDown = true;
 		cdTime = coolDown;
 	}
 
+	private void explode() {
+		Collider2D[] col = Physics2D.OverlapCircleAll((Vector2)gameObject.transform.position, detectionRadius, enemyMask);
+
+		bool boom = false;
+		foreach (Collider2D c in col) {
+			c.GetComponent<Enemy>().hurt(5, this);
+			if (!boom) { boom = !boom; }
+		}
+		if (boom) {
+			// Visual
+			appScript.explode(gameObject.transform.position, 10, .1f, color);
+		}
+	}
+
 	private void fireLaser(GameObject enemy) {
-		Vector3 tPos = new Vector3(enemy.transform.position.x - transform.position.x, 
-								enemy.transform.position.y - transform.position.y, 2f);
 	
 		// Physical
-		Collider2D c = new Collider2D();
 		RaycastHit2D[] rc;
-		rc = Physics2D.RaycastAll(transform.position, tPos, detectionRadius);
-		//rc = Physics2D.LinecastAll(transform.position, target.transform.position); // can specify depth/layers
-		foreach (var r in rc) {
-			GameObject go = r.collider.gameObject;
-			if (go.tag == "Enemy") {
-				go.GetComponent<Enemy>().hurt(5, this);
-			}
+		rc = Physics2D.LinecastAll(transform.position, target.transform.position, enemyMask);
+		foreach (RaycastHit2D r in rc) {
+			r.collider.gameObject.GetComponent<Enemy>().hurt(5, this);
 		}
 
 		// Visual
+		Vector3 tPos = new Vector3(enemy.transform.position.x - transform.position.x, 
+								enemy.transform.position.y - transform.position.y, 2f);
 		firingLaser = true;
 		if (!lr.enabled) {
 			lr.enabled = true;
 		}
-
-		lr.startColor = __app.colors[antibioticType];
-		lr.endColor = lr.startColor;
-		lr.SetPosition(0, new Vector3(0, 0, 0));
+		lr.startColor = color;
+		lr.endColor = color;
 		lr.SetPosition(1, tPos);
 	}
 	
@@ -204,11 +199,7 @@ public class Tower : MonoBehaviour {
 		bestDamage = 0;
 	}
 
-	private void OnTriggerEnter2D(Collider2D col) {
-
-	}
-	
-	//Placement stuff
+	// Placement stuff
 	private void OnMouseDown() {
     	if (gameObject.tag != "MenuItems" && !Game.paused) {
 			towerManager.destroyCircle();
@@ -219,6 +210,4 @@ public class Tower : MonoBehaviour {
 			towerManager.enableSellButton();
 		}
 	}
-
-	
 }

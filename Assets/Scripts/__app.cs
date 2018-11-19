@@ -191,6 +191,10 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 	public void newParticles(Vector3 pos, int count, float spd, Color col){
 		particles.newParticles(pos,count,spd,col);
 	}
+
+	public void explode(Vector3 pos, int count, float spd, Color col){
+		particles.explode(pos,count,spd,col);
+	}
 	
 	private class Options {
 		private bool music;
@@ -279,17 +283,25 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 		private int maxParticles;
 		private GameObject particle;
 		
-		public particleManager(){
+		public particleManager() {
 			particle = Resources.Load("Prefabs/Particle") as GameObject;
 		}
 		
 		public void newParticles(Vector3 pos, int count, float spd, Color col){
-			for(int i = 0; i < count; i++){
-				//particle = Resources.Load("Prefabs/Particle") as GameObject;
+			for (int i = 0; i < count; i++) {
 				GameObject part = Instantiate(particle);
 				part.transform.position = pos;
 				part.GetComponent<SpriteRenderer>().color = col;
 				part.GetComponent<Particle>().setVelocity(spd);
+			}
+		}
+
+		public void explode(Vector3 pos, int count, float spd, Color col) {
+			for (int i = 0; i < count; i++) {
+				GameObject part = Instantiate(particle);
+				part.transform.position = pos;
+				part.GetComponent<SpriteRenderer>().color = col;
+				part.GetComponent<Particle>().explode(spd);
 			}
 		}
 	}

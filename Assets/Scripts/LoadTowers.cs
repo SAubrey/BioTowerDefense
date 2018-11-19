@@ -36,8 +36,8 @@ public class LoadTowers : MonoBehaviour {
         
         // RADIUS
         public static float baseRadius = 3f;
-        public static float extraBombRadius = -1f;
-        public static float extraLaserRadius = 1f;
+        public static float extraBombRadius = -1.5f;
+        public static float extraLaserRadius = .8f;
 
         // COOLDOWN
         public static float baseCooldown = 0.5f; // seconds
