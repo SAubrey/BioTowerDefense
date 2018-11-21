@@ -115,6 +115,9 @@ public class Tower : MonoBehaviour {
 	}
 	
 	private void activate() {
+		if(ammo<1){
+			return;
+		}
 		if (type == 0 || type == 1) { 
 			
 			// If there's no target or if the target could be better, re-search.
@@ -137,10 +140,15 @@ public class Tower : MonoBehaviour {
 					}
 				}
 			}
+			//Ammo Handling
 			ammo--;
+			//If ammo gone
 			if(ammo<1){
-				Destroy(gameObject);
+				//Destroy(gameObject);
 			}
+			//Change opacity to match tower
+			Color tmp = GetComponent<SpriteRenderer>().color;
+			tmp.a = 255f*(ammo/5) + 10f;
 		}
 		else if (type == 2) { // AOE
 			explode();
