@@ -43,33 +43,30 @@ public class DragAndDrop : MonoBehaviour {
         }
     }
 
-    //Invoked when towers clicked
+    // Invoked when towers clicked
     void OnMouseDown() {
-
-        if(!Game.paused){
+        if (!Game.paused) {
 		    towerManager.destroyCircle();
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
             towerManager.setLabels(myTower.towerName, myTower.cost);
             gameObject.layer = 2;
 
-        //if user has enough money to buy tower
-        if (gameManager.Currency >= myTower.cost) {
+            // If user has enough money to buy tower
+            if (gameManager.Currency >= myTower.cost) {
+                towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+                originalPosition = gameObject.transform.position;
+                distance = Vector2.Distance(transform.position, Camera.main.transform.position);
+                dragging = true;
 
-            towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
-            originalPosition = gameObject.transform.position;
-            distance = Vector2.Distance(transform.position, Camera.main.transform.position);
-            dragging = true;
-
-            towerManager.drawCircle(myTower.detectionRadius);
-        }
+                towerManager.drawEllipse(myTower.detectionRadius);
+            }
         }
     }
 
     //Invoked when towers released
     void OnMouseUp() {
         if(!Game.paused) {
-
             if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {
                 validateDropPosition();
             }

@@ -31,12 +31,16 @@ public class Tower : MonoBehaviour {
 
 	private LayerMask enemyMask;
 
+	private Vector2 ellipseDetectionRadius;
+	private LineRenderer myLr;
+
     void Start () {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
 		baseDamages = __app.antibiotics[antibioticType];
 		color = __app.colors[antibioticType];
 		enemyMask = LayerMask.GetMask("Enemy");
+
 
 		if (type == 1) {
 			lr = gameObject.transform.GetChild(1).GetComponent<LineRenderer>();
@@ -48,6 +52,8 @@ public class Tower : MonoBehaviour {
 		if (type == 2) {
 			appScript = GameObject.Find("__app").GetComponent<__app>();
 		}
+
+		ellipseDetectionRadius = new Vector2(detectionRadius, detectionRadius * __app.ellipseYMult);
     }
 	
 	void Update () {
@@ -88,28 +94,43 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
-	private GameObject findTarget() {
-		Collider2D[] enemies = Physics2D.OverlapCircleAll((Vector2)gameObject.transform.position, detectionRadius, enemyMask);
+	private GameObject findBestTarget() {
 		GameObject bestCandidate = null;
 		bestDamage = 0f;
 
-		foreach (Collider2D enemy in enemies) {
-			Enemy enemyScript = enemy.GetComponent<Enemy>();
-			float damage = baseDamages[enemyScript.species];
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-			// If tower can do damage to the enemy && If the enemy has not mutated against tower
-			if (damage > bestDamage && !enemyScript.checkResistance(antibioticType)) { 
-				bestCandidate = enemy.gameObject;
-				bestDamage = damage;
-				if (damage == 1) { // No need to continue if we found a prime target
-					break;
+		foreach (GameObject enemy in enemies) {
+			if (checkInsideEllipse((Vector2)enemy.transform.position)) {
+				Enemy enemyScript = enemy.GetComponent<Enemy>();
+				float damage = baseDamages[enemyScript.species];
+
+				// If tower can do damage to the enemy && If the enemy has not mutated against tower
+				if (damage > bestDamage && !enemyScript.checkResistance(antibioticType)) { 
+					bestCandidate = enemy;
+					bestDamage = damage;
+					if (damage == 1) { // No need to continue if we found a prime target
+						break;
+					}
 				}
 			}
 		}
 		if (bestCandidate != null) {
-			print(antibioticType + " targeting: " + bestCandidate.GetComponent<Enemy>().species + " Best damage: " + bestDamage);
+			// print(antibioticType + " targeting: " + bestCandidate.GetComponent<Enemy>().species + " Best damage: " + bestDamage);
 		}
 		return bestCandidate;
+	}
+
+	private bool checkInsideEllipse(Vector2 enemyPos) {
+		float run = enemyPos.x - transform.position.x;
+		float rise = enemyPos.y - transform.position.y + __app.towerShadowYOffset;
+		float enemyDist = Mathf.Sqrt(Mathf.Pow(run, 2f) + Mathf.Pow(rise, 2f));
+
+		float angle = Mathf.Atan2(rise, run);
+		float ellipseDist = Mathf.Sqrt(Mathf.Pow((Mathf.Cos(angle) * ellipseDetectionRadius.x), 2f) + 
+						               Mathf.Pow((Mathf.Sin(angle) * ellipseDetectionRadius.y), 2f));
+
+		return enemyDist <= ellipseDist ? true : false;
 	}
 	
 	private void activate() {
@@ -117,13 +138,11 @@ public class Tower : MonoBehaviour {
 			
 			// If there's no target or if the target could be better, re-search.
 			if (target == null || bestDamage != 1f) {
-				target = findTarget();
+				target = findBestTarget();
 			}
 			if (target != null) { 
 				// Check if target is out of bounds
-				var targetDist = Mathf.Sqrt(Mathf.Pow(target.transform.position.x - transform.position.x, 2f) + 
-											Mathf.Pow(target.transform.position.y - transform.position.y, 2f));
-				if (targetDist > detectionRadius) {
+				if (!checkInsideEllipse((Vector2)(target.transform.position))) {
 					decoupleTarget();
 				}
 				else {
@@ -144,17 +163,35 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void explode() {
-		Collider2D[] col = Physics2D.OverlapCircleAll((Vector2)gameObject.transform.position, detectionRadius, enemyMask);
-
+		List<GameObject> targets = findAllTargets();
 		bool boom = false;
-		foreach (Collider2D c in col) {
-			c.GetComponent<Enemy>().hurt(5, this);
-			if (!boom) { boom = !boom; }
+
+		foreach (GameObject t in targets) {
+			t.GetComponent<Enemy>().hurt(5, this);
+			boom = !boom ? !boom : false;
 		}
 		if (boom) {
 			// Visual
 			appScript.explode(gameObject.transform.position, 10, .1f, color);
 		}
+	}
+
+	private List<GameObject> findAllTargets() {
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		List<GameObject> targets = new List<GameObject>();
+
+		foreach (GameObject enemy in enemies) {
+			if (checkInsideEllipse((Vector2)enemy.transform.position)) {
+				Enemy enemyScript = enemy.GetComponent<Enemy>();
+				float damage = baseDamages[enemyScript.species];
+
+				// If tower can do damage to the enemy && If the enemy has not mutated against tower
+				if (damage > 0 && !enemyScript.checkResistance(antibioticType)) { 
+					targets.Add(enemy);
+				}
+			}
+		}
+		return targets;
 	}
 
 	private void fireLaser(GameObject enemy) {
@@ -181,13 +218,13 @@ public class Tower : MonoBehaviour {
 	private void shoot(GameObject enemy) {
 		if (type == 0) {
 			GameObject myProjectile = Instantiate(projectile);
-			myProjectile.transform.position = new Vector3(transform.position.x, 
-														transform.position.y, transform.position.z);
-			var run = enemy.transform.position.x - transform.position.x;
-			var rise = enemy.transform.position.y - transform.position.y;
-			var distance = Mathf.Sqrt(Mathf.Pow(run, 2f) + Mathf.Pow(rise, 2f));
-			var xsp = (run / distance) * projectileSpeed;
-			var ysp = (rise / distance) * projectileSpeed;
+			myProjectile.transform.position = transform.position;
+
+			float run = enemy.transform.position.x - transform.position.x;
+			float rise = enemy.transform.position.y - transform.position.y;
+			float distance = Mathf.Sqrt(Mathf.Pow(run, 2f) + Mathf.Pow(rise, 2f));
+			float xsp = (run / distance) * projectileSpeed;
+			float ysp = (rise / distance) * projectileSpeed;
 			myProjectile.GetComponent<Projectile>().setVals(this, projectileSize, 
 															 projectilePierce, xsp, ysp);
 		}
@@ -205,7 +242,7 @@ public class Tower : MonoBehaviour {
 			towerManager.destroyCircle();
 			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
 			towerManager.SelectedTower = gameObject;
-			towerManager.drawCircle(detectionRadius);
+			towerManager.drawEllipse(detectionRadius);
 			towerManager.setLabels(towerName, cost);
 			towerManager.enableSellButton();
 		}

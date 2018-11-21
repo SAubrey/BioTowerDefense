@@ -14,24 +14,21 @@ public class TowerManager : MonoBehaviour {
     private Game gameManager;
     public float sellPercentage = 0.7f;
 
-
-    // Use this for initialization
     void Start () {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
     }
 
-    // Update is called once per frame
     void Update () {
 
-        //IF a tower is selected
+        // If a tower is selected
         if (SelectedTower != null) {
             
-            //Listen to Click events
+            // Listen to Click events
             if (Input.GetMouseButtonDown(0)) {
                 Vector2 direction = new Vector2(0, 0);
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction);
 
-                //Set selected tower to null if a collider was hit that's not of another tower or menu.
+                // Set selected tower to null if a collider was hit that's not of another tower or menu.
                 if((hit.collider == null) || (hit.collider.tag != "Tower" && hit.collider.tag != "Menu")) {
                     disableSellButton();
                     clearLabels();
@@ -42,7 +39,7 @@ public class TowerManager : MonoBehaviour {
         } 
 	}
 
-    //Destroys the currently selected tower and adds currecncy for it
+    // Destroys the currently selected tower and adds currecncy for it
     public void sellTower() {
         gameManager.Currency += (int)Mathf.Round(SelectedTower.GetComponent<Tower>().cost * sellPercentage);
         Destroy(SelectedTower);
@@ -51,7 +48,7 @@ public class TowerManager : MonoBehaviour {
         disableSellButton();
     }
 
-    //Sets the selected towers labels
+    // Sets the selected towers labels
     public void setLabels(string towerName, int towerCost) {
         towerNamelabel.text = towerName;
 
@@ -64,45 +61,49 @@ public class TowerManager : MonoBehaviour {
         }
     }
 
-    //Clears the labels once tower is deselected or sold
+    // Clears the labels once tower is deselected or sold
     public void clearLabels() {
         towerNamelabel.text = "";
     }
 
-    //Draws the Towers radius when it's selected
-    public void drawCircle(float radius) {
-        int segments = 360;
-        lineRenderer.positionCount = segments + 1;
+    // Draws the Towers radius when it's selected
+    public void drawEllipse(float radius) {
+        int segments = 200;
+        lineRenderer.positionCount = segments;
+        lineRenderer.alignment = LineAlignment.TransformZ;
 
-        int pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
-        Vector3[] points = new Vector3[pointCount];
+        Vector3[] points = new Vector3[segments];
+        float angle = 1f;
+        float xradius = radius;
+        float yradius = radius * __app.ellipseYMult;
 
-        for (int i = 0; i < pointCount; i++) {
-            var rad = Mathf.Deg2Rad * (i * 360f / segments);
-            points[i] = new Vector3(Mathf.Sin(rad) * radius, Mathf.Cos(rad) * radius, 0f);
+        for (int i = 0; i < segments; i++) {
+            var x = Mathf.Sin (Mathf.Deg2Rad * angle) * xradius;
+            var y = Mathf.Cos (Mathf.Deg2Rad * angle) * yradius;
+            angle += (360f / segments);
+
+            points[i] = new Vector3(x, y + __app.towerShadowYOffset, 0);
         }
-
-        lineRenderer.SetPositions(points); 
+        lineRenderer.SetPositions(points);
     }
 
     public void enableSellButton() {
         sellTowerButton.enabled = true;
         sellTowerButton.GetComponent<Image>().color = Color.green;
-
     }
     public void disableSellButton() {
         sellTowerButton.enabled = false;
         sellTowerButton.GetComponent<Image>().color = Color.white;
     }
 
-    //Erases the circle when tower is "deselected"
+    // Erases the circle when tower is "deselected"
     public void destroyCircle() {
         if (lineRenderer != null) {
             lineRenderer.positionCount = 0;
         }
     }
 
-    //Sets the color of the radius Circle
+    // Sets the color of the radius Circle
     public void colorCircle(Color col) {
         lineRenderer.startColor = col;
         lineRenderer.endColor = col;

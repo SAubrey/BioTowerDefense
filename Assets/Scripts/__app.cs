@@ -8,6 +8,9 @@ public class __app : MonoBehaviour {
 	private Screenshake screenshake;
 	private particleManager particles;
 	private string level;
+	public static float ellipseYMult = .5f;
+	// public static float ellipseRotAngle = 0f;
+	public static float towerShadowYOffset = -0.36f;
 
 	// COLOR
 	public static Color amoxColor = Color.green;
@@ -117,7 +120,6 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 					{"pneu", pneuChances},
 					{"TB", TBChances} };
             
-
    	public float mutationIncrement = 0.02f;
 
 	void Awake () {
@@ -134,13 +136,11 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 	
 	public void setLevel(string lvl){
 		level = lvl;
-		Debug.Log("LEVEL SET!!!"+level);
+		//Debug.Log("LEVEL SET!!!"+level);
 	}
-	public void printLevel(){
-		Debug.Log("=============="+level);
-	}
+
 	public string getLevel(){
-		Debug.Log("RETURNING!!!"+level);
+		//Debug.Log("RETURNING!!!"+level);
 		return level;
 	}
 

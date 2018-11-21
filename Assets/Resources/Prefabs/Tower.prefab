@@ -144,7 +144,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15, y: 0.15}
+  m_Size: {x: 0.2, y: 0.15}
   m_EdgeRadius: 0
 --- !u!61 &61690120724597572
 BoxCollider2D:
@@ -205,12 +205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16a8325ed761f849a299c5ef18ac152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerName: Amoxicillin
+  towerName: Amoxicillin Bomber
   antibioticType: amox
-  type: 0
-  cost: 25
-  coolDown: 0.5
-  detectionRadius: 3
+  type: 2
+  cost: 50
+  coolDown: 1.5
+  detectionRadius: 2.5
   projectileSize: 0.5
   projectileSpeed: 0.6
   projectilePierce: 0
@@ -305,7 +305,7 @@ LineRenderer:
     textureMode: 0
     generateLightingData: 0
   m_UseWorldSpace: 0
-  m_Loop: 0
+  m_Loop: 1
 --- !u!120 &120798566780514100
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -433,7 +433,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a5ca6ff3e2aad8b49860dc05e12bf3a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd0cc1f6ed8f8a648a2ba4683f558e39, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -532,6 +532,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 2.6500003}
+  m_AnchoredPosition: {x: 8, y: 2.6529675}
   m_SizeDelta: {x: 0.64, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
