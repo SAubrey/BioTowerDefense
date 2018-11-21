@@ -371,12 +371,12 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
         showTowers += step;
         scrolling = true;
 
-        if (showTowers == 0) {
+        if (showTowers == 2) {
              navUp.interactable = false;
         } else {
              navUp.interactable = true;
         }
-        if (showTowers == 2) {
+        if (showTowers == 0) {
               navDown.interactable = false;
         } else {
             navDown.interactable = true;
