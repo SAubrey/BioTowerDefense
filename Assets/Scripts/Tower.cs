@@ -24,6 +24,8 @@ public class Tower : MonoBehaviour {
 	private float bestDamage = 0f;
 	private Color color;
 	private __app appScript;
+	//Testing
+	public int ammo = 5;
 
 	// Laser specific
 	private LineRenderer lr;
@@ -134,6 +136,10 @@ public class Tower : MonoBehaviour {
 						fireLaser(target);
 					}
 				}
+			}
+			ammo--;
+			if(ammo<1){
+				Destroy(gameObject);
 			}
 		}
 		else if (type == 2) { // AOE
