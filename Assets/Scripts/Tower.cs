@@ -24,7 +24,11 @@ public class Tower : MonoBehaviour {
 	private float bestDamage = 0f;
 	private Color color;
 	private __app appScript;
+	public Image ammoBar;
+	public GameObject ammoBarWhole;
 	//Testing
+	[HideInInspector]
+	public int maxAmmo;
 	[HideInInspector]
 	public int ammo;
 
@@ -58,13 +62,18 @@ public class Tower : MonoBehaviour {
 
 		ellipseDetectionRadius = new Vector2(detectionRadius, detectionRadius * __app.ellipseYMult);
 		//ammo
-		ammo = 4;
+		maxAmmo = 30;
+		ammo = maxAmmo;
     }
 	
 	void Update () {
 		// Return if not actually placed
 		if (tag == "MenuItems") {
+			ammoBarWhole.SetActive(false);
 			return;
+		}
+		else{
+			ammoBarWhole.SetActive(true);	
 		}
 		// Return if paused or game not in session
 		if (Game.paused || !Game.game) {
@@ -84,6 +93,12 @@ public class Tower : MonoBehaviour {
 			}
 		}
 	}
+	
+	private void updateAmmo() {
+		ammo--;
+        ammoBar.fillAmount = (float)ammo / (float)maxAmmo;
+    }
+
 
 	private void updateLaser() {
 		Color c = lr.startColor;
@@ -158,11 +173,11 @@ public class Tower : MonoBehaviour {
 				else {
 					if (type == 0) { // PELLET
 						shoot(target);
-						ammo--;
+						updateAmmo();
 					}
 					else if(type == 1) { // LASER
 						fireLaser(target);
-						ammo--;
+						updateAmmo();
 					}
 				}
 			}
@@ -197,7 +212,7 @@ public class Tower : MonoBehaviour {
 		if (boom) {
 			// Visual
 			appScript.explode(gameObject.transform.position, 10, .1f, color);
-			ammo--;
+			updateAmmo();
 		}
 	}
 
