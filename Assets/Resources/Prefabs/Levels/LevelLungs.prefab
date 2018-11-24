@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 61472782475586116}
   - component: {fileID: 60642206535651986}
   - component: {fileID: 114796253861756290}
+  - component: {fileID: 61967362308130392}
   m_Layer: 0
   m_Name: LevelLungs
   m_TagString: Level
@@ -665,6 +666,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 4.5354223, y: 4.140236}
+  m_EdgeRadius: 0
+--- !u!61 &61967362308130392
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1888029049581392}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.017189026, y: -4.514267}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 17.44, y: 9.72}
+    newSize: {x: 19.2, y: 10.8}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 17.286236, y: 0.9115944}
   m_EdgeRadius: 0
 --- !u!95 &95610429997609216
 Animator:

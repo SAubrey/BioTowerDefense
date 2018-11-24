@@ -72,7 +72,6 @@ public class Game : MonoBehaviour {
 		}
 		*/
 	}
-
 	private void endGame() {
 		gameOverText = "GAME OVER";
 		var audioObject = GameObject.Find("AudioObject");
