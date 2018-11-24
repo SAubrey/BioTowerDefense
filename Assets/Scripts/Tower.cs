@@ -64,6 +64,8 @@ public class Tower : MonoBehaviour {
 		//ammo
 		maxAmmo = 30;
 		ammo = maxAmmo;
+		//Set Color
+		ammoBar.color = __app.colors[antibioticType];
     }
 	
 	void Update () {
