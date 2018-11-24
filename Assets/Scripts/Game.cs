@@ -65,12 +65,6 @@ public class Game : MonoBehaviour {
 	}
 	
 	void Update () {
-		/* 
-		if (game) {
-			//if (!paused) {
-			//}
-		}
-		*/
 	}
 	private void endGame() {
 		gameOverText = "GAME OVER";

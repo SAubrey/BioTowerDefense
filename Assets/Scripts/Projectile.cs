@@ -39,9 +39,7 @@ public class Projectile : MonoBehaviour {
 		// Debug.Log("Collision detected, hit obj of tag " + obj.tag);
 
 		if (obj.tag == "Enemy") {
-			//hurtEnemies.Add(obj);
 			obj.GetComponent<Enemy>().hurt(5, towerScript);
-			//obj.GetComponent<Enemy>().speed-=2;
 			enemiesPierced++;
 			if (enemiesPierced >= pierce) {
 				Destroy(gameObject);

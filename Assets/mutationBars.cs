@@ -23,12 +23,12 @@ public class mutationBars : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		amoxBar.fillAmount = appScript.mutationChances["staph"]["amox"];
-		methBar.fillAmount = appScript.mutationChances["staph"]["meth"];
-		vancBar.fillAmount = appScript.mutationChances["staph"]["vanc"];
-		carbBar.fillAmount = appScript.mutationChances["staph"]["carb"];
-		lineBar.fillAmount = appScript.mutationChances["staph"]["line"];
-		rifaBar.fillAmount = appScript.mutationChances["staph"]["rifa"];
-		isonBar.fillAmount = appScript.mutationChances["staph"]["ison"];
+		amoxBar.fillAmount = __app.mutationChances["amox"];
+		methBar.fillAmount = __app.mutationChances["meth"];
+		vancBar.fillAmount = __app.mutationChances["vanc"];
+		carbBar.fillAmount = __app.mutationChances["carb"];
+		lineBar.fillAmount = __app.mutationChances["line"];
+		rifaBar.fillAmount = __app.mutationChances["rifa"];
+		isonBar.fillAmount = __app.mutationChances["ison"];
 	}
 }
