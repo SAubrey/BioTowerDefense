@@ -17,6 +17,7 @@ public class Tower : MonoBehaviour {
 	public int projectilePierce = 1;
     private GameObject target = null;
     private GameObject projectile;
+	private GameObject bombAOE;
 	private TowerManager towerManager;
     bool coolingDown = false;
     float cdTime = 0f;
@@ -43,6 +44,7 @@ public class Tower : MonoBehaviour {
 
     void Start () {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
+		bombAOE = Resources.Load("Prefabs/TowerAOE") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
 		baseDamages = __app.antibiotics[antibioticType];
 		color = __app.colors[antibioticType];
@@ -150,9 +152,9 @@ public class Tower : MonoBehaviour {
 
 		float angle = Mathf.Atan2(rise, run);
 		float ellipseDist = Mathf.Sqrt(Mathf.Pow((Mathf.Cos(angle) * ellipseDetectionRadius.x), 2f) + 
-						               Mathf.Pow((Mathf.Sin(angle) * ellipseDetectionRadius.y), 2f));
+						               Mathf.Pow((Mathf.Sin(angle) * ellipseDetectionRadius.y + __app.towerShadowYOffset), 2f));
 
-		return enemyDist <= ellipseDist ? true : false;
+		return enemyDist <= ellipseDist;
 	}
 	
 	private void activate() {
@@ -209,10 +211,14 @@ public class Tower : MonoBehaviour {
 
 		foreach (GameObject t in targets) {
 			t.GetComponent<Enemy>().hurt(5, this);
-			boom = !boom ? !boom : false;
+			boom = true;
 		}
 		if (boom) {
 			// Visual
+			GameObject myAOE = Instantiate(bombAOE);
+			myAOE.GetComponent<SpriteRenderer>().color = (Vector4)__app.colors[antibioticType] + (new Vector4(0,0,0,-0.5f));
+			myAOE.transform.position = transform.position + new Vector3(0,__app.towerShadowYOffset,0);
+			myAOE.transform.localScale += new Vector3(1,0,0);
 			appScript.explode(gameObject.transform.position, 10, .1f, color);
 			updateAmmo();
 		}

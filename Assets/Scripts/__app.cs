@@ -8,7 +8,7 @@ public class __app : MonoBehaviour {
 	private Screenshake screenshake;
 	private particleManager particles;
 	private string level;
-	public static float ellipseYMult = .5f;
+	public static float ellipseYMult = .43f;
 	// public static float ellipseRotAngle = 0f;
 	public static float towerShadowYOffset = -0.36f;
 

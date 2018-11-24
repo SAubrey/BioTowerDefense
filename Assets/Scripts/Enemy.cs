@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour {
         game.GetComponent<Game>().Currency += baseProfitPerEnemy;
         
 		//Particles
-		appScript.newParticles(transform.position, 7, 0.01f, particleColor);
+		appScript.newParticles(transform.position, 7, 0.03f, particleColor);
         Destroy(gameObject);
     }
 
