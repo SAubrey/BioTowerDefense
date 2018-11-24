@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class towerAOE : MonoBehaviour {
 
-	// Use this for initialization
+	SpriteRenderer sr;
 	void Start () {
-		Destroy(gameObject,0.05f);
+		sr = gameObject.GetComponent<SpriteRenderer>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		
+
+		// Fade
+		sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, sr.color.a - 0.03f);
+		if (sr.color.a <= 0) {
+			Destroy(gameObject);
+		}
 	}
 }

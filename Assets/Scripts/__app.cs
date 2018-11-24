@@ -77,7 +77,8 @@ public static IDictionary<string, IDictionary<string, float>> antibiotics = new 
 					{"rifa", rifa},
 					{"ison", ison} };
 
-public static IDictionary<string, float> staphChances = new Dictionary<string, float>() {
+public static IDictionary<string, float> mutationChances =
+				new Dictionary<string, float>() {
 					{"amox", 0f},
 					{"meth", 0f},
 					{"vanc", 0f},
@@ -85,40 +86,6 @@ public static IDictionary<string, float> staphChances = new Dictionary<string, f
 					{"line", 0f},
 					{"rifa", 0f},
 					{"ison", 0f} };
-					
-public static IDictionary<string, float> strepChances = new Dictionary<string, float>() {
-					{"amox", 0f},
-					{"meth", 0f},
-					{"vanc", 0f},
-					{"carb", 0f},
-					{"line", 0f},
-					{"rifa", 0f},
-					{"ison", 0f} };
-
-public static IDictionary<string, float> pneuChances = new Dictionary<string, float>() {
-					{"amox", 0f},
-					{"meth", 0f},
-					{"vanc", 0f},
-					{"carb", 0f},
-					{"line", 0f},
-					{"rifa", 0f},
-					{"ison", 0f} };
-
-public static IDictionary<string, float> TBChances = new Dictionary<string, float>() {
-					{"amox", 0f},
-					{"meth", 0f},
-					{"vanc", 0f},
-					{"carb", 0f},
-					{"line", 0f},
-					{"rifa", 0f},
-					{"ison", 0f} };
-
-public IDictionary<string, IDictionary<string, float>> mutationChances = 
-				new Dictionary<string, IDictionary<string, float>>() {
-					{"staph", staphChances},
-					{"strep", strepChances},
-					{"pneu", pneuChances},
-					{"TB", TBChances} };
             
    	public float mutationIncrement = 0.02f;
 
@@ -145,22 +112,18 @@ public IDictionary<string, IDictionary<string, float>> mutationChances =
 	}
 
 	public void increaseMutationChanceForAntibiotic(string antibioticType) {
-		List<string> bacterias = new List<string> (mutationChances.Keys);
-		foreach (string bacteria in bacterias) {
-			mutationChances[bacteria][antibioticType] += mutationIncrement;
+		List<string> abs = new List<string> (mutationChances.Keys);
+		foreach (string ab in abs) {
+			mutationChances[ab] += mutationIncrement;
 		}
 		print("Increasing mutation chances for " + antibioticType + " by " + mutationIncrement);
 	}
 
-    // Iterate through all mutation chances and reduce by some percentage. Called after each wave?
-    public void lowerAllChances(float percent) {
-        List<string> bacterias = new List<string> (mutationChances.Keys);
-        foreach (string bacteria in bacterias) {
-            List<string> antibiotics = new List<string> (mutationChances[bacteria].Keys);
-            foreach (string antibiotic in antibiotics) {
-                mutationChances[bacteria][antibiotic] *= percent;
-            }
-        }
+	public void lowerAllChances(float percent) {
+		List<string> antibiotics = new List<string> (mutationChances.Keys);
+		foreach (string antibiotic in antibiotics) {
+			mutationChances[antibiotic] *= percent;
+		}
     }
 	
 	public bool getMusic(){

@@ -139,7 +139,8 @@ public class Enemy : MonoBehaviour {
 
     // Mutation check happens at each projectile hit against that antibiotic type.
     private bool rollForMutate(string antibioticType) {
-        var chance = appScript.mutationChances[species][antibioticType];
+        var chance = __app.mutationChances[antibioticType];
+        
         if (Random.Range(0, 100) < chance * 100) {
             print(species + " has mutated against " + antibioticType + "! Likelihood: " + (chance * 100) + "%");
             setResistance(antibioticType);

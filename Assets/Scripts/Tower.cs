@@ -50,7 +50,9 @@ public class Tower : MonoBehaviour {
 		color = __app.colors[antibioticType];
 		enemyMask = LayerMask.GetMask("Enemy");
 
-
+		if (tag == "MenuItems") {
+			ammoBarWhole.SetActive(false);
+		}
 		if (type == 1) {
 			lr = gameObject.transform.GetChild(1).GetComponent<LineRenderer>();
 			lr.positionCount = 2;
@@ -73,11 +75,10 @@ public class Tower : MonoBehaviour {
 	void Update () {
 		// Return if not actually placed
 		if (tag == "MenuItems") {
-			ammoBarWhole.SetActive(false);
 			return;
 		}
 		else{
-			ammoBarWhole.SetActive(true);	
+			//ammoBarWhole.SetActive(true);	
 		}
 		// Return if paused or game not in session
 		if (Game.paused || !Game.game) {
@@ -121,7 +122,6 @@ public class Tower : MonoBehaviour {
 	private GameObject findBestTarget() {
 		GameObject bestCandidate = null;
 		bestDamage = 0f;
-
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
 		foreach (GameObject enemy in enemies) {
@@ -160,7 +160,7 @@ public class Tower : MonoBehaviour {
 	private void activate() {
 		coolingDown = true;
 		cdTime = coolDown;
-		if(ammo<1){
+		if (ammo < 1) {
 			return;
 		}
 		if (type == 0 || type == 1) { 
@@ -185,14 +185,14 @@ public class Tower : MonoBehaviour {
 					}
 				}
 			}
-			//If ammo gone
-			if(ammo<1){
+			// If ammo gone
+			if (ammo < 1) {
 				//Destroy(gameObject);
 				Color tmp = GetComponent<SpriteRenderer>().color;
 				tmp.a = 0.5f;
 				GetComponent<SpriteRenderer>().color = tmp;
 			}
-			else{
+			else {
 				//Change opacity to match tower
 				Color tmp = GetComponent<SpriteRenderer>().color;
 				tmp.a = 1f;
@@ -206,17 +206,17 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void explode() {
-		List<GameObject> targets = findAllTargets();
+		List<Enemy> targets = findAllTargets();
 		bool boom = false;
 
-		foreach (GameObject t in targets) {
-			t.GetComponent<Enemy>().hurt(5, this);
+		foreach (Enemy t in targets) {
+			t.hurt(5, this);
 			boom = true;
 		}
 		if (boom) {
 			// Visual
 			GameObject myAOE = Instantiate(bombAOE);
-			myAOE.GetComponent<SpriteRenderer>().color = (Vector4)__app.colors[antibioticType] + (new Vector4(0,0,0,-0.5f));
+			myAOE.GetComponent<SpriteRenderer>().color = (Vector4)__app.colors[antibioticType] + (new Vector4(0.1f, 0.1f , 0.1f, -0.5f));
 			myAOE.transform.position = transform.position + new Vector3(0,__app.towerShadowYOffset,0);
 			myAOE.transform.localScale += new Vector3(1,0,0);
 			appScript.explode(gameObject.transform.position, 10, .1f, color);
@@ -224,9 +224,9 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
-	private List<GameObject> findAllTargets() {
+	private List<Enemy> findAllTargets() {
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-		List<GameObject> targets = new List<GameObject>();
+		List<Enemy> targets = new List<Enemy>();
 
 		foreach (GameObject enemy in enemies) {
 			if (checkInsideEllipse((Vector2)enemy.transform.position)) {
@@ -235,7 +235,7 @@ public class Tower : MonoBehaviour {
 
 				// If tower can do damage to the enemy && If the enemy has not mutated against tower
 				if (damage > 0 && !enemyScript.checkResistance(antibioticType)) { 
-					targets.Add(enemy);
+					targets.Add(enemyScript);
 				}
 			}
 		}
@@ -243,24 +243,33 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void fireLaser(GameObject enemy) {
-	
+		
 		// Physical
+		float run = enemy.transform.position.x - transform.position.x;
+		float rise = enemy.transform.position.y - transform.position.y;
+		float angle = Mathf.Atan2(rise, run);
+	
+		Vector2 ePos = new Vector2(Mathf.Cos(angle) * ellipseDetectionRadius.x,
+									 Mathf.Sin(angle) * ellipseDetectionRadius.y);
+		float eX = Mathf.Cos(angle) * ellipseDetectionRadius.x;
+		float eY = Mathf.Sin(angle) * ellipseDetectionRadius.y;
+		float ellipseDist = Mathf.Sqrt(Mathf.Pow(eX, 2f) + 
+						               Mathf.Pow(eY, 2f));
+									   
 		RaycastHit2D[] rc;
-		rc = Physics2D.LinecastAll(transform.position, target.transform.position, enemyMask);
+		rc = Physics2D.RaycastAll(transform.position, new Vector2(run, rise), ellipseDist, enemyMask);
 		foreach (RaycastHit2D r in rc) {
 			r.collider.gameObject.GetComponent<Enemy>().hurt(5, this);
 		}
 
 		// Visual
-		Vector3 tPos = new Vector3(enemy.transform.position.x - transform.position.x, 
-								enemy.transform.position.y - transform.position.y, 2f);
 		firingLaser = true;
 		if (!lr.enabled) {
 			lr.enabled = true;
 		}
 		lr.startColor = color;
 		lr.endColor = color;
-		lr.SetPosition(1, tPos);
+		lr.SetPosition(1, ePos);
 	}
 	
 	private void shoot(GameObject enemy) {
