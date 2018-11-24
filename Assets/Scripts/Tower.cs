@@ -269,6 +269,8 @@ public class Tower : MonoBehaviour {
 			float ysp = (rise / distance) * projectileSpeed;
 			myProjectile.GetComponent<Projectile>().setVals(this, projectileSize, 
 															 projectilePierce, xsp, ysp);
+			//Set Color
+			myProjectile.GetComponent<SpriteRenderer>().color = __app.colors[antibioticType];
 		}
 	}
 
