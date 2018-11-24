@@ -112,10 +112,7 @@ public static IDictionary<string, float> mutationChances =
 	}
 
 	public void increaseMutationChanceForAntibiotic(string antibioticType) {
-		List<string> abs = new List<string> (mutationChances.Keys);
-		foreach (string ab in abs) {
-			mutationChances[ab] += mutationIncrement;
-		}
+		mutationChances[antibioticType] += mutationIncrement;
 		print("Increasing mutation chances for " + antibioticType + " by " + mutationIncrement);
 	}
 
