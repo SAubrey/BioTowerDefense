@@ -295,11 +295,9 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
         tower = Resources.Load("Prefabs/Tower") as GameObject;
         projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
-        // Load the towers sprites, and assign them to their spots in the dictionaries
-        List<string> towerKeys = new List<string> (towers.Keys);
-        foreach (string key in towerKeys) {
-            towers[key]["towerSprite"] = Resources.Load<Sprite>("Sprites/Towers/tower") as Sprite;
-        }
+        pelletTower = Resources.Load<Sprite>("Sprites/Towers/pelletTower");
+        laserTower = Resources.Load<Sprite>("Sprites/Towers/laserTower");
+        bombTower = Resources.Load<Sprite>("Sprites/Towers/bombTower");
 
         showTowers = 0;
         destination = 6;
@@ -345,7 +343,7 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
 
         tScript.type = (int) attributes["type"];
         if (tScript.type == projType) {
-            sr.sprite = pelletTower;
+            t.GetComponent<SpriteRenderer>().sprite = pelletTower;
         } 
         else if (tScript.type == laserType) {
             sr.sprite = laserTower;

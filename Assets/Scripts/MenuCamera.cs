@@ -45,10 +45,7 @@ public class MenuCamera : MonoBehaviour {
 			GameObject.Find("Pneu").GetComponent<Animator>().Play("pneu");
 		} 
 		else if ( scene == "Encyclopedia") {
-			GameObject.Find("Strep/Enemy").GetComponent<Animator>().Play("strep");
-			GameObject.Find("Staph/Enemy").GetComponent<Animator>().Play("staph");
-			GameObject.Find("TB/Enemy").GetComponent<Animator>().Play("TB");
-			GameObject.Find("Pneu/Enemy").GetComponent<Animator>().Play("pneu");
+
 		}
 	}
 
