@@ -14,8 +14,11 @@ public class TowerManager : MonoBehaviour {
     private Game gameManager;
     public float sellPercentage = 0.7f;
 
+    private Color defaultColor;
+
     void Start () {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
+        defaultColor = sellTowerButton.GetComponent<Image>().color;
     }
 
     void Update () {
@@ -92,8 +95,9 @@ public class TowerManager : MonoBehaviour {
         sellTowerButton.GetComponent<Image>().color = Color.green;
     }
     public void disableSellButton() {
+
         sellTowerButton.enabled = false;
-        sellTowerButton.GetComponent<Image>().color = Color.white;
+        sellTowerButton.GetComponent<Image>().color = defaultColor;
     }
 
     // Erases the circle when tower is "deselected"
