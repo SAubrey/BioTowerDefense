@@ -12,7 +12,7 @@ public class LoadTowers : MonoBehaviour {
 
         public static GameObject projectile;
 
-        public int showTowers;
+        private int showTowers;
 
         public Button navUp;
         public Button navDown;
@@ -305,7 +305,7 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
         LoadAllTowers();
 
         scrollCoordinates =  new Dictionary<int, Vector2>() {
-							{0, new Vector2(0f, 7.08f)},
+							{0, new Vector2(0f, 7.0f)},
 							{1, new Vector2(0f, -0.5f)},
 							{2, new Vector2(0f, -8.1f)} };
     }
