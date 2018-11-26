@@ -9,8 +9,16 @@ public class __app : MonoBehaviour {
 	private particleManager particles;
 	private string level;
 	public static float ellipseYMult = .43f;
-	// public static float ellipseRotAngle = 0f;
 	public static float towerShadowYOffset = -0.36f;
+
+	// BALANCE VARIABLES
+	public static int baseCurrency = 60;
+	public static int baseCurrencyPerKill = 2; 
+	public static int baseDamage = 50;
+	public static int maxAmmo = 30;
+	public static float spawnInterval = 0.9f;
+   	public float mutationIncrement = 0.05f;
+
 
 	// COLOR
 	public static Color amoxColor = Color.green;
@@ -87,14 +95,12 @@ public static IDictionary<string, float> mutationChances =
 					{"rifa", 0f},
 					{"ison", 0f} };
             
-   	public float mutationIncrement = 0.02f;
 
 	void Awake () {
 		options = new Options();
 		screenshake = new Screenshake();
 		particles = new particleManager();
 		level = "doi";
-		mutationIncrement = 0.1f; // for testing
 	}
 	
 	void Update () {

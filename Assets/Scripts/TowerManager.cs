@@ -11,6 +11,8 @@ public class TowerManager : MonoBehaviour {
     public Text towerNamelabel;
     public Button sellTowerButton;
 
+    public Button reloadTowerAmmoButton;
+
     private Game gameManager;
     public float sellPercentage = 0.7f;
 
@@ -36,6 +38,7 @@ public class TowerManager : MonoBehaviour {
                     disableSellButton();
                     clearLabels();
                     destroyCircle();
+                    SelectedTower.GetComponent<Tower>().selected = false;
                     SelectedTower = null;
                 }
             }
@@ -49,6 +52,27 @@ public class TowerManager : MonoBehaviour {
         clearLabels();
         SelectedTower = null;
         disableSellButton();
+    }
+
+    public void reloadTowerAmmo() {
+        if (SelectedTower != null) {
+            Tower tScript = SelectedTower.GetComponent<Tower>();
+            int cost = calcReloadCost();
+            if (cost <= gameManager.Currency) {
+                gameManager.Currency -= cost;
+                tScript.ammo = tScript.maxAmmo;
+            }
+        }
+    }
+
+    private int calcReloadCost() {
+        Tower tScript = SelectedTower.GetComponent<Tower>();
+        float ammoRatio = (float)tScript.ammo / (float)tScript.maxAmmo;
+        return (int)Mathf.Round(((float)tScript.cost / 2f) * (1f - ammoRatio));
+    }
+
+    public void updateReloadText() {
+        reloadTowerAmmoButton.GetComponentInChildren<Text>().text = "Refill Tower for $" + calcReloadCost();
     }
 
     // Sets the selected towers labels
@@ -67,6 +91,7 @@ public class TowerManager : MonoBehaviour {
     // Clears the labels once tower is deselected or sold
     public void clearLabels() {
         towerNamelabel.text = "";
+        reloadTowerAmmoButton.GetComponentInChildren<Text>().text = "Refill Tower";
     }
 
     // Draws the Towers radius when it's selected
@@ -95,7 +120,6 @@ public class TowerManager : MonoBehaviour {
         sellTowerButton.GetComponent<Image>().color = Color.green;
     }
     public void disableSellButton() {
-
         sellTowerButton.enabled = false;
         sellTowerButton.GetComponent<Image>().color = defaultColor;
     }

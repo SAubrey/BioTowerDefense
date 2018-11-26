@@ -308,9 +308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916468aae4a1e4ed297008ef0b941ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedActual: 0
-  speed: 1.5
-  maxHealth: 10
+  speed: 1
+  maxHealth: 100
   species: 
   healthBar: {fileID: 114592877416686878}
   waypoints:
@@ -320,7 +319,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  baseProfitPerEnemy: 2
 --- !u!114 &114592877416686878
 MonoBehaviour:
   m_ObjectHideFlags: 1

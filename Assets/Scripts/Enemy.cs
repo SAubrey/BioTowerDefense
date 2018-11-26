@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
-    //[HideInInspector]
-	public float speedActual;
     public float speed;
     public float maxHealth;
     private float health;
@@ -24,9 +22,8 @@ public class Enemy : MonoBehaviour {
     public GameObject[] waypoints;
 
     private float distanceCovered;
-    //private SpriteRenderer particleSR; // SPrite Renderer
     private Color particleColor;
-    public int baseProfitPerEnemy = 2;
+    private int baseProfitPerEnemy;
 
     private IDictionary<string, bool> resistances = new Dictionary<string, bool>() {
                             {"amox", false},
@@ -37,16 +34,15 @@ public class Enemy : MonoBehaviour {
                             {"rifa", false},
                             {"ison", false} };
 
-    // Use this for initialization
     void Start () {
-		speedActual = speed;
+		//speedActual = speed;
         health = maxHealth;
         game = GameObject.Find("Game");
-		//level = GameObject.FindGameObjectsWithTag("Level")[0];
         level = GameObject.FindGameObjectWithTag("Level");
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
-       // particleSR = transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>();
+
+       baseProfitPerEnemy = __app.baseCurrencyPerKill;
 
         setDestination();
     }
@@ -60,8 +56,6 @@ public class Enemy : MonoBehaviour {
             setDestination();
         }
         move();
-	 //	speedActual = speed*game.GetComponent<Game>().timescale;
-		//Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
     }
     private void move() {
 
@@ -93,10 +87,6 @@ public class Enemy : MonoBehaviour {
          // Retrieve the position of the last waypoint the enemy crossed and the next waypoint
         startPosition = waypoints[currentWaypoint].transform.position;
         endPosition = waypoints[currentWaypoint + 1].transform.position;
-        // TODO: Rotate into move direction
-        //transform.LookAt((Vector2)endPosition);
-        //transform.up = (Vector2)endPosition;
-        //transform.right = (Vector2)endPosition;
     }
 
     private void reachOrgan() {
@@ -207,8 +197,8 @@ public class Enemy : MonoBehaviour {
         species = type;
         GetComponent<Animator>().Play(type);
 
-		//Set 'Color'
-		switch(type){
+		//Set particle 'Color'
+		switch (type) {
 			case("strep"):
 				particleColor = (Color)new Color32(132, 60, 211, 255); // purple
 				break;
@@ -222,7 +212,6 @@ public class Enemy : MonoBehaviour {
 				particleColor = (Color)new Color32(255, 52, 166, 255);
 				break;
 		}
-		
     }
 
     public bool checkResistance(string antibioticType) {

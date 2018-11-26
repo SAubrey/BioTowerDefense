@@ -351,16 +351,17 @@ MonoBehaviour:
   towerName: Amoxicillin
   antibioticType: amox
   type: 0
-  cost: 25
+  cost: 20
   coolDown: 0.5
   detectionRadius: 3
   projectileSize: 0.2
-  projectileSpeed: 0.1
+  projectileSpeed: 0.17
   projectilePierce: 0
   ammoBar: {fileID: 114783743929957930}
   ammoBarWhole: {fileID: 1720702151445220}
   maxAmmo: 0
-  ammo: 0
+  _ammo: 0
+  selected: 0
 --- !u!120 &120266810001499112
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -770,6 +771,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 2.6500003}
+  m_AnchoredPosition: {x: 8.000001, y: 2.649999}
   m_SizeDelta: {x: 0.64, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
