@@ -14,7 +14,6 @@ public class bgSquare : MonoBehaviour {
 		rotSpeed = Random.Range(1,2);
 		transform.localScale = new Vector3(size,size,1);
 		transform.position = new Vector3(Random.Range(-5,5),Random.Range(-4,4),0);
-		GetComponent<SpriteRenderer>().color = new Vector4(255f,255f,255f,0.05f);
 	}
 	
 	// Update is called once per frame
