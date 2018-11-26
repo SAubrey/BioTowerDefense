@@ -398,12 +398,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16a8325ed761f849a299c5ef18ac152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerName: Vancomycin
-  antibioticType: vanc
-  type: 0
-  cost: 20
-  coolDown: 0.5
-  detectionRadius: 3
+  towerName: Isoniazid Bomber
+  antibioticType: ison
+  type: 2
+  cost: 40
+  coolDown: 1.5
+  detectionRadius: 2.5
   projectileSize: 0.2
   projectileSpeed: 0.17
   projectilePierce: 0
@@ -632,8 +632,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 099ae690f1507d94cadd5b125c001e77, type: 3}
-  m_Color: {r: 0.60784316, g: 0, b: 0.8039216, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 36497c08ecf6e014d9c1e8b2e4a84f3f, type: 3}
+  m_Color: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -830,7 +830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.25, y: 0.55000037}
+  m_AnchoredPosition: {x: 8.25, y: 11.85}
   m_SizeDelta: {x: 0.64, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224939784210408796

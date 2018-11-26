@@ -103,7 +103,7 @@ public class Game : MonoBehaviour {
 
 	public void togglePaused() {
 		paused = !paused;
-		pauseMenu.SetActive(paused);
+		pauseMenu.SetActive(true);
 	}
 	
 	public void toggleTimescale() {
