@@ -348,8 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16a8325ed761f849a299c5ef18ac152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerName: Amoxicillin
-  antibioticType: amox
+  towerName: Vancomycin
+  antibioticType: vanc
   type: 0
   cost: 20
   coolDown: 0.5
@@ -582,7 +582,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 099ae690f1507d94cadd5b125c001e77, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.60784316, g: 0, b: 0.8039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

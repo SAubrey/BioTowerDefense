@@ -22,11 +22,15 @@ public class MenuCamera : MonoBehaviour {
 
 	void Start() {
 		mainMenuCoordinates = new Dictionary<string, Vector2>() {
-					{"MainMenu", new Vector2(0f, 0f)},
-					{"PlayMenu", new Vector2(0f, 10f)},
-					{"Game", new Vector2(0f, 30f)},
-					{"OptionsMenu", new Vector2(0f, -10f)},
-					{"Encyclopedia", new Vector2(-30f, 0f)} };
+			{"MainMenu", new Vector2(0f, 0f)},
+			{"PlayMenu", new Vector2(0f, 10f)},
+			{"Game", new Vector2(0f, 30f)},
+			{"OptionsMenu", new Vector2(0f, -10f)},
+			{"Encyclopedia", new Vector2(-30f, 0f)} ,
+			{"labMain", new Vector2(0f, 0f)},
+			{"labData", new Vector2(0f, 10f)},
+			{"labLogbook", new Vector2(-17.8f, 0f)},
+		};
 
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
@@ -137,8 +141,10 @@ public class MenuCamera : MonoBehaviour {
 	public void changeScreen(string scr) {
 
 		Time.timeScale = 1f;
-
-		dest = mainMenuCoordinates[scr]; // Gives coordinates assuming scene is MainMenu
+		//if(sceneGuy.currentScene == "MainMenu")
+			dest = mainMenuCoordinates[scr]; // Gives coordinates if scene is MainMenu
+		//if(sceneGuy.currentScene == "Encyclopedia")
+			//dest = labMenuCoordinates[scr]; // Gives coordinates if scene is LabMenu
 		setSceneFromScreen(scr);
 		moving = true;
 	}

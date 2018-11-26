@@ -38,6 +38,47 @@ public class __app : MonoBehaviour {
 					{"rifa", rifaColor},
 					{"ison", isonColor} };
 
+	public static IDictionary<string, bool> logbook = new Dictionary<string, bool>() { 
+		//Enemies
+		{"strep",false},
+		{"staph",false},
+		{"pneu",false},
+		{"TB",false},
+		//Towers
+		{"amox", false},
+		{"meth", false},
+		{"vanc", false},
+		{"carb", false},
+		{"line", false},
+		{"rifa", false},
+		{"ison", false},
+		//Levels
+		{"heart",false},
+		{"lungs",false},
+		//Extras
+		{"prof",false}
+	};
+	public static IDictionary<string, int> logbookChances = new Dictionary<string, int>() { 
+		//Enemies
+		{"strep",20},
+		{"staph",20},
+		{"pneu",20},
+		{"TB",20},
+		//Towers
+		{"amox", 100},
+		{"meth", 100},
+		{"vanc", 100},
+		{"carb", 100},
+		{"line", 100},
+		{"rifa", 100},
+		{"ison", 100},
+		//Levels
+		{"heart",100},
+		{"lungs",100},
+		//Extras
+		{"prof",100}
+	};
+					
         // Dictionaries are arranged in order of effectiveness up to carb (1-5)
     // Linezolid is its own category, rifampicin and isoniazid are their own category.
 private static IDictionary<string, float> amox = new Dictionary<string, float>() { // amoxicillin
