@@ -9,18 +9,17 @@ public class Tower : MonoBehaviour {
 	public string antibioticType;
 	public int type = 0; // 0 = pellet, 1 = laser, 2 = AOE 
     public int cost;
-	public float coolDown = 0f; 
-	//public int targetType = 0;//0=first, 1=last, 2=lowestHP, 3=highestHP, 4=self(aoe), 5=all in radius
+	public float coolDown;
+    bool coolingDown = false;
+    float cdTime = 0f;
 	public float detectionRadius;
-	public float projectileSize = 0.5f;
-	public float projectileSpeed = 0.6f;
-	public int projectilePierce = 1;
+	public float projectileSize;
+	public float projectileSpeed;
+	public int projectilePierce;
     private GameObject target = null;
     private GameObject projectile;
 	private GameObject bombAOE;
 	private TowerManager towerManager;
-    bool coolingDown = false;
-    float cdTime = 0f;
 	private IDictionary<string, float> baseDamages;
 	private float bestDamage = 0f;
 	private Color color;
@@ -33,7 +32,6 @@ public class Tower : MonoBehaviour {
 	[HideInInspector]
 	public int ammo;
 	private GameObject logbookDrop;
-
 	// Laser specific
 	private LineRenderer lr;
 	private bool firingLaser = false;
@@ -41,7 +39,8 @@ public class Tower : MonoBehaviour {
 	private LayerMask enemyMask;
 
 	private Vector2 ellipseDetectionRadius;
-	private LineRenderer myLr;
+
+	public bool selected = false;
 
     void Start () {
 		logbookDrop  = Resources.Load("Prefabs/LogbookUnlock") as GameObject;
@@ -68,7 +67,7 @@ public class Tower : MonoBehaviour {
 
 		ellipseDetectionRadius = new Vector2(detectionRadius, detectionRadius * __app.ellipseYMult);
 		//ammo
-		maxAmmo = 30;
+		maxAmmo = __app.maxAmmo;
 		ammo = maxAmmo;
 		//Set Color
 		ammoBar.color = __app.colors[antibioticType];
@@ -115,6 +114,18 @@ public class Tower : MonoBehaviour {
 		checkDropLogbook();
     }
 
+	public int ammo {
+		get {
+			return _ammo;
+		}
+		set {
+			_ammo = value;
+			ammoBar.fillAmount = (float)ammo / (float)maxAmmo;
+			if (selected) {
+				towerManager.updateReloadText();
+			}
+		}
+	}
 
 	private void updateLaser() {
 		Color c = lr.startColor;
@@ -149,9 +160,6 @@ public class Tower : MonoBehaviour {
 					}
 				}
 			}
-		}
-		if (bestCandidate != null) {
-			// print(antibioticType + " targeting: " + bestCandidate.GetComponent<Enemy>().species + " Best damage: " + bestDamage);
 		}
 		return bestCandidate;
 	}
@@ -190,11 +198,11 @@ public class Tower : MonoBehaviour {
 				else {
 					if (type == 0) { // PELLET
 						shoot(target);
-						updateAmmo();
+						ammo--;
 					}
 					else if(type == 1) { // LASER
 						fireLaser(target);
-						updateAmmo();
+						ammo--;
 					}
 				}
 			}
@@ -223,7 +231,7 @@ public class Tower : MonoBehaviour {
 		bool boom = false;
 
 		foreach (Enemy t in targets) {
-			t.hurt(5, this);
+			t.hurt(__app.baseDamage, this);
 			boom = true;
 		}
 		if (boom) {
@@ -233,7 +241,7 @@ public class Tower : MonoBehaviour {
 			myAOE.transform.position = transform.position + new Vector3(0,__app.towerShadowYOffset,0);
 			myAOE.transform.localScale += new Vector3(1,0,0);
 			appScript.explode(gameObject.transform.position, 10, .1f, color);
-			updateAmmo();
+			ammo--;
 		}
 	}
 
@@ -272,7 +280,7 @@ public class Tower : MonoBehaviour {
 		RaycastHit2D[] rc;
 		rc = Physics2D.RaycastAll(transform.position, new Vector2(run, rise), ellipseDist, enemyMask);
 		foreach (RaycastHit2D r in rc) {
-			r.collider.gameObject.GetComponent<Enemy>().hurt(5, this);
+			r.collider.gameObject.GetComponent<Enemy>().hurt(__app.baseDamage, this);
 		}
 
 		// Visual
@@ -310,13 +318,20 @@ public class Tower : MonoBehaviour {
 
 	// Placement stuff
 	private void OnMouseDown() {
-    	if (gameObject.tag != "MenuItems" && !Game.paused) {
-			towerManager.destroyCircle();
-			towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
-			towerManager.SelectedTower = gameObject;
-			towerManager.drawEllipse(detectionRadius);
-			towerManager.setLabels(towerName, cost);
-			towerManager.enableSellButton();
+		if (!Game.paused) {
+			if (gameObject.tag != "MenuItems") {
+				towerManager.destroyCircle();
+				towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+				towerManager.SelectedTower = gameObject;
+				towerManager.drawEllipse(detectionRadius);
+				towerManager.setLabels(towerName, cost);
+				towerManager.enableSellButton();
+			}
+
+			if (gameObject.tag == "Tower") {
+				towerManager.updateReloadText();
+				selected = true;
+			}
 		}
 	}
 }

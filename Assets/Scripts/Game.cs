@@ -32,9 +32,9 @@ public class Game : MonoBehaviour {
 		gameOver = false;
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
-		HPText.text = "HP: " + HP;
+		HPText.text = HP.ToString();
 		gameOverText = "";
-        Currency = 150;
+        Currency = __app.baseCurrency;
 
 		// Load Level
 		level = Resources.Load("Prefabs/Levels/"+appScript.getLevel()) as GameObject;
@@ -94,7 +94,7 @@ public class Game : MonoBehaviour {
 	
 	public void takeDamage(int damage){
 		HP -= damage;
-		HPText.text = "HP: " + HP;
+		HPText.text = HP.ToString();
 
 		if (HP <= 0) {
 			endGame();
@@ -125,7 +125,7 @@ public class Game : MonoBehaviour {
         }
         set {
             _currency = value;
-            currencyText.GetComponent<Text>().text = "$" + _currency;
+            currencyText.GetComponent<Text>().text = _currency.ToString();
         }
     }
 

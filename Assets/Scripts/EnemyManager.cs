@@ -7,7 +7,7 @@ public class EnemyManager : MonoBehaviour {
 
 	private Game game;
 	private float spawnTimer = 0f;
-	public float spawnInterval = .9f; // seconds
+	public float spawnInterval;
 	public GameObject Enemy;
 
 	// Burst Spawning Mode Management
@@ -25,20 +25,19 @@ public class EnemyManager : MonoBehaviour {
 	private bool waveActive = false;
 
 	private bool spawningActive = true;
-	public float waveInterval = 8f;
 	private float waveIntervalTimer = 0f;
 	private Text EnemyText;
-	private Text TimerText; 
 	private int _enemiesDead = 0;
 	public int waveCompleteReward = 20; 
 	public float waveCompleteMutMult = 0.5f;
 
 	void Start () {
 		game = GameObject.Find("Game").GetComponentInParent<Game>();
-		EnemyText = GameObject.Find("EnemyText").GetComponent<Text>();
-		//TimerText = GameObject.Find("TimerText").GetComponent<Text>();
+		EnemyText = GameObject.Find("Enemies Text").GetComponent<Text>();
 		enemiesDead = 0;
 		currentWave = 0;
+
+		spawnInterval = __app.spawnInterval;
 	}
 	 
 	void Update () {
