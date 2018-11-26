@@ -25,7 +25,6 @@ public class LoadTowers : MonoBehaviour {
         private static int projType = 0;
         private static int laserType = 1;
         private static int bombType = 2;
-
         
 
         private static float posX = 8.0f;
@@ -45,9 +44,9 @@ public class LoadTowers : MonoBehaviour {
         public static float extraLaserCooldown = 1f;
 
         // COST
-        public static int baseCost = 25;
-        public static int extraBombCost = 25;
-        public static int extraLaserCost = 25;
+        public static int baseCost = 20;
+        public static int extraBombCost = 20;
+        public static int extraLaserCost = 20;
         public static int amoxCost = baseCost;
         public static int methCost = baseCost;
         public static int vancCost = baseCost;
@@ -295,10 +294,6 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
         tower = Resources.Load("Prefabs/Tower") as GameObject;
         projectile = Resources.Load("Prefabs/Projectile") as GameObject;
 
-        pelletTower = Resources.Load<Sprite>("Sprites/Towers/pelletTower");
-        laserTower = Resources.Load<Sprite>("Sprites/Towers/laserTower");
-        bombTower = Resources.Load<Sprite>("Sprites/Towers/bombTower");
-
         showTowers = 0;
         destination = 6;
         scrolling = false;
@@ -343,7 +338,7 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
 
         tScript.type = (int) attributes["type"];
         if (tScript.type == projType) {
-            t.GetComponent<SpriteRenderer>().sprite = pelletTower;
+            sr.sprite = pelletTower;
         } 
         else if (tScript.type == laserType) {
             sr.sprite = laserTower;

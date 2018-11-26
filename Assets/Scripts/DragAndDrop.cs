@@ -17,7 +17,6 @@ public class DragAndDrop : MonoBehaviour {
 
     private TowerPlacement shadow;
     
-    // Use this for initialization
     void Start() {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
         towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
@@ -64,7 +63,7 @@ public class DragAndDrop : MonoBehaviour {
         }
     }
 
-    //Invoked when towers released
+    // Invoked when towers released
     void OnMouseUp() {
         if(!Game.paused) {
             if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {

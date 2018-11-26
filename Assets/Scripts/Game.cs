@@ -34,7 +34,7 @@ public class Game : MonoBehaviour {
 		appScript = app.GetComponent<__app>();
 		HPText.text = HP.ToString();
 		gameOverText = "";
-        Currency = 150;
+        Currency = __app.baseCurrency;
 
 		// Load Level
 		level = Resources.Load("Prefabs/Levels/"+appScript.getLevel()) as GameObject;
