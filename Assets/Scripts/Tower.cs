@@ -26,11 +26,12 @@ public class Tower : MonoBehaviour {
 	private __app appScript;
 	public Image ammoBar;
 	public GameObject ammoBarWhole;
+	public Text towerNickname;
 	//Testing
 	[HideInInspector]
 	public int maxAmmo;
 	[HideInInspector]
-	public int ammo;
+	public int _ammo;
 	private GameObject logbookDrop;
 	// Laser specific
 	private LineRenderer lr;
@@ -50,6 +51,7 @@ public class Tower : MonoBehaviour {
 		baseDamages = __app.antibiotics[antibioticType];
 		color = __app.colors[antibioticType];
 		enemyMask = LayerMask.GetMask("Enemy");
+		towerNickname.text = antibioticType.ToUpper();
 
 		if (tag == "MenuItems") {
 			ammoBarWhole.SetActive(false);

@@ -49,6 +49,7 @@ public class DragAndDrop : MonoBehaviour {
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
             towerManager.setLabels(myTower.towerName, myTower.cost);
+           
             gameObject.layer = 2;
 
             // If user has enough money to buy tower
@@ -57,6 +58,7 @@ public class DragAndDrop : MonoBehaviour {
                 originalPosition = gameObject.transform.position;
                 distance = Vector2.Distance(transform.position, Camera.main.transform.position);
                 dragging = true;
+                 myTower.towerNickname.enabled = false;
 
                 towerManager.drawEllipse(myTower.detectionRadius);
             }
@@ -92,6 +94,7 @@ public class DragAndDrop : MonoBehaviour {
         else {
             gameObject.transform.position = originalPosition;
             towerManager.destroyCircle();
+            myTower.towerNickname.enabled = true;
         }
     }
 

@@ -28,9 +28,9 @@ public class LoadTowers : MonoBehaviour {
         
 
         private static float posX = 8.0f;
-        private static Vector2 ppos = new Vector2(8.0f, 3.65f);
-        private static Vector2 lpos = new Vector2(8.0f, 11.2f);
-        private static Vector2 bpos = new Vector2(8.0f, 18.75f);
+        private static Vector2 ppos = new Vector2(8.25f, 3.65f);
+        private static Vector2 lpos = new Vector2(8.25f, 11.2f);
+        private static Vector2 bpos = new Vector2(8.25f, 18.75f);
         private static float yDist = 1f;
         
         // RADIUS
@@ -58,7 +58,7 @@ public class LoadTowers : MonoBehaviour {
     public static IDictionary<string, object> amoxProjectile = new Dictionary<string, object>(){
                 {"name", "Amoxicillin"},
                 {"antibioticType", "amox"},
-                {"position", new Vector2(ppos.x, ppos.y - yDist * 1)},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 1.2f)},
                 {"cost", amoxCost},
                 {"type", projType},
                 {"radius", baseRadius},
@@ -68,7 +68,7 @@ public class LoadTowers : MonoBehaviour {
     public static IDictionary<string, object> methProjectile = new Dictionary<string, object>(){
                 {"name", "Methicillin"},
                 {"antibioticType", "meth"},
-                {"position", new Vector2(ppos.x, ppos.y - yDist * 2)},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 2.1f)},
                 {"cost", methCost},
                 {"type", projType},
                 {"radius", baseRadius},
@@ -78,7 +78,7 @@ public class LoadTowers : MonoBehaviour {
     public static IDictionary<string, object> vancProjectile = new Dictionary<string, object>(){
                 {"name", "Vancomycin"},
                 {"antibioticType", "vanc"},
-                {"position", new Vector2(ppos.x, ppos.y - yDist * 3)},
+                {"position", new Vector2(ppos.x, ppos.y - yDist * 3.1f)},
                 {"cost", vancCost},
                 {"type", projType},
                 {"radius", baseRadius},
@@ -198,7 +198,7 @@ public static IDictionary<string, object> methHitscan = new Dictionary<string, o
 public static IDictionary<string, object> amoxAOE = new Dictionary<string, object>(){
                 {"name", "Amoxicillin Bomber"},
                 {"antibioticType", "amox"},
-                {"position", new Vector2(bpos.x, bpos.y - yDist * 1)},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 1.1f)},
                 {"cost", amoxCost + extraBombCost},
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
@@ -208,7 +208,7 @@ public static IDictionary<string, object> amoxAOE = new Dictionary<string, objec
 public static IDictionary<string, object> methAOE = new Dictionary<string, object>(){
                 {"name", "Methicillin Bomber"},
                 {"antibioticType", "meth"},
-                {"position", new Vector2(bpos.x, bpos.y - yDist * 2)},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 2.1f)},
                 {"cost", methCost + extraBombCost},
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
@@ -228,7 +228,7 @@ public static IDictionary<string, object> vancAOE = new Dictionary<string, objec
 public static IDictionary<string, object> carbAOE = new Dictionary<string, object>(){
                 {"name", "Carbapenem Bomber"},
                 {"antibioticType", "carb"},
-                {"position", new Vector2(bpos.x, bpos.y - yDist * 4)},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 3.95f)},
                 {"cost", carbCost + extraBombCost},
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
@@ -238,7 +238,7 @@ public static IDictionary<string, object> carbAOE = new Dictionary<string, objec
 public static IDictionary<string, object> lineAOE = new Dictionary<string, object>(){
                 {"name", "Linezolid Bomber"},
                 {"antibioticType", "line"},
-                {"position", new Vector2(bpos.x, bpos.y - yDist * 5)},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 4.9f)},
                 {"cost", lineCost + extraBombCost},
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
@@ -248,7 +248,7 @@ public static IDictionary<string, object> lineAOE = new Dictionary<string, objec
 public static IDictionary<string, object> rifaAOE = new Dictionary<string, object>(){
                 {"name", "Rifampicin Bomber"},
                 {"antibioticType", "rifa"},
-                {"position", new Vector2(bpos.x, bpos.y - yDist * 6)},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 5.9f)},
                 {"cost", rifaCost + extraBombCost},
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
@@ -258,7 +258,7 @@ public static IDictionary<string, object> rifaAOE = new Dictionary<string, objec
 public static IDictionary<string, object> isonAOE = new Dictionary<string, object>(){
                 {"name", "Isoniazid Bomber"},
                 {"antibioticType", "ison"},
-                {"position", new Vector2(bpos.x, bpos.y - yDist * 7)},
+                {"position", new Vector2(bpos.x, bpos.y - yDist * 6.9f)},
                 {"cost", isonCost + extraBombCost},
                 {"type", bombType},
                 {"radius", baseRadius + extraBombRadius},
