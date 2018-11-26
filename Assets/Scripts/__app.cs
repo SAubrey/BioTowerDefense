@@ -50,6 +50,26 @@ public class __app : MonoBehaviour {
 		//Extras
 		{"prof",false}
 	};
+	public static IDictionary<string, int> logbookChances = new Dictionary<string, int>() { 
+		//Enemies
+		{"strep",20},
+		{"staph",20},
+		{"pneu",20},
+		{"TB",20},
+		//Towers
+		{"amox", 100},
+		{"meth", 100},
+		{"vanc", 100},
+		{"carb", 100},
+		{"line", 100},
+		{"rifa", 100},
+		{"ison", 100},
+		//Levels
+		{"heart",100},
+		{"lungs",100},
+		//Extras
+		{"prof",100}
+	};
 					
         // Dictionaries are arranged in order of effectiveness up to carb (1-5)
     // Linezolid is its own category, rifampicin and isoniazid are their own category.

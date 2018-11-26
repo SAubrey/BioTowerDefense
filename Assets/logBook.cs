@@ -5,15 +5,34 @@ using UnityEngine.UI;
 
 public class logBook : MonoBehaviour {
 	//Panels
+	//Bacteria
 	public GameObject strep;
 	public GameObject staph;
 	public GameObject pneu;
 	public GameObject TB;
+	//Towers
+	public GameObject amox;
+	public GameObject meth;
+	public GameObject vanc;
+	public GameObject carb;
+	public GameObject line;
+	public GameObject rifa;
+	public GameObject ison;
+	
 	//Buttons
+	//Enemies
 	public GameObject strepButton;
 	public GameObject staphButton;
 	public GameObject pneuButton;
 	public GameObject TBButton;
+	//Towers
+	public GameObject amoxButton;
+	public GameObject methButton;
+	public GameObject vancButton;
+	public GameObject carbButton;
+	public GameObject lineButton;
+	public GameObject rifaButton;
+	public GameObject isonButton;
 	private string current;
 	private IDictionary<string, GameObject> panels;
 	private IDictionary<string, GameObject> buttons;
@@ -24,13 +43,27 @@ public class logBook : MonoBehaviour {
 			{"strep", strep},
 			{"staph", staph},
 			{"pneu", pneu},
-			{"TB", TB}
+			{"TB", TB},
+			{"amox", amox},
+			{"meth", meth},
+			{"vanc", vanc},
+			{"carb", carb},
+			{"line", line},
+			{"rifa", rifa},
+			{"ison", ison}
 		};
 		buttons = new Dictionary<string, GameObject>() { 
 			{"strep", strepButton},
 			{"staph", staphButton},
 			{"pneu", pneuButton},
-			{"TB", TBButton}
+			{"TB", TBButton},
+			{"amox", amoxButton},
+			{"meth", methButton},
+			{"vanc", vancButton},
+			{"carb", carbButton},
+			{"line", lineButton},
+			{"rifa", rifaButton},
+			{"ison", isonButton}
 		};
 	}
 	// Update is called once per frame
@@ -56,7 +89,11 @@ public class logBook : MonoBehaviour {
 	}
 	
 	public void showLog(string name){
-		if(name!="NULL" && __app.logbook[name]){
+		if(name=="NULL"){
+			current = "NULL";
+			return;
+		}
+		if(__app.logbook[name]){
 			current = name;
 		}
 	}

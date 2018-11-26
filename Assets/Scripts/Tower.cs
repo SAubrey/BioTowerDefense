@@ -32,6 +32,7 @@ public class Tower : MonoBehaviour {
 	public int maxAmmo;
 	[HideInInspector]
 	public int ammo;
+	private GameObject logbookDrop;
 
 	// Laser specific
 	private LineRenderer lr;
@@ -43,6 +44,7 @@ public class Tower : MonoBehaviour {
 	private LineRenderer myLr;
 
     void Start () {
+		logbookDrop  = Resources.Load("Prefabs/LogbookUnlock") as GameObject;
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		bombAOE = Resources.Load("Prefabs/TowerAOE") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
@@ -99,9 +101,18 @@ public class Tower : MonoBehaviour {
 		}
 	}
 	
+	private void checkDropLogbook(){
+		if(Random.Range(0,__app.logbookChances[antibioticType]) == 0){
+			GameObject myDrop = Instantiate(logbookDrop);
+			myDrop.transform.position = transform.position;
+			myDrop.GetComponent<logBookUnlock>().setId(antibioticType);
+		}
+	}
+	
 	private void updateAmmo() {
 		ammo--;
         ammoBar.fillAmount = (float)ammo / (float)maxAmmo;
+		checkDropLogbook();
     }
 
 
@@ -158,6 +169,8 @@ public class Tower : MonoBehaviour {
 	}
 	
 	private void activate() {
+		//Chance to drop log
+		
 		coolingDown = true;
 		cdTime = coolDown;
 		if (ammo < 1) {

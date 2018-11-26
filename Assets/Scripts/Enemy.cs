@@ -198,9 +198,11 @@ public class Enemy : MonoBehaviour {
         
 		//Particles
 		appScript.newParticles(transform.position, 7, 0.03f, particleColor);
-		GameObject myDrop = Instantiate(logbookDrop);
-		myDrop.transform.position = transform.position;
-		myDrop.GetComponent<logBookUnlock>().setId(species);
+		if(Random.Range(0,__app.logbookChances[species]) == 0){
+			GameObject myDrop = Instantiate(logbookDrop);
+			myDrop.transform.position = transform.position;
+			myDrop.GetComponent<logBookUnlock>().setId(species);
+		}
         Destroy(gameObject);
     }
 
