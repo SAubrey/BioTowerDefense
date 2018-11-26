@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
     private __app appScript;
     private Vector3 startPosition, endPosition;
     private GameObject audioObject;
+	private GameObject logbookDrop;
 
     [Header("Unity specific")]
     public Image healthBar;
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+		logbookDrop  = Resources.Load("Prefabs/LogbookUnlock") as GameObject;
 		speedActual = speed;
         health = maxHealth;
         game = GameObject.Find("Game");
@@ -196,6 +198,9 @@ public class Enemy : MonoBehaviour {
         
 		//Particles
 		appScript.newParticles(transform.position, 7, 0.03f, particleColor);
+		GameObject myDrop = Instantiate(logbookDrop);
+		myDrop.transform.position = transform.position;
+		myDrop.GetComponent<logBookUnlock>().setId(species);
         Destroy(gameObject);
     }
 
