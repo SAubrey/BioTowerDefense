@@ -17,7 +17,6 @@ public class DragAndDrop : MonoBehaviour {
 
     private TowerPlacement shadow;
     
-    // Use this for initialization
     void Start() {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
         towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
@@ -43,40 +42,44 @@ public class DragAndDrop : MonoBehaviour {
         }
     }
 
-    //Invoked when towers clicked
+    // Invoked when towers clicked
     void OnMouseDown() {
+        if (!Game.paused) {
 		    towerManager.destroyCircle();
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
             towerManager.setLabels(myTower.towerName, myTower.cost);
+           
             gameObject.layer = 2;
 
-        //if user has enough money to buy tower
-        if (gameManager.Currency >= myTower.cost) {
+            // If user has enough money to buy tower
+            if (gameManager.Currency >= myTower.cost) {
+                towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+                originalPosition = gameObject.transform.position;
+                distance = Vector2.Distance(transform.position, Camera.main.transform.position);
+                dragging = true;
+                 myTower.towerNickname.enabled = false;
 
-            towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
-            originalPosition = gameObject.transform.position;
-            distance = Vector2.Distance(transform.position, Camera.main.transform.position);
-            dragging = true;
-
-            towerManager.drawCircle(myTower.detectionRadius);
+                towerManager.drawEllipse(myTower.detectionRadius);
+            }
         }
     }
 
-    //Invoked when towers released
+    // Invoked when towers released
     void OnMouseUp() {
-        if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {
-            validateDropPosition();
+        if(!Game.paused) {
+            if (gameObject.tag == "MenuItems" && gameManager.Currency >= myTower.cost) {
+                validateDropPosition();
+            }
+            dragging = false;
+            gameObject.layer = 0;
         }
-        dragging = false;
-        gameObject.layer = 0;
     }
 
     //Moves tower back to menu if dropped on an invalid area
     // Detaches sideMenu as parent if towers dropped on valid area
     void validateDropPosition() {
         if (validSpot()) {
-            
             detachFromMenu();
             updateTheMenu();
             towerManager.clearLabels();
@@ -91,16 +94,19 @@ public class DragAndDrop : MonoBehaviour {
         else {
             gameObject.transform.position = originalPosition;
             towerManager.destroyCircle();
+            myTower.towerNickname.enabled = true;
         }
     }
 
     //Upon successful purchase of tower, detach it from the menu.
     void detachFromMenu() {
         gameObject.tag = "Tower";
+        myTower.ammoBarWhole.SetActive(true);
         gameObject.transform.SetParent(null);
 
         // Increase mutation probability.
 		__app appScript = GameObject.Find("__app").GetComponent<__app>();
+        
 		appScript.increaseMutationChanceForAntibiotic(myTower.antibioticType);
     }
 

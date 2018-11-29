@@ -19,18 +19,19 @@ public class MenuCamera : MonoBehaviour {
 	private float xOffset;
 	private float yOffset;
 	private __app appScript;
-	void Awake() {
-	}
 
 	void Start() {
-		mainMenuCoordinates = new Dictionary<string, Vector2>() 
-													{
-														{"MainMenu", new Vector2(0f, 0f)},
-														{"PlayMenu", new Vector2(0f, 10f)},
-														{"Game", new Vector2(0f, 30f)},
-														{"OptionsMenu", new Vector2(0f, -10f)},
-														{"Encyclopedia", new Vector2(-30f, 0f)}
-													};
+		mainMenuCoordinates = new Dictionary<string, Vector2>() {
+			{"MainMenu", new Vector2(0f, 0f)},
+			{"PlayMenu", new Vector2(0f, 10f)},
+			{"Game", new Vector2(0f, 30f)},
+			{"OptionsMenu", new Vector2(0f, -10f)},
+			{"Encyclopedia", new Vector2(-30f, 0f)} ,
+			{"labMain", new Vector2(0f, 0f)},
+			{"labData", new Vector2(0f, 10f)},
+			{"labLogbook", new Vector2(-17.8f, 0f)},
+		};
+
 		app = GameObject.Find("__app");
 		appScript = app.GetComponent<__app>();
 		sceneGuy = app.GetComponent<SceneGuy>();
@@ -41,11 +42,14 @@ public class MenuCamera : MonoBehaviour {
 		xOffset = 0;
 		yOffset = 0;
 
-		if (SceneManager.GetActiveScene().name == "MainMenu") {
+		if (scene == "MainMenu") {
 			GameObject.Find("Strep").GetComponent<Animator>().Play("strep");
 			GameObject.Find("Staph").GetComponent<Animator>().Play("staph");
 			GameObject.Find("TB").GetComponent<Animator>().Play("TB");
 			GameObject.Find("Pneu").GetComponent<Animator>().Play("pneu");
+		} 
+		else if ( scene == "Encyclopedia") {
+
 		}
 	}
 
@@ -62,8 +66,7 @@ public class MenuCamera : MonoBehaviour {
 		else{
 			xOffset = 0;
 			yOffset = 0;
-		}
-		
+		}	
 	}
 
 	private void determineStartPos() {
@@ -136,7 +139,12 @@ public class MenuCamera : MonoBehaviour {
 	
 	// Called by menu buttons
 	public void changeScreen(string scr) {
-		dest = mainMenuCoordinates[scr]; // Gives coordinates assuming scene is MainMenu
+
+		Time.timeScale = 1f;
+		//if(sceneGuy.currentScene == "MainMenu")
+			dest = mainMenuCoordinates[scr]; // Gives coordinates if scene is MainMenu
+		//if(sceneGuy.currentScene == "Encyclopedia")
+			//dest = labMenuCoordinates[scr]; // Gives coordinates if scene is LabMenu
 		setSceneFromScreen(scr);
 		moving = true;
 	}

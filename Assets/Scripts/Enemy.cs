@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
-    //[HideInInspector]
-	public float speedActual;
     public float speed;
     public float maxHealth;
     private float health;
@@ -18,30 +16,35 @@ public class Enemy : MonoBehaviour {
     private __app appScript;
     private Vector3 startPosition, endPosition;
     private GameObject audioObject;
+	private GameObject logbookDrop;
 
     [Header("Unity specific")]
     public Image healthBar;
     public GameObject[] waypoints;
 
     private float distanceCovered;
+    private Color particleColor;
+    private int baseProfitPerEnemy;
 
     private IDictionary<string, bool> resistances = new Dictionary<string, bool>() {
-                                        {"amox", false},
-                                        {"meth", false},
-                                        {"vanc", false},
-                                        {"carb", false},
-                                        {"line", false},
-                                        {"rifa", false},
-                                        {"ison", false} };
+                            {"amox", false},
+                            {"meth", false},
+                            {"vanc", false},
+                            {"carb", false},
+                            {"line", false},
+                            {"rifa", false},
+                            {"ison", false} };
 
-    // Use this for initialization
     void Start () {
-		speedActual = speed;
+		logbookDrop  = Resources.Load("Prefabs/LogbookUnlock") as GameObject;
+		//speedActual = speed;
         health = maxHealth;
         game = GameObject.Find("Game");
-		level = GameObject.FindGameObjectsWithTag("Level")[0];
+        level = GameObject.FindGameObjectWithTag("Level");
         appScript = GameObject.Find("__app").GetComponent<__app>();
         audioObject = GameObject.Find("AudioObject");
+
+       baseProfitPerEnemy = __app.baseCurrencyPerKill;
 
         setDestination();
     }
@@ -50,18 +53,15 @@ public class Enemy : MonoBehaviour {
 		if (Game.paused || !Game.game) {
 			return;
 		}
-        //bool reachedDestination = checkReachedDestination();
 		
         if (checkReachedDestination()) {
             setDestination();
         }
         move();
-		speedActual = speed*game.GetComponent<Game>().timescale;
-		//Debug.Log("Speed: "+(speed)+", timescale: "+game.GetComponent<Game>().timescale+", speedActual: "+speedActual);
     }
     private void move() {
 
-        //Get the total time between waypoints,  and multiply by speed for smooth enemy movement
+        // Get the total time between waypoints,  and multiply by speed for smooth enemy movement
         distanceCovered += Time.deltaTime;
         float step = distanceCovered * speed;
         gameObject.transform.position = Vector3.MoveTowards(startPosition, endPosition, step);
@@ -74,7 +74,6 @@ public class Enemy : MonoBehaviour {
             if (currentWaypoint < waypoints.Length - 2) {
                 currentWaypoint++;
                 distanceCovered = 0;
-                // TODO: Rotate into move direction
             } else {
 				reachOrgan();
                 return false;
@@ -97,23 +96,30 @@ public class Enemy : MonoBehaviour {
        // audioObject.GetComponent<AudioSource>().Play();
         game.GetComponent<Game>().takeDamage(1);
         level.GetComponent<EnemyManager>().incEnemiesDead();
-		appScript.newScreenshake(6, 0.1f);
+		appScript.newScreenshake(6, 0.04f);
         Destroy(gameObject);
     }
 
-    public void hurt(int baseDamage, string antibioticType) {
+    public void hurt(float baseDamage, Tower towerScript) {
+        string antibioticType = towerScript.antibioticType;
+
         if (resistances[antibioticType] == false) {
-            float effectiveness = 0;
+            float effectiveness = __app.antibiotics[antibioticType][species];
+            bool mutated = false;
+
             // So that pneu, staph, strep cannot mutate to rifa and ison.
             if (!(species != "TB" && (antibioticType == "rifa" || antibioticType == "ison"))) {
-                effectiveness = appScript.antibiotics[antibioticType][species];
+                
                 if (effectiveness > 0) { // So that TB doesn't mutate against 1-5
-                    rollForMutate(antibioticType);
+                    mutated = rollForMutate(antibioticType);
                 }
             }
 
-            if (resistances[antibioticType] == false) {
+            if (mutated) {
+                towerScript.decoupleTarget();
+            } else {
                 health -= baseDamage * effectiveness;
+                print(species + " taking " + baseDamage * effectiveness + " damage from " + antibioticType);
                 updateHealthBar();
 
                 if (health <= 0) {
@@ -123,46 +129,48 @@ public class Enemy : MonoBehaviour {
         }
 	}
 
-    // Mutation check happens at each projectile hit.
-    public void rollForMutate(string antibioticType) {
+    // Mutation check happens at each projectile hit against that antibiotic type.
+    private bool rollForMutate(string antibioticType) {
+        var chance = __app.mutationChances[antibioticType];
         
-        var chance = appScript.mutationChances[species][antibioticType];
         if (Random.Range(0, 100) < chance * 100) {
             print(species + " has mutated against " + antibioticType + "! Likelihood: " + (chance * 100) + "%");
             setResistance(antibioticType);
-			appScript.newParticles(transform.position,30,0.8f,Color.black);
+			appScript.newParticles(transform.position, 10, 0.8f, __app.colors[antibioticType]);
+            return true;
         }
+        return false;
     }
 
     private void setResistance(string antibioticType) {
         switch(antibioticType) {
             case "amox":
                 setResistances(new string[] {"amox"});
-                healthBar.color = LoadTowers.amoxColor;
+                healthBar.color = __app.amoxColor;
                 break;
             case "meth":
                 setResistances(new string[] {"amox", "meth"});
-                healthBar.color = LoadTowers.methColor;
+                healthBar.color = __app.methColor;
                 break;
             case "vanc":
                 setResistances(new string[] {"amox", "meth", "vanc"});
-                healthBar.color = LoadTowers.vancColor;
+                healthBar.color = __app.vancColor;
                 break;
             case "carb":
                 setResistances(new string[] {"amox", "meth", "vanc", "carb"});
-                healthBar.color = LoadTowers.carbColor;
+                healthBar.color = __app.carbColor;
                 break;
             case "line":
                 setResistances(new string[] {"amox", "meth", "vanc", "carb", "line"});
-                healthBar.color = LoadTowers.lineColor;
+                healthBar.color = __app.lineColor;
                 break;
             case "rifa":
                 resistances["rifa"] = true;
-                healthBar.color = LoadTowers.rifaColor;
+                healthBar.color = __app.rifaColor;
                 break;
             case "ison":
                 resistances["ison"] = true;
-                healthBar.color = LoadTowers.isonColor;
+                healthBar.color = __app.isonColor;
                 break;
         }
     }
@@ -176,10 +184,15 @@ public class Enemy : MonoBehaviour {
     private void die() {
         // queue SFX
         level.GetComponent<EnemyManager>().incEnemiesDead();
-        game.GetComponent<Game>().Currency += 2;
+        game.GetComponent<Game>().Currency += baseProfitPerEnemy;
         
 		//Particles
-		appScript.newParticles(transform.position,10,0.05f,transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color);
+		appScript.newParticles(transform.position, 7, 0.03f, particleColor);
+		if(Random.Range(0,__app.logbookChances[species]) == 0){
+			GameObject myDrop = Instantiate(logbookDrop);
+			myDrop.transform.position = transform.position;
+			myDrop.GetComponent<logBookUnlock>().setId(species);
+		}
         Destroy(gameObject);
     }
 
@@ -190,21 +203,25 @@ public class Enemy : MonoBehaviour {
     public void setSpecies(string type) {
         species = type;
         GetComponent<Animator>().Play(type);
-		//Set 'Color'
-		switch(type){
+
+		//Set particle 'Color'
+		switch (type) {
 			case("strep"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+				particleColor = (Color)new Color32(132, 60, 211, 255); // purple
 				break;
 			case("staph"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+				particleColor = (Color)new Color32(132, 60, 211, 255);
 				break;
 			case("pneu"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+				particleColor = (Color)new Color32(255, 52, 166, 255); // pinkish
 				break;
 			case("TB"):
-				transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+				particleColor = (Color)new Color32(255, 52, 166, 255);
 				break;
 		}
-		
     }
-}
+
+    public bool checkResistance(string antibioticType) {
+        return resistances[antibioticType];
+    }
+} 

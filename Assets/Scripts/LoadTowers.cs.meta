@@ -3,7 +3,12 @@ guid: d01208acb4cbb4b6dac5a035728f5ad0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pelletTower: {fileID: 21300000, guid: a5ca6ff3e2aad8b49860dc05e12bf3a7, type: 3}
+  - laserTower: {instanceID: 0}
+  - bombTower: {instanceID: 0}
+  - navUp: {instanceID: 0}
+  - navDown: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

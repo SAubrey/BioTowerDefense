@@ -3,33 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
-	private string antibioticType;
-	private string type; 
-	// PROJECTILE DOESN'T NEED TO STORE THESE VALUES IF THEY'RE STORED/USED BY TOWER (size, speed)
+	//private string antibioticType;
+	//private string type; 
+	//private float speed = 0.6f;
 	private float size = 0.5f;
-	private float speed = 0.6f;
 	private int pierce = 1; // Number of enemies a projectile pierces
 	private int enemiesPierced = 0;
-	private GameObject tower;
+	private Tower towerScript;
 	private Vector3 velocity;
 	private List<GameObject> hurtEnemies;
-	// Use this for initialization
+
 	public virtual void Start () {
 		hurtEnemies = new List<GameObject>();
 	}
 	
-	// Update is called once per frame
 	public virtual void Update () {
-		//Move
-		transform.position += velocity;
+		// Move
+		transform.position += velocity * Time.timeScale;
 	}
 	
-	public void setVals(GameObject pTow, string abType, float pSize, 
-						float pSpeed, int pPierce, float xsp, float ysp) {
-		tower = pTow;
-		antibioticType = abType;
+	public void setVals(Tower pTow, float pSize, 
+						int pPierce, float xsp, float ysp) {
+		towerScript = pTow;
 		size = pSize;
-		speed = pSpeed;
 		pierce = pPierce;
 		velocity.x = xsp;
 		velocity.y = ysp;
@@ -43,9 +39,7 @@ public class Projectile : MonoBehaviour {
 		// Debug.Log("Collision detected, hit obj of tag " + obj.tag);
 
 		if (obj.tag == "Enemy") {
-			//hurtEnemies.Add(obj);
-			obj.GetComponent<Enemy>().hurt(5, antibioticType);
-			//obj.GetComponent<Enemy>().speed-=2;
+			obj.GetComponent<Enemy>().hurt(__app.baseDamage, towerScript);
 			enemiesPierced++;
 			if (enemiesPierced >= pierce) {
 				Destroy(gameObject);
