@@ -14,15 +14,12 @@ public class mutationBars : MonoBehaviour {
 	public Image isonBar;
 	private __app appScript;
 	
-	
-
-	// Use this for initialization
 	void Start () {
 		appScript = GameObject.Find("__app").GetComponent<__app>();
+		appScript.giveMutationBarsScript(this);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	public void updateBars() {
 		amoxBar.fillAmount = __app.mutationChances["amox"];
 		methBar.fillAmount = __app.mutationChances["meth"];
 		vancBar.fillAmount = __app.mutationChances["vanc"];

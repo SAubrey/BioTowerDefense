@@ -48,9 +48,12 @@ public class Tower : MonoBehaviour {
 		projectile  = Resources.Load("Prefabs/Projectile") as GameObject;
 		bombAOE = Resources.Load("Prefabs/TowerAOE") as GameObject;
 		towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
+		enemyMask = LayerMask.GetMask("Enemy");
+    }
+	
+	public void manualStart() {
 		baseDamages = __app.antibiotics[antibioticType];
 		color = __app.colors[antibioticType];
-		enemyMask = LayerMask.GetMask("Enemy");
 		towerNickname.text = antibioticType.ToUpper();
 
 		if (tag == "MenuItems") {
@@ -73,16 +76,14 @@ public class Tower : MonoBehaviour {
 		ammo = maxAmmo;
 		//Set Color
 		ammoBar.color = __app.colors[antibioticType];
-    }
-	
+	}
+
 	void Update () {
 		// Return if not actually placed
 		if (tag == "MenuItems") {
 			return;
 		}
-		else{
-			//ammoBarWhole.SetActive(true);	
-		}
+	
 		// Return if paused or game not in session
 		if (Game.paused || !Game.game) {
 			return;
@@ -102,19 +103,14 @@ public class Tower : MonoBehaviour {
 		}
 	}
 	
-	private void checkDropLogbook(){
-		if(Random.Range(0,__app.logbookChances[antibioticType]) == 0){
+	private void checkDropLogbook() {
+		if (Random.Range(0, __app.logbookChances[antibioticType]) == 0){
 			GameObject myDrop = Instantiate(logbookDrop);
 			myDrop.transform.position = transform.position;
 			myDrop.GetComponent<logBookUnlock>().setId(antibioticType);
 		}
 	}
-	
-	private void updateAmmo() {
-		ammo--;
-        ammoBar.fillAmount = (float)ammo / (float)maxAmmo;
-		checkDropLogbook();
-    }
+
 
 	public int ammo {
 		get {
@@ -123,6 +119,7 @@ public class Tower : MonoBehaviour {
 		set {
 			_ammo = value;
 			ammoBar.fillAmount = (float)ammo / (float)maxAmmo;
+			
 			if (selected) {
 				towerManager.updateReloadText();
 			}
@@ -237,6 +234,8 @@ public class Tower : MonoBehaviour {
 			boom = true;
 		}
 		if (boom) {
+			checkDropLogbook();
+
 			// Visual
 			GameObject myAOE = Instantiate(bombAOE);
 			myAOE.GetComponent<SpriteRenderer>().color = (Vector4)__app.colors[antibioticType] + (new Vector4(0.1f, 0.1f , 0.1f, -0.5f));
@@ -266,6 +265,7 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void fireLaser(GameObject enemy) {
+		checkDropLogbook();
 		
 		// Physical
 		float run = enemy.transform.position.x - transform.position.x;
@@ -293,10 +293,13 @@ public class Tower : MonoBehaviour {
 		lr.startColor = color;
 		lr.endColor = color;
 		lr.SetPosition(1, ePos);
+
 	}
 	
 	private void shoot(GameObject enemy) {
 		if (type == 0) {
+			checkDropLogbook();
+
 			GameObject myProjectile = Instantiate(projectile);
 			myProjectile.transform.position = transform.position;
 
@@ -328,9 +331,7 @@ public class Tower : MonoBehaviour {
 				towerManager.drawEllipse(detectionRadius);
 				towerManager.setLabels(towerName, cost);
 				towerManager.enableSellButton();
-			}
 
-			if (gameObject.tag == "Tower") {
 				towerManager.updateReloadText();
 				selected = true;
 			}

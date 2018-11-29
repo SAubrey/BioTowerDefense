@@ -17,10 +17,12 @@ public class TowerManager : MonoBehaviour {
     public float sellPercentage = 0.7f;
 
     private Color defaultColor;
+    private float reloadCostDiv;
 
     void Start () {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
         defaultColor = sellTowerButton.GetComponent<Image>().color;
+        reloadCostDiv = __app.reloadCostDiv;
     }
 
     void Update () {
@@ -61,6 +63,9 @@ public class TowerManager : MonoBehaviour {
             if (cost <= gameManager.Currency) {
                 gameManager.Currency -= cost;
                 tScript.ammo = tScript.maxAmmo;
+
+                __app appScript = GameObject.Find("__app").GetComponent<__app>();
+                appScript.increaseMutationChanceForAntibiotic(tScript.antibioticType, ((float)cost/tScript.cost) * reloadCostDiv);
             }
         }
     }
@@ -68,7 +73,7 @@ public class TowerManager : MonoBehaviour {
     private int calcReloadCost() {
         Tower tScript = SelectedTower.GetComponent<Tower>();
         float ammoRatio = (float)tScript.ammo / (float)tScript.maxAmmo;
-        return (int)Mathf.Round(((float)tScript.cost / 2f) * (1f - ammoRatio));
+        return (int)Mathf.Round(((float)tScript.cost / reloadCostDiv) * (1f - ammoRatio));
     }
 
     public void updateReloadText() {

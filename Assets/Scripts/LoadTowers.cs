@@ -27,10 +27,10 @@ public class LoadTowers : MonoBehaviour {
         private static int bombType = 2;
         
 
-        private static float posX = 8.0f;
+        private static float posX = 8.25f;
         private static Vector2 ppos = new Vector2(8.25f, 3.65f);
         private static Vector2 lpos = new Vector2(8.25f, 11.2f);
-        private static Vector2 bpos = new Vector2(8.25f, 18.75f);
+        private static Vector2 bpos = new Vector2(posX, 18.75f);
         private static float yDist = 1f;
         
         // RADIUS
@@ -315,25 +315,25 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
     public void reloadTower(string towerName, Vector3 relativePosition) {
         IDictionary <string, object> towerAttributes;
         towerAttributes = towers[towerName];
-
         GameObject newTower = setTowerAttributes(towerAttributes);
 
         newTower.transform.position = relativePosition;
-        Instantiate(newTower, gameObject.transform, true);
     }
 
     //Loads the first column of towers on start, will load the displayed column
-    void LoadAllTowers() {
+    private void LoadAllTowers() {
         foreach (KeyValuePair<string, IDictionary<string, object>> tow in towers) {    
-            GameObject newTower = setTowerAttributes(tow.Value);
-            Instantiate(newTower, gameObject.transform, true);
+            setTowerAttributes(tow.Value);
         }
     }
 
     // Set the towers attributes before spawning to the menu
-    GameObject setTowerAttributes(IDictionary<string, object> attributes) {
-        GameObject t = tower;
-        Tower tScript = tower.GetComponent<Tower>();
+    private GameObject setTowerAttributes(IDictionary<string, object> attributes) {
+        Vector2 p = (Vector2) attributes["position"];
+
+        GameObject t = Instantiate(tower, gameObject.transform, true);
+
+        Tower tScript = t.GetComponent<Tower>();
         SpriteRenderer sr = t.GetComponent<SpriteRenderer>();
 
         tScript.type = (int) attributes["type"];
@@ -353,10 +353,10 @@ public static IDictionary<string, object> isonAOE = new Dictionary<string, objec
         tScript.detectionRadius = (float)attributes["radius"];
         tScript.coolDown = (float)attributes["cooldown"];
         sr.color = (Color) attributes["towerColor"];
-
-        Vector2 pos = (Vector2) attributes["position"];
-        tScript.transform.position = new Vector3(pos.x, pos.y, -2f);
+        t.transform.position = new Vector3(p.x, p.y, -2f);
         tScript.tag = "MenuItems"; 
+
+        tScript.manualStart();
         return t;
     }
 

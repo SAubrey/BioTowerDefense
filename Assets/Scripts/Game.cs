@@ -154,5 +154,4 @@ public class Game : MonoBehaviour {
             _startNextWave = value;
         }
     }
-
 }

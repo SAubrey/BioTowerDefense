@@ -16,8 +16,9 @@ public class __app : MonoBehaviour {
 	public static int baseCurrencyPerKill = 2; 
 	public static int baseDamage = 50;
 	public static int maxAmmo = 30;
-	public static float spawnInterval = 0.9f;
-   	public float mutationIncrement = 0.05f;
+	public static float spawnInterval = 1.2f;
+   	public const float mutationIncrement = 0.05f;
+	public static float reloadCostDiv = 2f;
 
 
 	// COLOR
@@ -135,14 +136,15 @@ public static IDictionary<string, float> mutationChances =
 					{"line", 0f},
 					{"rifa", 0f},
 					{"ison", 0f} };
-            
 
+	mutationBars mbScript;
 	void Awake () {
 		options = new Options();
 		screenshake = new Screenshake();
 		particles = new particleManager();
 		level = "doi";
 	}
+
 	
 	void Update () {
 		screenshake.Update();
@@ -158,9 +160,11 @@ public static IDictionary<string, float> mutationChances =
 		return level;
 	}
 
-	public void increaseMutationChanceForAntibiotic(string antibioticType) {
-		mutationChances[antibioticType] += mutationIncrement;
-		print("Increasing mutation chances for " + antibioticType + " by " + mutationIncrement);
+	public void increaseMutationChanceForAntibiotic(string antibioticType, float mult=1f) {
+		mutationChances[antibioticType] += mutationIncrement * mult;
+
+		mbScript.updateBars();
+		print("Increasing mutation chances for " + antibioticType + " by " + mutationIncrement * mult);
 	}
 
 	public void lowerAllChances(float percent) {
@@ -169,6 +173,10 @@ public static IDictionary<string, float> mutationChances =
 			mutationChances[antibiotic] *= percent;
 		}
     }
+
+	public void giveMutationBarsScript(mutationBars mb) {
+		mbScript = mb;
+	}
 	
 	public bool getMusic(){
 		return options.getMusic();

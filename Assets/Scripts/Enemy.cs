@@ -37,7 +37,6 @@ public class Enemy : MonoBehaviour {
 
     void Start () {
 		logbookDrop  = Resources.Load("Prefabs/LogbookUnlock") as GameObject;
-		//speedActual = speed;
         health = maxHealth;
         game = GameObject.Find("Game");
         level = GameObject.FindGameObjectWithTag("Level");
@@ -119,7 +118,7 @@ public class Enemy : MonoBehaviour {
                 towerScript.decoupleTarget();
             } else {
                 health -= baseDamage * effectiveness;
-                print(species + " taking " + baseDamage * effectiveness + " damage from " + antibioticType);
+                //print(species + " taking " + baseDamage * effectiveness + " damage from " + antibioticType);
                 updateHealthBar();
 
                 if (health <= 0) {

@@ -25,7 +25,6 @@ public class EnemyManager : MonoBehaviour {
 	private bool waveActive = false;
 
 	private bool spawningActive = true;
-	private float waveIntervalTimer = 0f;
 	private Text EnemyText;
 	private int _enemiesDead = 0;
 	public int waveCompleteReward = 20; 
@@ -127,7 +126,6 @@ public class EnemyManager : MonoBehaviour {
 	// Called after waveInterval has been reached.
 	private void progressWave() {
 		// Reset values
-		waveIntervalTimer = 0;
 		enemiesSpawnedInWave = 0;
 		spawnTimer = 0;
 		burstTimer = 0;

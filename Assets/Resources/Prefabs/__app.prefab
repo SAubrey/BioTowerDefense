@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570aac1117376df438dbcded5b88250b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mutationIncrement: 0.02
+  mutationIncrement: 0.1
 --- !u!114 &114466907172758552
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -20,7 +20,7 @@ public class DragAndDrop : MonoBehaviour {
     void Start() {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
         towerManager = GameObject.Find("Game").GetComponent<TowerManager>();
-        loadTowers = gameObject.GetComponentInParent<LoadTowers>();
+        loadTowers = GameObject.Find("TowerPortion").GetComponent<LoadTowers>();
         myTower = gameObject.GetComponent<Tower>();
         shadow = gameObject.GetComponentInChildren<TowerPlacement>();
     }
@@ -110,7 +110,7 @@ public class DragAndDrop : MonoBehaviour {
 		appScript.increaseMutationChanceForAntibiotic(myTower.antibioticType);
     }
 
-    //Upon successful drop, reload the an instance of the tower to the sidemenu
+    //Upon successful drop, reload an instance of the tower to the sidemenu
     void updateTheMenu() {
         loadTowers.reloadTower(gameObject.GetComponent<Tower>().towerName, originalPosition);
     }
