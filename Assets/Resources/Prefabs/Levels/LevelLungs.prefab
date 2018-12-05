@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 95610429997609216}
   - component: {fileID: 114882413274926498}
   - component: {fileID: 61608254271796358}
+  - component: {fileID: 114377947458559082}
   m_Layer: 0
   m_Name: Lung
   m_TagString: Base
@@ -658,7 +659,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.42, y: 4.56}
+    oldSize: {x: 6.66, y: 6.21}
     newSize: {x: 1.28, y: 1.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -710,6 +711,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114377947458559082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913818747233336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6e10862422c4eaf98366c10fc1b947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114796253861756290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -726,7 +738,6 @@ MonoBehaviour:
   burstInterval: 4
   burstEnemyCount: 4
   wavesEnemyCounts: 00000000090000000c00000010000000130000001500000017000000190000001b0000001d0000001f000000
-  waveInterval: 8
   waveCompleteReward: 20
   waveCompleteMutMult: 0.5
 --- !u!114 &114882413274926498
@@ -824,7 +835,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cd6a3a77b46b04f9c836c9bc142295df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c3238e1e98724042a52a563bf2b79bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

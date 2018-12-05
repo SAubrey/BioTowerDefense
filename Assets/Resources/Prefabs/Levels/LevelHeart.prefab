@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 61338251180211554}
   - component: {fileID: 114890555661250452}
   - component: {fileID: 50303108678953288}
+  - component: {fileID: 114309111507892764}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Base
@@ -558,9 +559,19 @@ MonoBehaviour:
   burstInterval: 4
   burstEnemyCount: 4
   wavesEnemyCounts: 00000000090000000c00000010000000130000001500000017000000190000001b0000001d0000001f000000
-  waveInterval: 8
   waveCompleteReward: 20
   waveCompleteMutMult: 0.5
+--- !u!114 &114309111507892764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432038426200060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6e10862422c4eaf98366c10fc1b947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114890555661250452
 MonoBehaviour:
   m_ObjectHideFlags: 1
