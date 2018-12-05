@@ -19,4 +19,9 @@ public class logBookUnlock : MonoBehaviour {
 		Debug.Log("ID SET TO: "+id);
 		__app.logbook[id] = true;
 	}
+
+	void OnMouseDown()
+	{
+		Destroy(gameObject);
+	}
 }
