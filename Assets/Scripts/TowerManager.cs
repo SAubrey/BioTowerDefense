@@ -9,19 +9,19 @@ public class TowerManager : MonoBehaviour {
     [HideInInspector] public LineRenderer lineRenderer;
 
     public Text towerNamelabel;
+    public Text towerSelectlabel;
     public Button sellTowerButton;
 
     public Button reloadTowerAmmoButton;
 
     private Game gameManager;
     public float sellPercentage = 0.7f;
-
-    private Color defaultColor;
     private float reloadCostDiv;
+
+    public GameObject towerInfoPanel;
 
     void Start () {
         gameManager = GameObject.Find("Game").GetComponent<Game>();
-        defaultColor = sellTowerButton.GetComponent<Image>().color;
         reloadCostDiv = __app.reloadCostDiv;
     }
 
@@ -29,7 +29,7 @@ public class TowerManager : MonoBehaviour {
 
         // If a tower is selected
         if (SelectedTower != null) {
-            
+
             // Listen to Click events
             if (Input.GetMouseButtonDown(0)) {
                 Vector2 direction = new Vector2(0, 0);
@@ -77,20 +77,25 @@ public class TowerManager : MonoBehaviour {
     }
 
     public void updateReloadText() {
-        reloadTowerAmmoButton.GetComponentInChildren<Text>().text = "Refill Tower for $" + calcReloadCost();
+        reloadTowerAmmoButton.GetComponentInChildren<Text>().text = "Refill for $" + calcReloadCost();
     }
 
     // Sets the selected towers labels
     public void setLabels(string towerName, int towerCost) {
         towerNamelabel.text = towerName;
+        towerSelectlabel.text = towerName;
 
         //If MenuItem show buy price, if already bought, show sell price
-        if (SelectedTower.tag == "Tower") {
-           towerNamelabel.text += ("\n Sell for $" + Mathf.Round(towerCost * sellPercentage));
+        if (SelectedTower.tag == "MenuItems") {
+        towerNamelabel.text += "\n $" + towerCost.ToString();
+        } else
+        {
+            showTowerInfo();
         }
-        else {
-            towerNamelabel.text += "\n $" + towerCost.ToString();
-        }
+    }
+    //Activates the Tower Information Panel
+    private void showTowerInfo(){
+        towerInfoPanel.SetActive(true);
     }
 
     // Clears the labels once tower is deselected or sold
@@ -122,11 +127,12 @@ public class TowerManager : MonoBehaviour {
 
     public void enableSellButton() {
         sellTowerButton.enabled = true;
-        sellTowerButton.GetComponent<Image>().color = Color.green;
+        sellTowerButton.GetComponentInChildren<Text>().text = "Sell for $" + (int)Mathf.Round(SelectedTower.GetComponent<Tower>().cost * sellPercentage);
     }
     public void disableSellButton() {
         sellTowerButton.enabled = false;
-        sellTowerButton.GetComponent<Image>().color = defaultColor;
+        sellTowerButton.GetComponentInChildren<Text>().text = "Sell for";
+
     }
 
     // Erases the circle when tower is "deselected"
