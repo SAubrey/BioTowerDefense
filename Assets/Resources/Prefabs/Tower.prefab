@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 61192666657911230}
   m_Layer: 0
   m_Name: Drop Shadow
-  m_TagString: Untagged
+  m_TagString: MenuItems
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

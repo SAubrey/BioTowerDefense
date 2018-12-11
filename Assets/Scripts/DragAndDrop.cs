@@ -15,6 +15,8 @@ public class DragAndDrop : MonoBehaviour {
     private Game gameManager;
     private Tower myTower;
 
+    private bool offMenu = false;
+
     private TowerPlacement shadow;
     
     void Start() {
@@ -28,17 +30,34 @@ public class DragAndDrop : MonoBehaviour {
     void Update() {
         //Handles updating tower movement when being dragged
         if (dragging) {
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 rayPoint = ray.GetPoint(distance);
-            //Debug.Log(rayPoint);
-            gameObject.transform.position = new Vector3(rayPoint.x, rayPoint.y, rayPoint.y);
+            RaycastHit2D hit = Physics2D.Raycast(rayPoint, new Vector2(0,0));
+            Debug.Log("OFFMENU IS " + offMenu);
+            if(hit.collider == null || (hit.collider.gameObject.tag != "Menu" && hit.collider.gameObject.tag != "MenuItems")){
+                offMenu = true;
+                
+                gameObject.transform.position = new Vector3(rayPoint.x, rayPoint.y, rayPoint.y);
+                if (validSpot() ) {
+                    
+                    towerManager.colorCircle(validColor);
+                }
+                else {
+                    towerManager.colorCircle(invalidColor);
+                }   
 
-            if (validSpot()) {
-                towerManager.colorCircle(validColor);
+                  if(offMenu == true){
+                    myTower.towerNickname.enabled = false;
+                    towerManager.drawEllipse(myTower.detectionRadius);
+                }
+            } else{
+                gameObject.transform.position = originalPosition;
+                myTower.towerNickname.enabled = true;
+                towerManager.destroyCircle();
+
             }
-            else {
-                towerManager.colorCircle(invalidColor);
-            }
+            
         }
     }
 
@@ -49,18 +68,19 @@ public class DragAndDrop : MonoBehaviour {
             towerManager.SelectedTower = gameObject;
             towerManager.disableSellButton();
             towerManager.setLabels(myTower.towerName, myTower.cost);
-           
+            towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
+
             gameObject.layer = 2;
+           
 
             // If user has enough money to buy tower
             if (gameManager.Currency >= myTower.cost) {
-                towerManager.lineRenderer = gameObject.GetComponent<LineRenderer>();
                 originalPosition = gameObject.transform.position;
                 distance = Vector2.Distance(transform.position, Camera.main.transform.position);
                 dragging = true;
-                 myTower.towerNickname.enabled = false;
+                //Debug.Log(""WHY ARE YOU NOT ENTERING"");
 
-                towerManager.drawEllipse(myTower.detectionRadius);
+              
             }
         }
     }
@@ -73,6 +93,7 @@ public class DragAndDrop : MonoBehaviour {
             }
             dragging = false;
             gameObject.layer = 0;
+            offMenu = false;
         }
     }
 
@@ -101,6 +122,7 @@ public class DragAndDrop : MonoBehaviour {
     //Upon successful purchase of tower, detach it from the menu.
     void detachFromMenu() {
         gameObject.tag = "Tower";
+        shadow.tag = "TowerShadow";
         myTower.ammoBarWhole.SetActive(true);
         gameObject.transform.SetParent(null);
 
